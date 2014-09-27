@@ -1,5 +1,33 @@
 # Point Of Interest Mod for [TUG](http://www.nerdkingdom.com/)
 
+## What it is?
+
+It is a mod that allows players to mark certain locations as Points of Interest, and allows them a way to find those locations easily again on a later point. *This is very early version of the mod and is not currently recommended for actual use.*
+
+## How do you use it?
+
+Currently it only has very simple command line UI, that supports /slashcommands. This will be changing in the future. 
+
+The /commands are:
+
+```
+/CreatePointOfInterest <name> <description> <category>
+/ListPointsOfInterest
+/DistanceToPointOfInterest <id>
+/DirectionToPointOfInterest <id>
+/RemovePointOfInterest <id>
+```
+
+The command line UI is very simplistic and is designed to be replaced with a real graphical UI in the near future.
+
+## What is coming later?
+
+* Way to load and save Points of Interest. Currently all of the data is flushed away when new world is loaded/created.
+* Graphical UI that will make it far easier to move between different Points of Interest.
+
+## How can I create my own UI for the mod?
+
+The UI part of the mod is separated from the rest of the mods functionality. This way it's very simple to create new UIs for the mod. The current console UI will become optional when the graphical UI will be implemented. As this is very early version the methods and object names are subject to change in the future.
 
 ## Installation
 
