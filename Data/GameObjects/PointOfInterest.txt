@@ -1,0 +1,18 @@
+GameObjects
+{
+  PlaceableObject
+  {
+    PointOfInterest
+    {
+      Script
+      {
+        file = "Scripts/Objects/PointOfInterest.lua"
+        class = "PointOfInterest"
+
+        arguments
+        {
+        }
+      }
+    }
+  }
+}

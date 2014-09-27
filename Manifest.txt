@@ -1,0 +1,12 @@
+Manifest
+{
+	# Name of the mods.
+  Name = "Point Of Interest mod"
+
+	# Description of the mod.
+  Description = "A Point Of Interest system for making it easier to return to interesting places"
+
+  # Versioning
+  MajorVersion = 0
+  MinorVersion = 0
+}
