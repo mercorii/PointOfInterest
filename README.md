@@ -4,6 +4,8 @@
 
 It is a mod that allows players to mark certain locations as Points of Interest, and allows them a way to find those locations easily again on a later point. *This is very early version of the mod and is not currently recommended for actual use.*
 
+It adds an invisible PointOfInterest.lua gameobject that player or other mods can spawn to the world (via this mod). The mod then keeps track of these objects and their location in relation to player.
+
 ## How do you use it?
 
 Currently it only has very simple command line UI, that supports /slashcommands. This will be changing in the future. 
