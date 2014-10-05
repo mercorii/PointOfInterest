@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Pointofinterest Mod by mercor-</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Pointofinterest Mod</h1>
+          <h2>Mod for TUG that adds a new Points of Interest system to make it easier to mark interesting locations</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/mercor-/PointOfInterest/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/mercor-/PointOfInterest/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/mercor-/PointOfInterest" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="point-of-interest-mod-for-tug" class="anchor" href="#point-of-interest-mod-for-tug"><span class="octicon octicon-link"></span></a>Point Of Interest Mod for <a href="http://www.nerdkingdom.com/">TUG</a>
+</h1>
+
+<h2>
+<a name="what-it-is" class="anchor" href="#what-it-is"><span class="octicon octicon-link"></span></a>What it is?</h2>
+
+<p>It is a mod that allows players to mark certain locations as Points of Interest, and allows them a way to find those locations easily again on a later point. <em>This is very early version of the mod and is not currently recommended for actual use.</em></p>
+
+<p>It adds an invisible PointOfInterest.lua gameobject that player or other mods can spawn to the world (via this mod). The mod then keeps track of these objects and their location in relation to player.</p>
+
+<h2>
+<a name="how-do-you-use-it" class="anchor" href="#how-do-you-use-it"><span class="octicon octicon-link"></span></a>How do you use it?</h2>
+
+<p>Currently it only has very simple command line UI, that supports /slashcommands. This will be changing in the future. </p>
+
+<p>The /commands are:</p>
+
+<pre><code>/CreatePointOfInterest &lt;name&gt; &lt;description&gt; &lt;category&gt;
+/ListPointsOfInterest
+/DistanceToPointOfInterest &lt;id&gt;
+/DirectionToPointOfInterest &lt;id&gt;
+/RemovePointOfInterest &lt;id&gt;
+</code></pre>
+
+<p>The command line UI is very simplistic and is designed to be replaced with a real graphical UI in the near future.</p>
+
+<h2>
+<a name="what-is-coming-later" class="anchor" href="#what-is-coming-later"><span class="octicon octicon-link"></span></a>What is coming later?</h2>
+
+<ul>
+<li>Way to load and save Points of Interest. Currently all of the data is flushed away when new world is loaded/created.</li>
+<li>Graphical UI that will make it far easier to move between different Points of Interest.</li>
+</ul><h2>
+<a name="how-can-i-create-my-own-ui-for-the-mod" class="anchor" href="#how-can-i-create-my-own-ui-for-the-mod"><span class="octicon octicon-link"></span></a>How can I create my own UI for the mod?</h2>
+
+<p>The UI part of the mod is separated from the rest of the mods functionality. This way it's very simple to create new UIs for the mod. The current console UI will become optional when the graphical UI will be implemented. As this is very early version the methods and object names are subject to change in the future.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p><strong>This is very early version of the mod and is not intended for real use yet.</strong> The mod requires you to edit certain core game files. This will change in the future, but for now, it's recommended that you only edit these files if you know what you are doing.</p>
+
+<h3>
+<a name="where-to-install" class="anchor" href="#where-to-install"><span class="octicon octicon-link"></span></a>Where to install</h3>
+
+<p>Copy all the files into a Mods file under your TUG installation. If you are using Steam, TUG is probably installed at C:\Program Files (x86)\Steam\Steamapps\common\TUG. Under this folder create a folder called 'Mods', if you already don't have one. Inside the Mods folder, create folder 'PointOfInterest' and copy all of this mods files under it.</p>
+
+<p>In addition to this, you have to edit the file \config\mods.txt and add it the following row below other similar lines:</p>
+
+<pre><code>  "Mods/PointOfInterest"
+</code></pre>
+
+<p>So that it looks something like:</p>
+
+<pre><code>Mods
+{
+  "Game/Survival"
+  "Game/Creative"
+  "Game/Core"
+  "Mods/PointOfInterest"
+}
+</code></pre>
+
+<p>In addition to this, you need to edit Survival.lua file at \Core\Scripts\Modes\Survival\Survival.lua. <strong>Don't do this unless you know what you are doing</strong>, as it might break your game. If it does that, installing the game from a fresh will make your game work again, but you might lose any changes you have done.</p>
+
+<p>Add the following lines to the end of Survival.lua or any other GameMode class you want to use the mod in:</p>
+
+<pre><code>---------------- PointOfInterest mods code starts here ----------------
+
+include("Scripts/PointOfInterestMain.lua")
+include("Scripts/UI/PointOfInterestConsoleUI.lua")
+
+ -- Register /commands
+Survival:RegisterSlashCommand("CreatePointOfInterest", "CreatePointOfInterest")
+Survival:RegisterSlashCommand("ListPointsOfInterest", "ListPointsOfInterest")
+Survival:RegisterSlashCommand("RemovePointOfInterest", "RemovePointOfInterest")
+Survival:RegisterSlashCommand("DistanceToPointOfInterest", "DistanceToPointOfInterest")
+Survival:RegisterSlashCommand("DirectionToPointOfInterest", "DirectionToPointOfInterest")
+
+-- Create methods for /commands
+function Survival:CreatePointOfInterest(args)
+  NKPrint("\nCreatePointOfInterest custom slash command was called\n")
+  if EternusEngine.PointOfInterestUI then
+    EternusEngine.PointOfInterestUI:CreatePointOfInterest(args)
+  end
+end
+
+function Survival:ListPointsOfInterest(args)
+  NKPrint("\nListPointsOfInterest custom slash command was called\n")
+  if EternusEngine.PointOfInterestUI then
+    EternusEngine.PointOfInterestUI:ListPointsOfInterest(args)
+  end
+end
+
+function Survival:RemovePointOfInterest(args)
+  NKPrint("\nRemovePointOfInterest custom slash command was called\n")
+  if EternusEngine.PointOfInterestUI then
+    EternusEngine.PointOfInterestUI:RemovePointOfInterest(args)
+  end
+end
+
+function Survival:DirectionToPointOfInterest(args)
+  NKPrint("\nDirectionToPointOfInterest custom slash command was called\n")
+  if EternusEngine.PointOfInterestUI then
+    EternusEngine.PointOfInterestUI:DirectionToPointOfInterest(args[1])
+  end
+end
+
+function Survival:DistanceToPointOfInterest(args)
+  NKPrint("\nDistanceToPointOfInterest custom slash command was called\n")
+  if EternusEngine.PointOfInterestUI then
+    EternusEngine.PointOfInterestUI:DistanceToPointOfInterest(args[1])
+  end
+end
+
+---------------- PointOfInterest mods code ends here ------------------
+</code></pre>
+        </section>
+
+        <footer>
+          Pointofinterest Mod is maintained by <a href="https://github.com/mercor-">mercor-</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
