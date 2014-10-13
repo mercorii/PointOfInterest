@@ -1,62 +1,90 @@
 --- @author Mercor 
 
 include("Scripts/Core/Common.lua")
-include("Scripts/PointOfInterester.lua")
 
-if PointOfInterestUI == nil then
-	PointOfInterestUI = EternusEngine.Class.Subclass("PointOfInterestUI")
+if PointOfInterestConsoleUI == nil then
+--	PointOfInterestConsoleUI = EternusEngine.ModScriptClass.Subclass("PointOfInterestConsoleUI")
+	PointOfInterestConsoleUI = EternusEngine.Class.Subclass("PointOfInterestConsoleUI")
 end
 
+-------------------------------------------------------------------------------
+function PointOfInterestConsoleUI:Constructor(  )
+  NKPrint("\n\nPointOfInterestConsoleUI:Constructor called\n\n")
+end
+
+
+-------------------------------------------------------------------------------
 --- Initialize UI.
-function PointOfInterestUI:Init()
+-- Called once from C++ at engine initialization time
+function PointOfInterestConsoleUI:Initialize()
+  NKPrint("\n\nPointOfInterestConsoleUI:Initialize called\n\n")
   
+end
+
+function PointOfInterestConsoleUI:Enter()
+  NKPrint("\n\nPointOfInterestConsoleUI:Enter called\n\n")
+  
+  PointOfInterestConsoleUI:RegisterSlashCommands()
+end
+
+function PointOfInterestConsoleUI:Leave()
+  NKPrint("\n\nPointOfInterestConsoleUI:Leave called\n\n")
+  -- do something
+end
+
+function PointOfInterestConsoleUI:RegisterSlashCommands()
+
+  -- if we haven't added the functions yet, add them now
+  if not Eternus.GameState.ListPointsOfInterest then
+
   -- Register /commands
---  Eternus.GameStatePlaying:RegisterSlashCommand("CreatePointOfInterest", "CreatePointOfInterest")
---  Eternus.GameStatePlaying:RegisterSlashCommand("ListPointsOfInterest", "ListPointsOfInterest")
---  Eternus.GameStatePlaying:RegisterSlashCommand("RemovePointOfInterest", "RemovePointOfInterest")
---  Eternus.GameStatePlaying:RegisterSlashCommand("DistanceToPointOfInterest", "DistanceToPointOfInterest")
---  Eternus.GameStatePlaying:RegisterSlashCommand("DirectionToPointOfInterest", "DirectionToPointOfInterest")
+    Eternus.GameState:RegisterSlashCommand("CreatePointOfInterest", "CreatePointOfInterest")
+    Eternus.GameState:RegisterSlashCommand("ListPointsOfInterest", "ListPointsOfInterest")
+    Eternus.GameState:RegisterSlashCommand("RemovePointOfInterest", "RemovePointOfInterest")
+    Eternus.GameState:RegisterSlashCommand("DistanceToPointOfInterest", "DistanceToPointOfInterest")
+    Eternus.GameState:RegisterSlashCommand("DirectionToPointOfInterest", "DirectionToPointOfInterest")
 
-  -- Create methods for /commands
---  function Eternus.GameState:CreatePointOfInterest(args)
---    NKPrint("\nCreatePointOfInterest custom slash command was called\n")
---    if EternusEngine.PointOfInterestUI then
---      EternusEngine.PointOfInterestUI:CreatePointOfInterest(args)
---    end
---  end
+    -- Create methods for /commands
+    function Eternus.GameState:CreatePointOfInterest(args)
+      NKPrint("\nCreatePointOfInterest custom slash command was called\n")
+      if EternusEngine.mods.PointOfInterest.ConsoleUI then
+        EternusEngine.mods.PointOfInterest.ConsoleUI:CreatePointOfInterest(args)
+      end
+    end
 
---  function Eternus.GameState:ListPointsOfInterest(args)
---    NKPrint("\nListPointsOfInterest custom slash command was called\n")
---    if EternusEngine.PointOfInterestUI then
---      EternusEngine.PointOfInterestUI:ListPointsOfInterest(args)
---    end
---  end
+    function Eternus.GameState:ListPointsOfInterest(args)
+      NKPrint("\nListPointsOfInterest custom slash command was called\n")
+      if EternusEngine.mods.PointOfInterest.ConsoleUI then
+        EternusEngine.mods.PointOfInterest.ConsoleUI:ListPointsOfInterest(args)
+      end
+    end
 
---  function Eternus.GameState:RemovePointOfInterest(args)
---    NKPrint("\nRemovePointOfInterest custom slash command was called\n")
---    if EternusEngine.PointOfInterestUI then
---      EternusEngine.PointOfInterestUI:RemovePointOfInterest(args)
---    end
---  end
+    function Eternus.GameState:RemovePointOfInterest(args)
+      NKPrint("\nRemovePointOfInterest custom slash command was called\n")
+      if EternusEngine.mods.PointOfInterest.ConsoleUI then
+        EternusEngine.mods.PointOfInterest.ConsoleUI:RemovePointOfInterest(args)
+      end
+    end
 
---  function Eternus.GameState:DirectionToPointOfInterest(args)
---    NKPrint("\nDirectionToPointOfInterest custom slash command was called\n")
---    if EternusEngine.PointOfInterestUI then
---      EternusEngine.PointOfInterestUI:DirectionToPointOfInterest(args[1])
---    end
---  end
+    function Eternus.GameState:DirectionToPointOfInterest(args)
+      NKPrint("\nDirectionToPointOfInterest custom slash command was called\n")
+      if EternusEngine.mods.PointOfInterest.ConsoleUI then
+        EternusEngine.mods.PointOfInterest.ConsoleUI:DirectionToPointOfInterest(args[1])
+      end
+    end
 
---  function Eternus.GameState:DistanceToPointOfInterest(args)
---    NKPrint("\nDistanceToPointOfInterest custom slash command was called\n")
---    if EternusEngine.PointOfInterestUI then
---      EternusEngine.PointOfInterestUI:DistanceToPointOfInterest(args[1])
---    end
---  end
+    function Eternus.GameState:DistanceToPointOfInterest(args)
+      NKPrint("\nDistanceToPointOfInterest custom slash command was called\n")
+      if EternusEngine.mods.PointOfInterest.ConsoleUI then
+        EternusEngine.mods.PointOfInterest.ConsoleUI:DistanceToPointOfInterest(args[1])
+      end
+    end
+  end
 end
 
 --- Helper function to write messages into the chat window.
 -- @param message Message to write to chat. Can be either a string or a table containing strings.
-function PointOfInterestUI:WriteMessageToChat(message)
+function PointOfInterestConsoleUI:WriteMessageToChat(message)
 
   --	local uiContainer = self.state:NKGetUIContainer()
 	local uiContainer = Eternus.GameStatePlaying:NKGetUIContainer()
@@ -64,23 +92,23 @@ function PointOfInterestUI:WriteMessageToChat(message)
   
   -- if message is actually table, expect its items to be strings and print them one at a time
   if type(message) == "table" then
-    NKPrint("\nPointOfInterestUI:WriteMessageToChat(message) called, was a table:")
+    NKPrint("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called, was a table:")
     for i, msg in ipairs(message) do
       NKPrint("\n" .. msg)
       miscUI:NKChatWindow_AddText(msg)
     end
     NKPrint("\n")
   else -- otherwise expect it to be string
-    NKPrint("\nPointOfInterestUI:WriteMessageToChat(message) called with message: \n" .. message)
+    NKPrint("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called with message: \n" .. message)
     miscUI:NKChatWindow_AddText(message)
   end
 end
 
 --- Creates a new PoI.
 -- @param args Table containing options for the new PoI.
-function PointOfInterestUI:CreatePointOfInterest(args)
+function PointOfInterestConsoleUI:CreatePointOfInterest(args)
   
-  NKPrint("\nPointOfInterestUI:CreatePointOfInterest(args) called\n")
+  NKPrint("\nPointOfInterestConsoleUI:CreatePointOfInterest(args) called\n")
   
   local title = nil
   local description = nil
@@ -104,7 +132,7 @@ function PointOfInterestUI:CreatePointOfInterest(args)
   local player = Eternus.GameState:GetLocalPlayer()
   local pos = player:NKGetPosition() -- player position
   
-  local poi = EternusEngine.PointOfInterester:CreatePointOfInterest(pos, radius, title, description, poiType)
+  local poi = EternusEngine.mods.PointOfInterest.Main:CreatePointOfInterest(pos, radius, title, description, poiType)
  
   if poi then
     self:WriteMessageToChat("PoI created: " .. poi:ToString())
@@ -115,11 +143,11 @@ end
 
 --- Removes point of interest.
 -- @param args Table that is supposed to contain the id of the PoI to be removed as its first item.
-function PointOfInterestUI:RemovePointOfInterest(args)
-  NKPrint("\nPointOfInterestUI:RemovePointOfInterest(args) called\n")
+function PointOfInterestConsoleUI:RemovePointOfInterest(args)
+  NKPrint("\nPointOfInterestConsoleUI:RemovePointOfInterest(args) called\n")
   
   if #args >= 1 then
-    if EternusEngine.PointOfInterester:RemovePointOfInterest(args[1]) then
+    if EternusEngine.mods.PointOfInterest.Main:RemovePointOfInterest(args[1]) then
       self:WriteMessageToChat("PoI " .. args[1] .. " succeeded\n")
     else
       self:WriteMessageToChat("PoI " .. args[1] .. " removal failed\n")
@@ -130,13 +158,13 @@ function PointOfInterestUI:RemovePointOfInterest(args)
 end
 
 --- List all PoIs.
-function PointOfInterestUI:ListPointsOfInterest(args)
-  NKPrint("\nPointOfInterestUI:ListPointsOfInterest(args) called\n")
+function PointOfInterestConsoleUI:ListPointsOfInterest(args)
+  NKPrint("\nPointOfInterestConsoleUI:ListPointsOfInterest(args) called\n")
   
   local pois = {}
   table.insert(pois, "PointsOfInterest: ")
   
-  for i, poi in ipairs(EternusEngine.PointOfInterester:GetPointsOfInterest()) do
+  for i, poi in ipairs(EternusEngine.mods.PointOfInterest.Main:GetPointsOfInterest()) do
     table.insert(pois, " [" .. poi.id .. "] " .. poi.title)
   end
 
@@ -145,31 +173,31 @@ end
 
 --- Writes distance of given PoI from the player to console.
 -- @param poiID ID of the PoI which distance from the player the method is about to print.
-function PointOfInterestUI:DistanceToPointOfInterest(poiID)
+function PointOfInterestConsoleUI:DistanceToPointOfInterest(poiID)
   if poiID == nil then
-    NKPrint("\n PointOfInterestUI:DistanceToPointOfInterest - no value given\n")
+    NKPrint("\n PointOfInterestConsoleUI:DistanceToPointOfInterest - no value given\n")
     return false
   end
   
-  local poi = EternusEngine.PointOfInterester:GetPointOfInterest(poiID)
+  local poi = EternusEngine.mods.PointOfInterest.Main:GetPointOfInterest(poiID)
   if poi then
     local distance = poi:DistanceTo(Eternus.GameState:GetLocalPlayer():NKGetPosition())
 --    self:WriteMessageToChat('Distance: ' .. string.format("%.2g", distance)) -- converts 0 to ~0.55
     self:WriteMessageToChat('Distance: ' .. distance)
   else 
-    NKPrint("\n PointOfInterestUI:DistanceToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
+    NKPrint("\n PointOfInterestConsoleUI:DistanceToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
   end
 end
 
 --- Writes direction of given PoI from the position of players forward vector to console.
 -- @param poiID ID of the PoI which direction from the player the method is about to print.
-function PointOfInterestUI:DirectionToPointOfInterest(poiID)
+function PointOfInterestConsoleUI:DirectionToPointOfInterest(poiID)
     if poiID == nil then
-    NKPrint("\n PointOfInterestUI:DirectionToPointOfInterest - no value given\n")
+    NKPrint("\n PointOfInterestConsoleUI:DirectionToPointOfInterest - no value given\n")
     return false
   end
   
-  local poi = EternusEngine.PointOfInterester:GetPointOfInterest(poiID)
+  local poi = EternusEngine.mods.PointOfInterest.Main:GetPointOfInterest(poiID)
   if poi then
     local direction = poi:DirectionFromInDegrees(Eternus.GameState:GetLocalPlayer():NKGetPosition())
     local string = ""
@@ -182,10 +210,10 @@ function PointOfInterestUI:DirectionToPointOfInterest(poiID)
     end
     self:WriteMessageToChat(string)
   else 
-    NKPrint("\n PointOfInterestUI:DirectionToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
+    NKPrint("\n PointOfInterestConsoleUI:DirectionToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
   end
 end
 
-EternusEngine.PointOfInterestUI = PointOfInterestUI.new()
-
-EternusEngine.PointOfInterestUI:Init()
+if EternusEngine.mods.PointOfInterest.ConsoleUI == nil then
+  EternusEngine.mods.PointOfInterest.ConsoleUI = PointOfInterestConsoleUI.new()
+end

@@ -1,37 +1,69 @@
---- @author Mercor 
+--- @author Mercor
 
 include("Scripts/Core/Common.lua")
 
 -- The main file for the Point Of Interest mod. Does most of the work.
 
-if PointOfInterester == nil then
-	PointOfInterester = EternusEngine.Class.Subclass("PointOfInterester")
+if PointOfInterestMain == nil then
+	PointOfInterestMain = EternusEngine.Class.Subclass("PointOfInterestMain")
 end
 
-PointOfInterester.MAX_VISIBLE_DISTANCE = 1000 -- TODO: this should be some better number
+-------------------------------------------------------------------------------
+function PointOfInterestMain:Constructor(  )
 
--- allowed PoI types -- TODO: this should probably come from a config file or something, probably not from gameobjects data file.
-PointOfInterester.poiTypes = {
-                    {name = "normal", description = ""},
-                    {name = "danger"},
-                    {name = "building"},
-                    {name = "altar"},
-                    {name = "resource"}
-}
+end
 
-PointOfInterester.defaultType = PointOfInterester.poiTypes[1].name -- PoI always has type, users can add new types (acts like category)
-PointOfInterester.defaultTitle = "Point of Interest" -- PoI always has title, even if only default one
-PointOfInterester.defaultDescription = "" -- PoI can contain description, that UI can show if it likes to do so
-PointOfInterester.defaultDiscovered = true -- if PoI has been discovered or not (like skyrim full vs bordered location icon)
 
-PointOfInterester.nextID = 1 -- id for the next PoI
-PointOfInterester.pointsOfInterest = {} -- where we hold all PoIs
+-------------------------------------------------------------------------------
+-- Called once from C++ at engine initialization time
+function PointOfInterestMain:Initialize()
+  
+  PointOfInterestMain.MAX_VISIBLE_DISTANCE = 1000 -- TODO: this should be some better number
+
+  -- allowed PoI types -- TODO: this should probably come from a config file or something, probably not from gameobjects data file.
+  PointOfInterestMain.poiTypes = {
+                      {name = "normal", description = ""},
+                      {name = "danger"},
+                      {name = "building"},
+                      {name = "altar"},
+                      {name = "resource"}
+  }
+
+  PointOfInterestMain.defaultType = PointOfInterestMain.poiTypes[1].name -- PoI always has type, users can add new types (acts like category)
+  PointOfInterestMain.defaultTitle = "Point of Interest" -- PoI always has title, even if only default one
+  PointOfInterestMain.defaultDescription = "" -- PoI can contain description, that UI can show if it likes to do so
+  PointOfInterestMain.defaultDiscovered = true -- if PoI has been discovered or not (like skyrim full vs bordered location icon)
+end
+
+-------------------------------------------------------------------------------
+-- Called from C++ when the current game enters 
+function PointOfInterestMain:Enter()	
+--  PointOfInterestMain.nextID = 1 -- id for the next PoI
+--  PointOfInterestMain.pointsOfInterest = {} -- where we hold all PoIs
+
+-- Call load data only if no data is available (mainly, call load data only when gameplay starts first time, not when returning from paused state)
+  if not PointOfInterestMain.nextID then
+    PointOfInterestMain:LoadData()
+  end
+end
+
+-------------------------------------------------------------------------------
+-- Called from C++ when the game leaves it current mode
+function PointOfInterestMain:Leave()
+    PointOfInterestMain:SaveData()
+end
+
+-------------------------------------------------------------------------------
+-- Called from C++ every update tick
+function PointOfInterestMain:Process(dt)
+  -- do something
+end
 
 --- Returns PoI with id poiID.
 -- @param poiID Id of PoI to return.
-function PointOfInterester:GetPointOfInterest(poiID)
+function PointOfInterestMain:GetPointOfInterest(poiID)
   for i, poi in ipairs(self.pointsOfInterest) do
-    NKPrint("\n PointOfInterester:GetPointOfInterest - id: " .. poi.id .. ", poiID: " .. tostring(poiID) .. "\n")
+    NKPrint("\n PointOfInterestMain:GetPointOfInterest - id: " .. poi.id .. ", poiID: " .. tostring(poiID) .. "\n")
     if tostring(poi.id) == poiID then
       return poi
     end
@@ -47,13 +79,13 @@ end
 -- @param description Longer description for PoI.
 -- @param poiType Type of PoI. Can be used to differentiate between different types of PoIs.
 -- @param discovered Whether or not PoI is discovered and visible, or still to be found and hidden.
-function PointOfInterester:CreatePointOfInterest(pos, radius, title, description, poiType, discovered)
-  NKPrint("\nPointOfInterester:CreatePointOfInterest()\n")
+function PointOfInterestMain:CreatePointOfInterest(pos, radius, title, description, poiType, discovered)
+  NKPrint("\nPointOfInterestMain:CreatePointOfInterest()\n")
   
   local poi = self:SpawnPointOfInterest(pos)
 
   if poi then
-    NKPrint("\nPointOfInterester:CreatePointOfInterest(): new PoI created\n")
+    NKPrint("\nPointOfInterestMain:CreatePointOfInterest(): new PoI created\n")
 
     poi.radius = (radius and radius or 1)
 
@@ -76,7 +108,7 @@ end
 --- Remove the item from the list and delete the related gameobject.
 -- Returns true if it succeeded in removing the item, false otherwise.
 -- @param id The PoI to remove.
-function PointOfInterester:RemovePointOfInterest(id)
+function PointOfInterestMain:RemovePointOfInterest(id)
   NKPrint("\nPointOfInterestUI:RemovePointOfInterest(id) called\n")
   
   for i, poi in ipairs(self.pointsOfInterest) do
@@ -92,7 +124,7 @@ function PointOfInterester:RemovePointOfInterest(id)
 end
 
 --- Return list of PoIs to the caller.
-function PointOfInterester:GetPointsOfInterest()
+function PointOfInterestMain:GetPointsOfInterest()
   NKPrint("\nPointOfInterestUI:GetPointsOfInterest() called\n")
   
   local pois = self.pointsOfInterest
@@ -106,7 +138,7 @@ end
 
 --- Check if certain PoI type is in the list of allowed types.
 -- @param poiTypeToCheck PoI type to check.
-function PointOfInterester:PoITypeAllowed(poiTypeToCheck)
+function PointOfInterestMain:PoITypeAllowed(poiTypeToCheck)
   NKPrint("\nPointOfInterestUI:PoITypeAllowed(poiTypeToCheck) called\n")
   
   for i, poiType in ipairs(self.poiTypes) do
@@ -121,12 +153,12 @@ end
 -- Copied from Modes/TUGGameMode.lua.
 -- @param position Position of the gameobject.
 -- @param rotation Roration of the gameobject. Not used for now.
-function PointOfInterester:SpawnPointOfInterest( position, rotation )
-  NKPrint("\nPointOfInterester:SpawnPointOfInterest( position, rotation ) called\n")
-	local obj = Eternus.GameObjectSystem:cCreateGameObject("PointOfInterest", true)
+function PointOfInterestMain:SpawnPointOfInterest( position, rotation )
+  NKPrint("\nPointOfInterestMain:SpawnPointOfInterest( position, rotation ) called\n")
+	local obj = Eternus.GameObjectSystem:NKCreateGameObject("PointOfInterest", true)
   
   if obj then
-    NKPrint("\nPointOfInterester:SpawnPointOfInterest - succeeded in creating PointOfInterest \n")
+    NKPrint("\nPointOfInterestMain:SpawnPointOfInterest - succeeded in creating PointOfInterest \n")
     
     obj:NKSetShouldRender(false, false)
     obj:NKSetPosition(position, false)
@@ -137,14 +169,14 @@ function PointOfInterester:SpawnPointOfInterest( position, rotation )
 
     return obj:NKGetInstance() -- you need to do this for now. Will be no more required after 0.6.6 or 0.6.7, hopefully
   else
-    NKPrint("\nPointOfInterester:SpawnPointOfInterest - failed creating PointOfInterest \n")
+    NKPrint("\nPointOfInterestMain:SpawnPointOfInterest - failed creating PointOfInterest \n")
     return nil
   end
 end
 
 --- Method called by PoI when it's near player.
 -- @param poi The acking PoI itself
-function PointOfInterester:InRangePoIAcking( poi )
+function PointOfInterestMain:InRangePoIAcking( poi )
   NKPrint("\nPointOfInterestUI:InRangePoIAcking( poi ) called\n")
 end
 
@@ -152,7 +184,7 @@ end
 -- To be implemented.
 -- @param posFrom First position - a place from where to calculate the direction.
 -- @param posTo Second position - a place of which direction is to be calculated in relation to the first position.
-function PointOfInterester:calculateDirection(posFrom, posTo)
+function PointOfInterestMain:calculateDirection(posFrom, posTo)
   local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
   return math.atan2(posFrom:z() - posTo:z() , posFrom:x() - posTo:x()) - math.atan2(fwd:z(), fwd:x())
 end
@@ -162,7 +194,7 @@ end
 -- @param posFrom First position - a place from where to calculate the direction.
 -- @param posTo Second position - a place of which direction is to be calculated in relation to the first position.
 -- @return number.
-function PointOfInterester:calculateDirectionInDegrees(posFrom, posTo)
+function PointOfInterestMain:calculateDirectionInDegrees(posFrom, posTo)
   local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
   return math.deg(math.atan2(posFrom:z() - posTo:z() , posFrom:x() - posTo:x()) - math.atan2(fwd:z(), fwd:x()))
 end
@@ -171,7 +203,7 @@ end
 -- @param posFrom First position.
 -- @param posTo Second position.
 -- @return number.
-function PointOfInterester:calculateDistance(posFrom, posTo)
+function PointOfInterestMain:calculateDistance(posFrom, posTo)
   return math.abs((posFrom - posTo):NKLength())
 end
 
@@ -179,8 +211,8 @@ end
 -- @param pos Position in relation to which we are calculating PoI's direction and distance.
 -- @param poi PoI of which direction and distance from pos we are calculating.
 -- @return table.
-function PointOfInterester:calculatePoIDirectionDistance(pos, poi)
-  NKPrint("\nPointOfInterester:calculatePoIDirectionDistance(pos, poi) called\n")
+function PointOfInterestMain:calculatePoIDirectionDistance(pos, poi)
+  NKPrint("\nPointOfInterestMain:calculatePoIDirectionDistance(pos, poi) called\n")
   
   local dirDis = {}
   
@@ -189,7 +221,7 @@ function PointOfInterester:calculatePoIDirectionDistance(pos, poi)
   -- calculate distance between player and PoI
   dirDis.distance = self:calculateDistance(poiPos, pos)
     
---  if dirDis.distance > PointOfInterester.MAX_VISIBLE_DISTANCE + 100 then
+--  if dirDis.distance > PointOfInterestMain.MAX_VISIBLE_DISTANCE + 100 then
 --      return false -- means it should be deleted from the list as it's too far to be worth following for now
 --  end
 
@@ -202,8 +234,8 @@ end
 --- Calculate direction and distance from pos to PoI positions.
 -- @param pos Position in relation to which we are calculating PoIs' directions and distances.
 -- @return table.
-function PointOfInterester:calculateAllPoIDirectionDistance(pos)
-  NKPrint("\nPointOfInterester:calculateAllPoIDirectionDistance(pos) called\n")
+function PointOfInterestMain:calculateAllPoIDirectionDistance(pos)
+  NKPrint("\nPointOfInterestMain:calculateAllPoIDirectionDistance(pos) called\n")
   
   local pois = {}
   
@@ -222,14 +254,18 @@ end
 
 --- Load data from a file.
 -- Not yet implemented.
-function PointOfInterester:LoadData()
-  NKPrint("\nPointOfInterester:LoadData()\n")
+function PointOfInterestMain:LoadData()
+  NKPrint("\nPointOfInterestMain:LoadData()\n")
+  PointOfInterestMain.nextID = 1
+  PointOfInterestMain.pointsOfInterest = {}
 end
 
 --- Save data to a file.
 -- Not yet implemented.
-function PointOfInterester:SaveData()
-  NKPrint("\nPointOfInterester:SaveData()\n")
+function PointOfInterestMain:SaveData()
+  NKPrint("\nPointOfInterestMain:SaveData()\n")
 end
 
-EternusEngine.PointOfInterester = PointOfInterester.new()
+if EternusEngine.mods.PointOfInterest.Main == nil then
+  EternusEngine.mods.PointOfInterest.Main = PointOfInterestMain.new()
+end

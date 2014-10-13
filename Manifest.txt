@@ -8,5 +8,11 @@ Manifest
 
   # Versioning
   MajorVersion = 0
-  MinorVersion = 0
+  MinorVersion = 1
+  
+  # The file path to the script that is the entry point.
+	ScriptFile = "Scripts/PointOfInterestMod.lua"
+  
+	# The script entry point class name
+	ScriptClass = "PointOfInterestMod"
 }

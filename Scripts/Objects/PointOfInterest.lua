@@ -10,8 +10,6 @@ end
 -------------------------------------------------------------------------------
 function PointOfInterest:Constructor(args)
   NKPrint("\n\nPointOfInterest:Constructor\n\n")
---  include("Scripts/Mods/PointOfInterester.lua")
---  include("Scripts/Mods/PointOfInterestUI.lua")
 end
 
 -------------------------------------------------------------------------------
@@ -35,37 +33,37 @@ end
 --- Event that is called when system is trying to calculate wich of the PoIs are inside n units perimeter from the player.
 -- When the method is called, PoI will report itself to the main class by calling its InRangePoIAcking method.
 function PointOfInterest:Event_CallingAllPoI()
-    EternusEngine.PointOfInterester:InRangePoIAcking(self)
+    EternusEngine.mods.PointOfInterest.Main:InRangePoIAcking(self)
 end
 
 -------------------------------------------------------------------------------
 --- Distance between pos and PointOfInterest.
 function PointOfInterest:DistanceTo(pos)
-  return EternusEngine.PointOfInterester:calculateDistance(pos, self:NKGetPosition())
+  return EternusEngine.mods.PointOfInterest.Main:calculateDistance(pos, self:NKGetPosition())
 end
 
 -------------------------------------------------------------------------------
 --- Where pos is from the direction of PointOfInterest.
 function PointOfInterest:DirectionTo(pos)
-  return EternusEngine.PointOfInterester:calculateDirection(pos, self:NKGetPosition())
+  return EternusEngine.mods.PointOfInterest.Main:calculateDirection(pos, self:NKGetPosition())
 end
 
 -------------------------------------------------------------------------------
 --- Where PointOfInterest is from the direction of pos.
 function PointOfInterest:DirectionFrom(pos)
-  return EternusEngine.PointOfInterester:calculateDirection(self:NKGetPosition(), pos)
+  return EternusEngine.mods.PointOfInterest.Main:calculateDirection(self:NKGetPosition(), pos)
 end
 
 -------------------------------------------------------------------------------
 --- Where pos is from the direction of PointOfInterest.
 function PointOfInterest:DirectionToInDegrees(pos)
-  return EternusEngine.PointOfInterester:calculateDirectionInDegrees(pos, self:NKGetPosition())
+  return EternusEngine.mods.PointOfInterest.Main:calculateDirectionInDegrees(pos, self:NKGetPosition())
 end
 
 -------------------------------------------------------------------------------
 --- Where PointOfInterest is from the direction of pos.
 function PointOfInterest:DirectionFromInDegrees(pos)
-  return EternusEngine.PointOfInterester:calculateDirectionInDegrees(self:NKGetPosition(), pos)
+  return EternusEngine.mods.PointOfInterest.Main:calculateDirectionInDegrees(self:NKGetPosition(), pos)
 end
 
 -------------------------------------------------------------------------------
