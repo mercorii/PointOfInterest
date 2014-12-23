@@ -1,0 +1,3 @@
+<Imageset autoScaled="" imagefile="CL.png" name="PointOfInterest" nativeHorzRes="1920" nativeVertRes="1080" version="2">
+    <Image height="184" width="267" name="CompassBG" xPos="0" yPos="0" />
+</Imageset>
