@@ -1,3 +1,5 @@
+--- @author Mercor
+
 include("Scripts/Core/Common.lua")
 include("Scripts/Core/View.lua")
 
