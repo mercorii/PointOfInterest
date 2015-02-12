@@ -1,4 +1,4 @@
---- @author Mercor 
+--- @author Mercor
 
 include("Scripts/Core/Common.lua")
 
@@ -20,9 +20,10 @@ end
 function PointOfInterest:Spawn()
   NKPrint("PointOfInterest:Spawn() called")
 end
- 
+
 -------------------------------------------------------------------------------
 function PointOfInterest:Despawn()
+  NKPrint("PointOfInterest:Despawn() called")
 end
 
 -------------------------------------------------------------------------------
@@ -64,6 +65,38 @@ end
 --- Where PointOfInterest is from the direction of pos.
 function PointOfInterest:DirectionFromInDegrees(pos)
   return EternusEngine.mods.PointOfInterest.Main:calculateDirectionInDegrees(self:NKGetPosition(), pos)
+end
+
+-------------------------------------------------------------------------------
+-- Save function for GameObject
+function PointOfInterest:Save(outData)
+	NKPrint("PointOfInterest:Save() called")
+	PointOfInterest.__super.Save(self, outData) -- only Object classes need to implement this (do not add this to mixins!)
+
+	outData.id = self.id
+	outData.title = self.title
+	outData.type = self.type
+	outData.description = self.description
+	outData.discovered = self.discovered
+end
+
+-------------------------------------------------------------------------------
+-- Load data function for GameObject
+function PointOfInterest:Restore(inData, version)
+	NKPrint("PointOfInterest:Restore() called")
+	PointOfInterest.__super.Restore(self, inData) -- only Object classes need to implement this (do not add this to mixins!)
+
+	self.id = inData.id
+	self.title = inData.title
+  self.type = inData.type
+  self.description = inData.description
+  self.discovered = inData.discovered
+	self.m_restored = true -- set the m_restored to true (used internally)
+
+	-- TODO: call PointOfInterestMain and tell about the existence of this PoI
+	if EternusEngine.mods and EternusEngine.mods.PointOfInterest and EternusEngine.mods.PointOfInterest.Main then
+		EternusEngine.mods.PointOfInterest.Main:RestorePointOfInterest(self)
+	end
 end
 
 -------------------------------------------------------------------------------

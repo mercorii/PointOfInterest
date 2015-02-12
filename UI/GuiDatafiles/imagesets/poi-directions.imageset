@@ -1,0 +1,6 @@
+<Imageset autoScaled="false" imagefile="poi-directions.png" name="PoI-Directions" nativeHorzRes="31" nativeVertRes="62" version="2">
+    <Image height="18" name="east" width="11" xPos="18" yPos="42" />
+    <Image height="18" name="north" width="18" xPos="2" yPos="22" />
+    <Image height="18" name="south" width="14" xPos="2" yPos="42" />
+    <Image height="18" name="west" width="26" xPos="2" yPos="2" />
+</Imageset>

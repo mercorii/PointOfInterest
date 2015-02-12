@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GUILayout version="4" >
+    <Window type="DefaultWindow" name="PointOfInterestCompassLayout" >
+        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+<!--        <Property name="MousePassThroughEnabled" value="true" /> -->
+<!--        <Property name="DistributeCapturedInputs" value="true" /> -->
+<!--        <Property name="MouseInputPropagationEnabled" value="true" /> -->
+        <Property name="BackgroundEnabled" value="false" />
+        <Window type="TUGLook/StaticImage" name="Compass" >
+            <Property name="Area" value="{{0,0},{0.03,0},{0,530},{0.03,73}}" />
+            <Property name="Image" value="PoI-Compass/compass_bar" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="FrameEnabled" value="false" />
+            <Property name="DragDropTarget" value="false" />
+            <Property name="BackgroundEnabled" value="false" />
+            <Property name="HorizontalAlignment" value="Centre" />
+            <Property name="MousePassThroughEnabled" value="true" />
+            <Property name="DistributeCapturedInputs" value="true" />
+            <Property name="RiseOnClickEnabled" value="false" />
+            <Property name="MouseInputPropagationEnabled" value="true" />
+            <Window type="TUGLook/StaticImage" name="North" >
+                <Property name="Area" value="{{-1,0},{0,0},{-1,18},{0,18}}" />
+                <Property name="Image" value="PoI-Directions/north" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="AspectMode" value="Expand" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Property name="VerticalAlignment" value="Centre" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window type="TUGLook/StaticImage" name="East" >
+                <Property name="Area" value="{{-1,0},{0,0},{-1,11},{0,18}}" />
+                <Property name="Image" value="PoI-Directions/east" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Property name="VerticalAlignment" value="Centre" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window type="TUGLook/StaticImage" name="South" >
+                <Property name="Area" value="{{-1,0},{0,0},{-1,14},{0,18}}" />
+                <Property name="Image" value="PoI-Directions/south" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Property name="VerticalAlignment" value="Centre" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window type="TUGLook/StaticImage" name="West" >
+                <Property name="Area" value="{{-1,0},{0,0},{-1,26},{0,18}}" />
+                <Property name="Image" value="PoI-Directions/west" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Property name="VerticalAlignment" value="Centre" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+            <Window type="TUGLook/StaticImage" name="Radar" >
+              <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+              <Property name="MaxSize" value="{{1,0},{1,0}}" />
+              <Property name="FrameEnabled" value="false" />
+              <Property name="BackgroundEnabled" value="false" />
+              <Window type="TUGLook/StaticImage" name="PoI Item" >
+                  <Property name="Area" value="{{-1,0},{0,0},{-1,26},{0,26}}" />
+                  <Property name="Image" value="PoI-Icons/forest" />
+                  <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                  <Property name="FrameEnabled" value="false" />
+                  <Property name="BackgroundEnabled" value="false" />
+                  <Property name="VerticalAlignment" value="Centre" />
+                  <Property name="HorizontalAlignment" value="Centre" />
+              </Window>
+            </Window>
+            <Window type="TUGLook/ImageButton" name="PoI Button" >
+                <Property name="Area" value="{{0.947,0},{0,0},{0.947,35},{0,35}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="Text" value="      " />
+                <Property name="AspectMode" value="Expand" />
+                <Property name="HoverImage" value="PoI-Compass/compass_gem" />
+                <Property name="NormalImage" value="PoI-Compass/compass_gem" />
+                <Property name="PushedImage" value="PoI-Compass/compass_gem" />
+                <Property name="DisabledImage" value="PoI-Compass/compass_gem" />
+                <Property name="ClippedByParent" value="false" />
+                <Property name="VerticalAlignment" value="Centre" />
+            </Window>
+        </Window>
+    </Window>
+</GUILayout>

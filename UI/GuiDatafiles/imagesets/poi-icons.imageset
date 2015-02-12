@@ -1,0 +1,7 @@
+<Imageset autoScaled="false" imagefile="poi-icons.png" name="PoI-Icons" nativeHorzRes="30" nativeVertRes="125" version="2">
+    <Image height="26" name="forest" width="26" xPos="2" yPos="2" />
+    <Image height="23" name="lighthouse" width="24" xPos="2" yPos="78" />
+    <Image height="25" name="panda" width="24" xPos="2" yPos="51" />
+    <Image height="19" name="sheep" width="25" xPos="2" yPos="30" />
+    <Image height="20" name="triforce" width="24" xPos="2" yPos="103" />
+</Imageset>

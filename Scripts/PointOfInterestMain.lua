@@ -17,7 +17,7 @@ end
 -------------------------------------------------------------------------------
 -- Called once from C++ at engine initialization time
 function PointOfInterestMain:Initialize()
-  
+
   PointOfInterestMain.MAX_VISIBLE_DISTANCE = 1000 -- TODO: this should be some better number
 
   -- allowed PoI types -- TODO: this should probably come from a config file or something, probably not from gameobjects data file.
@@ -33,18 +33,23 @@ function PointOfInterestMain:Initialize()
   PointOfInterestMain.defaultTitle = "Point of Interest" -- PoI always has title, even if only default one
   PointOfInterestMain.defaultDescription = "" -- PoI can contain description, that UI can show if it likes to do so
   PointOfInterestMain.defaultDiscovered = true -- if PoI has been discovered or not (like skyrim full vs bordered location icon)
+
+	PointOfInterestMain.previousPos = nil -- used to refresh poi distances after traveling n units
 end
 
 -------------------------------------------------------------------------------
--- Called from C++ when the current game enters 
-function PointOfInterestMain:Enter()	
---  PointOfInterestMain.nextID = 1 -- id for the next PoI
---  PointOfInterestMain.pointsOfInterest = {} -- where we hold all PoIs
+-- Called from C++ when the current game enters
+function PointOfInterestMain:Enter()
 
 -- Call load data only if no data is available (mainly, call load data only when gameplay starts first time, not when returning from paused state)
   if not PointOfInterestMain.nextID then
     PointOfInterestMain:LoadData()
   end
+
+	local currentPos = Eternus.GameState:GetLocalPlayer():NKGetPosition()
+	if PointOfInterestMain.previousPos == nil then
+		PointOfInterestMain.previousPos = currentPos
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -56,7 +61,15 @@ end
 -------------------------------------------------------------------------------
 -- Called from C++ every update tick
 function PointOfInterestMain:Process(dt)
-  -- do something
+  -- TODO: calculate distance to previous calculation point, if distance is more than n units, recalculate distance to all PoIs
+	local currentPos = Eternus.GameState:GetLocalPlayer():NKGetPosition()
+	local recalcDistance	= 10
+
+	if PointOfInterestMain:calculateDistance(PointOfInterestMain.previousPos, currentPos) > recalcDistance then
+		PointOfInterestMain.previousPos = currentPos
+		PointOfInterestMain:calculateAllPoIDistance(currentPos)
+	end
+
 end
 
 --- Returns PoI with id poiID.
@@ -81,7 +94,7 @@ end
 -- @param discovered Whether or not PoI is discovered and visible, or still to be found and hidden.
 function PointOfInterestMain:CreatePointOfInterest(pos, radius, title, description, poiType, discovered)
   NKPrint("\nPointOfInterestMain:CreatePointOfInterest()\n")
-  
+
   local poi = self:SpawnPointOfInterest(pos)
 
   if poi then
@@ -91,17 +104,24 @@ function PointOfInterestMain:CreatePointOfInterest(pos, radius, title, descripti
 
     poi.title = (title and title or self.defaultTitle)
     poi.description = (description and description or self.defaultDescription)
-  
+
     poi.type = (self:PoITypeAllowed(poiType) and poiType or self.defaultType)
-  
+
     poi.discovered = (discovered and discovered or self.defaultDiscovered)
 
     poi.id = self.nextID
     self.nextID = self.nextID + 1
-  
-    self.pointsOfInterest[#self.pointsOfInterest+1] = poi    
+
+    self.pointsOfInterest[#self.pointsOfInterest+1] = poi
+
+		-- let listeners know:
+		-- fire item added event
+		-- for now, just tell poiCompass
+		if EternusEngine.mods.PointOfInterest.CompassUI then
+			EternusEngine.mods.PointOfInterest.CompassUI:Event_PoIAdded(poi)
+		end
   end
-  
+
   return poi
 end
 
@@ -110,7 +130,7 @@ end
 -- @param id The PoI to remove.
 function PointOfInterestMain:RemovePointOfInterest(id)
   NKPrint("\nPointOfInterestUI:RemovePointOfInterest(id) called\n")
-  
+
   for i, poi in ipairs(self.pointsOfInterest) do
     if poi.id == id then
        -- remove it from the list
@@ -126,21 +146,29 @@ end
 --- Return list of PoIs to the caller.
 function PointOfInterestMain:GetPointsOfInterest()
   NKPrint("\nPointOfInterestUI:GetPointsOfInterest() called\n")
-  
+
   local pois = self.pointsOfInterest
-  
+
   -- each PoI's location is converted to a current distance.. or that probably needs to be done every tick, so it should probably happen somewhere else
-  
+
   --local inPos = self.currentState.m_activeCamera:NKGetLocation() + (self.currentState.m_activeCamera:ForwardVector() * vec3.new(playerHeight))
-  
+
   return pois
+end
+
+
+-- PoI gameobjects call this on restore, in order to make their existence known.
+function PointOfInterestMain:RestorePointOfInterest(poi)
+	if self:GetPointOfInterest(self.pointsOfInterest, poi.id) ~= true then
+	  self.pointsOfInterest[#self.pointsOfInterest+1] = poi
+  end
 end
 
 --- Check if certain PoI type is in the list of allowed types.
 -- @param poiTypeToCheck PoI type to check.
 function PointOfInterestMain:PoITypeAllowed(poiTypeToCheck)
   NKPrint("\nPointOfInterestUI:PoITypeAllowed(poiTypeToCheck) called\n")
-  
+
   for i, poiType in ipairs(self.poiTypes) do
     if poiType.name == poiTypeToCheck then
       return true
@@ -156,15 +184,15 @@ end
 function PointOfInterestMain:SpawnPointOfInterest( position, rotation )
   NKPrint("\nPointOfInterestMain:SpawnPointOfInterest( position, rotation ) called\n")
 	local obj = Eternus.GameObjectSystem:NKCreateGameObject("PointOfInterest", true)
-  
+
   if obj then
     NKPrint("\nPointOfInterestMain:SpawnPointOfInterest - succeeded in creating PointOfInterest \n")
-    
+
     obj:NKSetShouldRender(false, false)
     obj:NKSetPosition(position, false)
 --	poi:NKSetRotation(rotation)  -- it doesn't move so rotation shouldn't matter, there's probably default value
     obj:NKPlaceInWorld(false, false, false)
-  
+
 --    poi:Init(self)
 
     return obj:NKGetInstance() -- you need to do this for now. Will be no more required after 0.6.6 or 0.6.7, hopefully
@@ -190,7 +218,6 @@ function PointOfInterestMain:calculateDirection(posFrom, posTo)
 end
 
 --- Calculate a direction (in degrees) from first position to a second position.
--- To be implemented.
 -- @param posFrom First position - a place from where to calculate the direction.
 -- @param posTo Second position - a place of which direction is to be calculated in relation to the first position.
 -- @return number.
@@ -212,45 +239,65 @@ end
 -- @param poi PoI of which direction and distance from pos we are calculating.
 -- @return table.
 function PointOfInterestMain:calculatePoIDirectionDistance(pos, poi)
-  NKPrint("\nPointOfInterestMain:calculatePoIDirectionDistance(pos, poi) called\n")
-  
+--  NKPrint("\nPointOfInterestMain:calculatePoIDirectionDistance(pos, poi) called\n")
+
   local dirDis = {}
-  
+
   local poiPos = poi:NKGetPosition() -- PoI position
-  
+
   -- calculate distance between player and PoI
   dirDis.distance = self:calculateDistance(poiPos, pos)
-    
+
 --  if dirDis.distance > PointOfInterestMain.MAX_VISIBLE_DISTANCE + 100 then
 --      return false -- means it should be deleted from the list as it's too far to be worth following for now
 --  end
 
   -- calculate direction from player to PoI
-  dirDis.direction = self:calculateDirection(pos, poiPos)
+  dirDis.direction = self:calculateDirection(poiPos, pos)
   return dirDis
-  
+
 end
 
 --- Calculate direction and distance from pos to PoI positions.
 -- @param pos Position in relation to which we are calculating PoIs' directions and distances.
 -- @return table.
 function PointOfInterestMain:calculateAllPoIDirectionDistance(pos)
-  NKPrint("\nPointOfInterestMain:calculateAllPoIDirectionDistance(pos) called\n")
-  
+--  NKPrint("\nPointOfInterestMain:calculateAllPoIDirectionDistance(pos) called\n")
+
   local pois = {}
-  
+
   for i, poi in ipairs(self.pointsOfInterest) do
-    local dirDis = self:calculatePoIDirectinDistance(pos, poi)
+    local dirDis = self:calculatePoIDirectionDistance(pos, poi)
     if dirDis then
-      table.insert(pois, { obj = poi, 
-                  direction = dirDis.direction, 
+      table.insert(pois, { obj = poi,
+                  direction = dirDis.direction,
                   distance = dirDis.distance
                 })
     end
   end
-  
+	return pois
 end
 
+--- Calculate distance from pos to all PoI positions.
+-- @param pos Position in relation to which we are calculating PoIs' directions and distances.
+-- @return table.
+function PointOfInterestMain:calculateAllPoIDistance(pos)
+--	NKPrint("\nPointOfInterestMain:calculateAllPoIDistance(pos) called\n")
+
+	local pois = {}
+	local dis = nil
+
+	for i, poi in ipairs(self.pointsOfInterest) do
+		dis = self:calculateDistance(pos, poi:NKGetPosition())
+		if dis then
+			table.insert(pois, { obj = poi,
+									distance = dis
+								})
+		end
+	end
+	--TODO: sort table according to distance from player
+	return pois
+end
 
 --- Load data from a file.
 -- Not yet implemented.

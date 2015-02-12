@@ -1,5 +1,4 @@
--- The idea of this file is just to be the entry point for the mod.
--- In ideal world this file wouldn't be needed.
+--- @author Mercor
 
 include("Scripts/Core/Common.lua")
 
@@ -17,22 +16,27 @@ end
 if EternusEngine.mods.PointOfInterest == nil then
   EternusEngine.mods.PointOfInterest = {}
 end
--------------------------------------------------------------------------------
+
 
 -------------------------------------------------------------------------------
 -- Include mod files
 include("Scripts/PointOfInterestMain.lua")
 include("Scripts/UI/PointOfInterestConsoleUI.lua")
+include("Scripts/UI/PointOfInterestCompass.lua")
 
 -------------------------------------------------------------------------------
 -- This is called on .new() ?
 function PointOfInterestMod:Constructor(  )
-		CEGUI.SchemeManager:getSingleton():createFromFile("PointOfInterest.scheme")
+	NKPrint("PointOfInterestMod:Constructor was just called.....\n")
+
+	-- Load CEGUI scheme
+	CEGUI.SchemeManager:getSingleton():createFromFile("PointOfInterest.scheme")
 end
 
 -------------------------------------------------------------------------------
 -- Called once from C++ at engine initialization time
 function PointOfInterestMod:Initialize()
+	NKPrint("PointOfInterestMod:Initialize was just called.....\n")
   self.useConsole = true
 
   EternusEngine.mods.PointOfInterest.Main:Initialize()
@@ -42,14 +46,24 @@ function PointOfInterestMod:Initialize()
   end
 
 	-- use ui
-	self.cl_debuggingBox = CL_DebuggingBox.new("SurvivalLayout.layout")
-	self.cl_debuggingBox:SetPosition(0.8, 0.0)
-	self.cl_debuggingBox:SetSize(0.2, 0.2)
-	self.cl_debuggingBox:SetText("Here! I'm over here! Notice me!")
+	self.m_pointOfInterestCompassView = PointOfInterestCompass.new("PointOfInterestCompassLayout.layout")
+	EternusEngine.mods.PointOfInterest.CompassUI = self.m_pointOfInterestCompassView
+
+	if self.useConsole then
+		EternusEngine.mods.PointOfInterest.ConsoleUI:SetupInputSystem()
+	end
+end
+
+function PointOfInterestMod:SetupInputSystem()
+	NKPrint("PointOfInterestMod:SetupInputSystem was just called.....\n")
+
+	-- if self.useConsole then
+	-- 	EternusEngine.mods.PointOfInterest.ConsoleUI:SetupInputSystem()
+	-- end
 end
 
 -------------------------------------------------------------------------------
--- Called from C++ when the current game enters
+-- Called from C++ when the current game enters (on game start: when 100% of world loaded)
 function PointOfInterestMod:Enter()
   EternusEngine.mods.PointOfInterest.Main:Enter()
 
@@ -57,7 +71,7 @@ function PointOfInterestMod:Enter()
     EternusEngine.mods.PointOfInterest.ConsoleUI:Enter()
   end
 
-	self.cl_debuggingBox:Show()
+	self.m_pointOfInterestCompassView:Show()
 end
 
 -------------------------------------------------------------------------------
@@ -69,7 +83,7 @@ function PointOfInterestMod:Leave()
     EternusEngine.mods.PointOfInterest.ConsoleUI:Leave()
   end
 
-	self.cl_debuggingBox:Hide()
+	self.m_pointOfInterestCompassView:Hide()
 end
 
 
@@ -77,6 +91,10 @@ end
 -- Called from C++ every update tick
 function PointOfInterestMod:Process(dt)
   EternusEngine.mods.PointOfInterest.Main:Process(dt)
+
+	if self.m_pointOfInterestCompassView then
+		self.m_pointOfInterestCompassView:Update(dt)
+  end
 end
 
 EntityFramework:RegisterModScript(PointOfInterestMod)
