@@ -6,6 +6,12 @@
 
 **This version of Point Of Interest is made for TUG version 0.8.2.**
 
+## Warning - early build!
+
+*Currently the mod doesn't save any of the custom placed markers between sessions.*
+
+**Don't wander off your base unless you have written down your (x,y,z) coordinates from F2 debug window.**
+
 ## What it is?
 
 It is a mod that allows players to mark certain locations as Points of Interest, and allows them a way to find those locations easily again on a later point. *Note: This is very early version of the mod.*
@@ -14,7 +20,8 @@ It adds an invisible PointOfInterest.lua gameobject that player and other mods c
 
 ## Known bugs
 
-* This is dev build, and because of that there might be game breaking bugs left.
+* **This is dev build**, and because of that there might be game breaking bugs left.
+* Point of Interest markers **are currently not saved between play sessions**. Markers only exist during the current play session.
 * Items on the compass jump and disappear from time to time.
 * In order to get the mod working, CommonLib_mods mod by Johnycilohokla needs to be installed.
 
