@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<GUIScheme version="5" name="StaticImages">
+
+	<!--
+		This scheme file is only intended to be used with CEGUI CEED editor,
+		in order to make TUGLook.looknfeel definitions available for it.
+
+		Do not include it in TUG lua code.
+
+		Original file can be found in: Game\Core\UI\schemes\TUGLook.scheme
+		-->
+
+	<LookNFeel filename="TUGLook_looknfeel_for_CEED.looknfeel" />
+
+	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />
+
+	<!-- Static -->
+	<FalagardMapping windowType="TUGLook/StaticImage"             targetType="DefaultWindow"           renderer="Core/StaticImage"       lookNFeel="TUGLook/StaticImage" />
+	<FalagardMapping windowType="TUGLook/StaticText"              targetType="DefaultWindow"           renderer="Core/StaticText"        lookNFeel="TUGLook/StaticText" />
+	<FalagardMapping windowType="TUGLook/Label"                   targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/Label" />
+	<FalagardMapping windowType="TUGLook/GroupBox"                targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/GroupBox" />
+
+	<!-- Input -->
+	<FalagardMapping windowType="TUGLook/Button"                  targetType="CEGUI/PushButton"        renderer="Core/Button"            lookNFeel="TUGLook/Button" />
+	<FalagardMapping windowType="TUGLook/ImageButton"             targetType="CEGUI/PushButton"        renderer="Core/Button"            lookNFeel="TUGLook/ImageButton" />
+	<FalagardMapping windowType="TUGLook/Checkbox"                targetType="CEGUI/ToggleButton"      renderer="Core/ToggleButton"      lookNFeel="TUGLook/Checkbox" />
+	<FalagardMapping windowType="TUGLook/RadioButton"             targetType="CEGUI/RadioButton"       renderer="Core/ToggleButton"      lookNFeel="TUGLook/RadioButton" />
+	<FalagardMapping windowType="TUGLook/Spinner"                 targetType="CEGUI/Spinner"           renderer="Core/Default"           lookNFeel="TUGLook/Spinner" />
+
+	<!-- Scrolling -->
+	<FalagardMapping windowType="TUGLook/VerticalScrollbar"           targetType="CEGUI/Scrollbar"         renderer="Core/Scrollbar"         lookNFeel="TUGLook/VerticalScrollbar" />
+	<FalagardMapping windowType="TUGLook/VerticalScrollbarThumb"      targetType="CEGUI/Thumb"             renderer="Core/Button"            lookNFeel="TUGLook/VerticalScrollbarThumb" />
+	<FalagardMapping windowType="TUGLook/HorizontalScrollbar"         targetType="CEGUI/Scrollbar"         renderer="Core/Scrollbar"         lookNFeel="TUGLook/HorizontalScrollbar" />
+	<FalagardMapping windowType="TUGLook/HorizontalScrollbarThumb"    targetType="CEGUI/Thumb"             renderer="Core/Button"            lookNFeel="TUGLook/HorizontalScrollbarThumb" />
+	<FalagardMapping windowType="TUGLook/LargeVerticalScrollbar"      targetType="CEGUI/Scrollbar"         renderer="Core/Scrollbar"         lookNFeel="TUGLook/LargeVerticalScrollbar" />
+	<FalagardMapping windowType="TUGLook/LargeVerticalScrollbarThumb" targetType="CEGUI/Thumb"             renderer="Core/Button"            lookNFeel="TUGLook/LargeVerticalScrollbarThumb" />
+	<FalagardMapping windowType="TUGLook/ScrollablePane"              targetType="CEGUI/ScrollablePane"    renderer="Core/ScrollablePane"    lookNFeel="TUGLook/ScrollablePane" />
+
+	<!-- Combo Boxes -->
+	<FalagardMapping windowType="TUGLook/Combobox"                targetType="CEGUI/Combobox"          renderer="Core/Default"           lookNFeel="TUGLook/Combobox" />
+	<FalagardMapping windowType="TUGLook/ComboboxListItem"        targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/ComboboxListItem" />
+	<FalagardMapping windowType="TUGLook/ComboDropList"           targetType="CEGUI/ComboDropList"     renderer="Core/Listbox"           lookNFeel="TUGLook/ComboDropList" />
+	<FalagardMapping windowType="TUGLook/ComboEditbox"            targetType="CEGUI/Editbox"           renderer="Core/Editbox"           lookNFeel="TUGLook/ComboEditbox" />
+
+	<!-- Edit Boxes -->
+	<FalagardMapping windowType="TUGLook/MultiLineEditbox"        targetType="CEGUI/MultiLineEditbox"  renderer="Core/MultiLineEditbox"  lookNFeel="TUGLook/MultiLineEditbox" />
+	<FalagardMapping windowType="TUGLook/Editbox"                 targetType="CEGUI/Editbox"           renderer="Core/Editbox"           lookNFeel="TUGLook/Editbox" />
+	<FalagardMapping windowType="TUGLook/EditboxListItem"         targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/EditboxListItem" />
+	<FalagardMapping windowType="TUGLook/SpinnerListItem"         targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/SpinnerListItem" />
+	<FalagardMapping windowType="TUGLook/CategoryListItem"        targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/CategoryListItem" />
+	<FalagardMapping windowType="TUGLook/EmptyListItem"           targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/EmptyListItem" />
+	<FalagardMapping windowType="TUGLook/TextListItem"            targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/TextListItem" />
+	<FalagardMapping windowType="TUGLook/CheckboxListItem"		  targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/CheckboxListItem" />
+
+	<!-- Lists -->
+	<FalagardMapping windowType="TUGLook/ListHeader"              targetType="CEGUI/ListHeader"        renderer="Core/ListHeader"        lookNFeel="TUGLook/ListHeader" />
+	<FalagardMapping windowType="TUGLook/ListHeaderSegment"       targetType="CEGUI/ListHeaderSegment" renderer="Core/ListHeaderSegment" lookNFeel="TUGLook/ListHeaderSegment" />
+	<FalagardMapping windowType="TUGLook/Listbox"                 targetType="CEGUI/Listbox"           renderer="Core/Listbox"           lookNFeel="TUGLook/Listbox" />
+	<FalagardMapping windowType="TUGLook/ListboxItem"             targetType="CEGUI/ItemEntry"         renderer="Core/ItemEntry"         lookNFeel="TUGLook/ListboxItem" />
+	<FalagardMapping windowType="TUGLook/ItemListbox"             targetType="CEGUI/ItemListbox"       renderer="Core/ItemListbox"       lookNFeel="TUGLook/ItemListbox" />
+	<FalagardMapping windowType="TUGLook/MultiColumnList"         targetType="CEGUI/MultiColumnList"   renderer="Core/MultiColumnList"   lookNFeel="TUGLook/MultiColumnList" />
+
+	<!-- Sliders -->
+	<FalagardMapping windowType="TUGLook/Slider"                  targetType="CEGUI/Slider"            renderer="Core/Slider"            lookNFeel="TUGLook/Slider" />
+	<FalagardMapping windowType="TUGLook/SliderThumb"             targetType="CEGUI/Thumb"             renderer="Core/Button"            lookNFeel="TUGLook/SliderThumb" />
+
+	<!-- Tab Controls -->
+	<FalagardMapping windowType="TUGLook/TabButton"               targetType="CEGUI/TabButton"         renderer="Core/TabButton"         lookNFeel="TUGLook/TabButton" />
+	<FalagardMapping windowType="TUGLook/TabControl"              targetType="CEGUI/TabControl"        renderer="Core/TabControl"        lookNFeel="TUGLook/TabControl" />
+	<FalagardMapping windowType="TUGLook/TabContentPane"          targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/TabContentPane" />
+	<FalagardMapping windowType="TUGLook/TabButtonPane"           targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/TabButtonPane" />
+
+	<!-- Progress Bars -->
+	<!--<FalagardMapping windowType="TUGLook/AlternateProgressBar"  targetType="CEGUI/ProgressBar"       renderer="Core/ProgressBar"       lookNFeel="TUGLook/AltProgressBar" />-->
+	<FalagardMapping windowType="TUGLook/ProgressBar"               targetType="CEGUI/ProgressBar"       renderer="Core/ProgressBar"       lookNFeel="TUGLook/ProgressBar" />
+	<FalagardMapping windowType="TUGLook/VUMeter"                   targetType="CEGUI/ProgressBar"       renderer="Core/ProgressBar"       lookNFeel="TUGLook/VUMeter" />
+
+	<!-- Menus -->
+	<FalagardMapping windowType="TUGLook/FrameWindow"           targetType="CEGUI/FrameWindow"       renderer="Core/FrameWindow"       lookNFeel="TUGLook/FrameWindow" />
+	<FalagardMapping windowType="TUGLook/Titlebar"              targetType="CEGUI/Titlebar"          renderer="Core/Titlebar"          lookNFeel="TUGLook/Titlebar" />
+	<FalagardMapping windowType="TUGLook/Menubar"               targetType="CEGUI/Menubar"           renderer="Core/Menubar"           lookNFeel="TUGLook/Menubar" />
+	<FalagardMapping windowType="TUGLook/MenuItem"              targetType="CEGUI/MenuItem"          renderer="Core/MenuItem"          lookNFeel="TUGLook/MenuItem" />
+	<FalagardMapping windowType="TUGLook/PopupMenu"             targetType="CEGUI/PopupMenu"         renderer="Core/PopupMenu"         lookNFeel="TUGLook/PopupMenu" />
+	<FalagardMapping windowType="TUGLook/Tooltip"               targetType="CEGUI/Tooltip"           renderer="Core/Tooltip"           lookNFeel="TUGLook/Tooltip" />
+
+	<!-- Misc -->
+	<FalagardMapping windowType="TUGLook/InventorySlot"		    targetType="DragContainer"           renderer="Core/Default"           lookNFeel="TUGLook/InventorySlot" />
+	<FalagardMapping windowType="TUGLook/TabBacker"             targetType="CEGUI/PushButton"        renderer="Core/Button"            lookNFeel="TUGLook/TabBacker" />
+	<FalagardMapping windowType="TUGLook/HScrollListItem"       targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/HScrollListItem" />
+	<FalagardMapping windowType="TUGLook/Tree"                  targetType="CEGUI/Tree"              renderer="Core/Tree"              lookNFeel="TUGLook/Tree" />
+	<FalagardMapping windowType="TUGLook/StackDialog"      	    targetType="DefaultWindow"           renderer="Core/Default"           lookNFeel="TUGLook/StackDialog" />
+
+	<!-- Game Elements -->
+
+</GUIScheme>
