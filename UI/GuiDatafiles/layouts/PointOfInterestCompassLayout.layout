@@ -77,10 +77,10 @@
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="Text" value="      " />
                 <Property name="AspectMode" value="Expand" />
-                <Property name="HoverImage" value="PoI-Compass/compass_gem" />
-                <Property name="NormalImage" value="PoI-Compass/compass_gem" />
-                <Property name="PushedImage" value="PoI-Compass/compass_gem" />
-                <Property name="DisabledImage" value="PoI-Compass/compass_gem" />
+                <Property name="HoverImage" value="PoI-Compass/compass_gem_hover" />
+                <Property name="NormalImage" value="PoI-Compass/compass_gem_normal" />
+                <Property name="PushedImage" value="PoI-Compass/compass_gem_pushed" />
+                <Property name="DisabledImage" value="PoI-Compass/compass_gem_disabled" />
                 <Property name="ClippedByParent" value="false" />
                 <Property name="VerticalAlignment" value="Centre" />
             </Window>

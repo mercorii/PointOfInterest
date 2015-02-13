@@ -1,4 +1,7 @@
-<Imageset autoScaled="false" imagefile="poi-compass.png" name="PoI-Compass" nativeHorzRes="571" nativeVertRes="77" version="2">
+<Imageset autoScaled="false" imagefile="poi-compass.png" name="PoI-Compass" nativeHorzRes="682" nativeVertRes="77" version="2">
     <Image height="73" name="compass_bar" width="530" xPos="2" yPos="2" />
-    <Image height="35" name="compass_gem" width="35" xPos="534" yPos="2" />
+    <Image height="35" name="compass_gem_normal" width="35" xPos="534" yPos="2" />
+    <Image height="35" name="compass_gem_pushed" width="35" xPos="571" yPos="2" />
+    <Image height="35" name="compass_gem_disabled" width="35" xPos="608" yPos="2" />
+    <Image height="35" name="compass_gem_hover" width="35" xPos="645" yPos="2" />
 </Imageset>
