@@ -9,7 +9,7 @@ end
 
 -------------------------------------------------------------------------------
 function PointOfInterestConsoleUI:Constructor(  )
-  NKPrint("\n\nPointOfInterestConsoleUI:Constructor called\n\n")
+	self:Debug("\n\nPointOfInterestConsoleUI:Constructor called\n\n")
 end
 
 
@@ -17,25 +17,25 @@ end
 --- Initialize UI.
 -- Called once from C++ at engine initialization time
 function PointOfInterestConsoleUI:Initialize()
-  NKPrint("\n\nPointOfInterestConsoleUI:Initialize called\n\n")
+	self:Debug("\n\nPointOfInterestConsoleUI:Initialize called\n\n")
 
 end
 
 function PointOfInterestConsoleUI:Enter()
-  NKPrint("\n\nPointOfInterestConsoleUI:Enter called\n\n")
+	self:Debug("\n\nPointOfInterestConsoleUI:Enter called\n\n")
 end
 
 function PointOfInterestConsoleUI:Leave()
-  NKPrint("\n\nPointOfInterestConsoleUI:Leave called\n\n")
+	self:Debug("\n\nPointOfInterestConsoleUI:Leave called\n\n")
   -- do something
 end
 
 -- not sure what this function does.. in survival.lua it's used to register slash commands among other things..
 function PointOfInterestConsoleUI:SetupInputSystem()
-	NKPrint("\n\nPointOfInterestConsoleUI:SetupInputSystem called\n\n")
+	self:Debug("\n\nPointOfInterestConsoleUI:SetupInputSystem called\n\n")
 
-	Eternus.World:NKGetKeybinds():NKRegisterNamedCommand("Create PoI", self, "CreatePointOfInterestBtn", KEY_ONCE)
-	Eternus.World:NKGetKeybinds():NKRegisterNamedCommand("Next PoI", self, "NextPointOfInterestBtn", KEY_ONCE)
+--	Eternus.World:NKGetKeybinds():NKRegisterNamedCommand("Create PoI", self, "CreatePointOfInterestBtn", KEY_ONCE)
+--	Eternus.World:NKGetKeybinds():NKRegisterNamedCommand("Next PoI", self, "NextPointOfInterestBtn", KEY_ONCE)
 
 --	Eternus.World:NKGetKeybinds():NKRegisterDirectCommand("O", self, "CreatePointOfInterestBtn", KEY_ONCE)
 
@@ -44,7 +44,7 @@ end
 
 function PointOfInterestConsoleUI:RegisterSlashCommands()
 
-	NKPrint("\n\nPointOfInterestConsoleUI:RegisterSlashCommands called\n\n")
+	self:Debug("\n\nPointOfInterestConsoleUI:RegisterSlashCommands called\n\n")
 
   -- if we haven't added the functions yet, add them now
 --  if not Eternus.GameState.ListPointsOfInterest then
@@ -68,14 +68,14 @@ function PointOfInterestConsoleUI:WriteMessageToChat(message)
 
   -- if message is actually table, expect its items to be strings and print them one at a time
   if type(message) == "table" then
-    NKPrint("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called, was a table:")
+		self:Debug("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called, was a table:")
     for i, msg in ipairs(message) do
-      NKPrint("\n" .. msg)
+			self:Debug("\n" .. msg)
       miscUI:NKChatWindow_AddText(msg)
     end
-    NKPrint("\n")
+		self:Debug("\n")
   else -- otherwise expect it to be string
-    NKPrint("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called with message: \n" .. message)
+		self:Debug("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called with message: \n" .. message)
     miscUI:NKChatWindow_AddText(message)
   end
 end
@@ -84,7 +84,7 @@ function PointOfInterestConsoleUI:CreatePointOfInterestBtn(down)
 	if down then
 		return
 	end
-	NKPrint("\nPointOfInterestConsoleUI:CreatePointOfInterestBtn(down) called.\n")
+	self:Debug("\nPointOfInterestConsoleUI:CreatePointOfInterestBtn(down) called.\n")
 	self:WriteMessageToChat("PointOfInterestConsoleUI:CreatePointOfInterestBtn(down) called.")
 end
 
@@ -92,7 +92,7 @@ function PointOfInterestConsoleUI:NextPointOfInterestBtn(down)
 	if down then
 		return
 	end
-	NKPrint("\nPointOfInterestConsoleUI:NextPointOfInterestBtn(down) called.\n")
+	self:Debug("\nPointOfInterestConsoleUI:NextPointOfInterestBtn(down) called.\n")
 	self:WriteMessageToChat("PointOfInterestConsoleUI:NextPointOfInterestBtn(down) called.")
 end
 
@@ -100,7 +100,7 @@ end
 -- @param args Table containing options for the new PoI.
 function PointOfInterestConsoleUI:CreatePointOfInterest(args)
 
-  NKPrint("\nPointOfInterestConsoleUI:CreatePointOfInterest(args) called\n")
+	self:Debug("\nPointOfInterestConsoleUI:CreatePointOfInterest(args) called\n")
 
   local title = nil
   local description = nil
@@ -136,7 +136,7 @@ end
 --- Removes point of interest.
 -- @param args Table that is supposed to contain the id of the PoI to be removed as its first item.
 function PointOfInterestConsoleUI:RemovePointOfInterest(args)
-  NKPrint("\nPointOfInterestConsoleUI:RemovePointOfInterest(args) called\n")
+	self:Debug("\nPointOfInterestConsoleUI:RemovePointOfInterest(args) called\n")
 
   if #args >= 1 then
     if EternusEngine.mods.PointOfInterest.Main:RemovePointOfInterest(args[1]) then
@@ -151,7 +151,7 @@ end
 
 --- List all PoIs.
 function PointOfInterestConsoleUI:ListPointsOfInterest(args)
-  NKPrint("\nPointOfInterestConsoleUI:ListPointsOfInterest(args) called\n")
+	self:Debug("\nPointOfInterestConsoleUI:ListPointsOfInterest(args) called\n")
 
   local pois = {}
   table.insert(pois, "PointsOfInterest: ")
@@ -167,7 +167,7 @@ end
 -- @param poiID ID of the PoI which distance from the player the method is about to print.
 function PointOfInterestConsoleUI:DistanceToPointOfInterest(poiID)
   if poiID == nil then
-    NKPrint("\n PointOfInterestConsoleUI:DistanceToPointOfInterest - no value given\n")
+		self:Debug("\n PointOfInterestConsoleUI:DistanceToPointOfInterest - no value given\n")
     return false
   end
 
@@ -177,7 +177,7 @@ function PointOfInterestConsoleUI:DistanceToPointOfInterest(poiID)
 --    self:WriteMessageToChat('Distance: ' .. string.format("%.2g", distance)) -- converts 0 to ~0.55
     self:WriteMessageToChat('Distance: ' .. distance)
   else
-    NKPrint("\n PointOfInterestConsoleUI:DistanceToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
+		self:Debug("\n PointOfInterestConsoleUI:DistanceToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
   end
 end
 
@@ -185,7 +185,7 @@ end
 -- @param poiID ID of the PoI which direction from the player the method is about to print.
 function PointOfInterestConsoleUI:DirectionToPointOfInterest(poiID)
     if poiID == nil then
-    NKPrint("\n PointOfInterestConsoleUI:DirectionToPointOfInterest - no value given\n")
+			self:Debug("\n PointOfInterestConsoleUI:DirectionToPointOfInterest - no value given\n")
     return false
   end
 
@@ -202,10 +202,12 @@ function PointOfInterestConsoleUI:DirectionToPointOfInterest(poiID)
     end
     self:WriteMessageToChat(string)
   else
-    NKPrint("\n PointOfInterestConsoleUI:DirectionToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
+    self:Debug("\n PointOfInterestConsoleUI:DirectionToPointOfInterest - Couldn't find PoI with id: " .. poiID .. "\n")
   end
 end
 
-if EternusEngine.mods.PointOfInterest.ConsoleUI == nil then
-  EternusEngine.mods.PointOfInterest.ConsoleUI = PointOfInterestConsoleUI.new()
+function PointOfInterestConsoleUI:Debug(msg)
+	if EternusEngine.mods.PointOfInterest.Mod.options.useDebug then
+		NKPrint(msg)
+	end
 end

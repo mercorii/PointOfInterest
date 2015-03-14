@@ -1,7 +1,7 @@
 --- @author Mercor
 
 include("Scripts/Core/Common.lua")
-include("Scripts/Core/View.lua")
+include("Scripts/UI/View.lua")
 
 local Windows = EternusEngine.UI.Windows
 
@@ -13,7 +13,7 @@ end
 -------------------------------------------------------------------------------
 function PointOfInterestCompass:PostLoad(args)
 
-  NKPrint("\n\nPointOfInterestCompass:PostLoad called\n\n")
+  self:Debug("\n\nPointOfInterestCompass:PostLoad called\n\n")
 
   self.m_compass = self:GetChild("Compass")
   self.m_north = self:GetChild("Compass/North")
@@ -45,7 +45,7 @@ function PointOfInterestCompass:PostLoad(args)
   -- self.m_text:setText("testing")
 
 	self.m_poi_button:subscribeEvent("MouseClick", function( args )
-		NKPrint("PointOfInterestMod's ui text was clicked")
+    self:Debug("PointOfInterestMod's ui text was clicked")
     if EternusEngine.mods.PointOfInterest.ConsoleUI then
 		  EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest created.")
     end
@@ -88,7 +88,7 @@ end
 -------------------------------------------------------------------------------
 --- Create PoI (call poiMain to actually do it)
 function PointOfInterestCompass:CreatePointOfInterest()
-  NKPrint("PointOfInterestCompass:CreatePointOfInterest() called")
+  self:Debug("PointOfInterestCompass:CreatePointOfInterest() called")
   local radius = 1.0
 
   local player = Eternus.GameState:GetLocalPlayer()
@@ -107,7 +107,7 @@ end
 -------------------------------------------------------------------------------
 -- Add PoI to array and to radar
 function PointOfInterestCompass:AddPointOfInterest(poi)
-  NKPrint("PointOfInterestCompass:AddPointOfInterest() called")
+  self:Debug("PointOfInterestCompass:AddPointOfInterest() called")
 
   -- check that poi.id is not already in pois that compass is currently tracking
   for i, item in ipairs(self.m_items) do
@@ -138,7 +138,7 @@ end
 --- Remove PoI from radar.
 -- Returns boolean depending on the success.
 function PointOfInterestCompass:RemovePointOfInterest(poi)
-  NKPrint("PointOfInterestCompass:RemovePointOfInterest() called")
+  self:Debug("PointOfInterestCompass:RemovePointOfInterest() called")
 
   for i, item in ipairs(self.m_items) do
     if item.poi.id == poi.id then
@@ -174,4 +174,24 @@ end
 -------------------------------------------------------------------------------
 function PointOfInterestCompass:SetText(text)
 --  self.m_text:setText(text)
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass visible (i.e. when slotting compass item)
+function PointOfInterestCompass:ShowCompass()
+  -- TODO: do things necessary to make compass visible
+  self:Show()
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass hidden (i.e when unslotting compass item)
+function PointOfInterestCompass:HideCompass()
+  -- TODO: do things necessary to hide compass
+  self:Hide()
+end
+
+function PointOfInterestCompass:Debug(msg)
+	if EternusEngine.mods.PointOfInterest.Mod.options.useDebug then
+		NKPrint(msg)
+	end
 end

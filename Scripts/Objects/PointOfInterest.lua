@@ -9,7 +9,7 @@ end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:Constructor(args)
-  NKPrint("\n\nPointOfInterest:Constructor\n\n")
+	self:Debug("\n\nPointOfInterest:Constructor\n\n")
 end
 
 -------------------------------------------------------------------------------
@@ -18,12 +18,12 @@ end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:Spawn()
-  NKPrint("PointOfInterest:Spawn() called")
+	self:Debug("PointOfInterest:Spawn() called")
 end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:Despawn()
-  NKPrint("PointOfInterest:Despawn() called")
+	self:Debug("PointOfInterest:Despawn() called")
 end
 
 -------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ end
 -------------------------------------------------------------------------------
 -- Save function for GameObject
 function PointOfInterest:Save(outData)
-	NKPrint("PointOfInterest:Save() called")
+	self:Debug("PointOfInterest:Save() called")
 	PointOfInterest.__super.Save(self, outData) -- only Object classes need to implement this (do not add this to mixins!)
 
 	outData.id = self.id
@@ -83,7 +83,7 @@ end
 -------------------------------------------------------------------------------
 -- Load data function for GameObject
 function PointOfInterest:Restore(inData, version)
-	NKPrint("PointOfInterest:Restore() called")
+	self:Debug("PointOfInterest:Restore() called")
 	PointOfInterest.__super.Restore(self, inData) -- only Object classes need to implement this (do not add this to mixins!)
 
 	self.id = inData.id
@@ -101,19 +101,25 @@ end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:ToString()
-  NKPrint("PointOfInterest:ToString() called")
+	self:Debug("PointOfInterest:ToString() called")
   local pos = self:NKGetPosition()
   return '{ title: ' .. self.title .. ', id: ' .. self.id .. ', pos: (' .. tostring(pos:x()) .. ', ' .. tostring(pos:y()) .. ', ' .. tostring(pos:z()) .. '), type: ' .. self.type ..', description: ' .. self.description .. ', discovered: ' .. tostring(self.discovered) .. " }"
 end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:ToStringWithDirDist()
-  NKPrint("PointOfInterest:ToStringWithDirDist() called")
+	self:Debug("PointOfInterest:ToStringWithDirDist() called")
   local pos = self:NKGetPosition()
   local playerPos = Eternus.GameState:GetLocalPlayer():NKGetPosition()
   local direction = self:DistanceTo(playerPos)
   local distance = self:DirectionFrom(playerPos)
   return '{ title: ' .. self.title .. ', id: ' .. self.id .. ', pos: (' .. tostring(pos:x()) .. ', ' .. tostring(pos:y()) .. ', ' .. tostring(pos:z()) .. '), direction: ' .. direction .. ' distance: ' .. distance .. ' type: ' .. self.type ..', description: ' .. self.description .. ', discovered: ' .. tostring(self.discovered) .. " }"
+end
+
+function PointOfInterest:Debug(msg)
+	if EternusEngine.mods and EternusEngine.mods.PointOfInterest and EternusEngine.mods.PointOfInterest.Mod and EternusEngine.mods.PointOfInterest.Mod.options and EternusEngine.mods.PointOfInterest.Mod.options.useDebug then
+		NKPrint(msg)
+	end
 end
 
 -------------------------------------------------------------------------------

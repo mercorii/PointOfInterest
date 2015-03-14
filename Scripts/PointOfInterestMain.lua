@@ -76,7 +76,7 @@ end
 -- @param poiID Id of PoI to return.
 function PointOfInterestMain:GetPointOfInterest(poiID)
   for i, poi in ipairs(self.pointsOfInterest) do
-    NKPrint("\n PointOfInterestMain:GetPointOfInterest - id: " .. poi.id .. ", poiID: " .. tostring(poiID) .. "\n")
+		self:Debug("\n PointOfInterestMain:GetPointOfInterest - id: " .. poi.id .. ", poiID: " .. tostring(poiID) .. "\n")
     if tostring(poi.id) == poiID then
       return poi
     end
@@ -93,12 +93,12 @@ end
 -- @param poiType Type of PoI. Can be used to differentiate between different types of PoIs.
 -- @param discovered Whether or not PoI is discovered and visible, or still to be found and hidden.
 function PointOfInterestMain:CreatePointOfInterest(pos, radius, title, description, poiType, discovered)
-  NKPrint("\nPointOfInterestMain:CreatePointOfInterest()\n")
+	self:Debug("\nPointOfInterestMain:CreatePointOfInterest()\n")
 
   local poi = self:SpawnPointOfInterest(pos)
 
   if poi then
-    NKPrint("\nPointOfInterestMain:CreatePointOfInterest(): new PoI created\n")
+		self:Debug("\nPointOfInterestMain:CreatePointOfInterest(): new PoI created\n")
 
     poi.radius = (radius and radius or 1)
 
@@ -129,7 +129,7 @@ end
 -- Returns true if it succeeded in removing the item, false otherwise.
 -- @param id The PoI to remove.
 function PointOfInterestMain:RemovePointOfInterest(id)
-  NKPrint("\nPointOfInterestUI:RemovePointOfInterest(id) called\n")
+	self:Debug("\nPointOfInterestUI:RemovePointOfInterest(id) called\n")
 
   for i, poi in ipairs(self.pointsOfInterest) do
     if poi.id == id then
@@ -145,7 +145,7 @@ end
 
 --- Return list of PoIs to the caller.
 function PointOfInterestMain:GetPointsOfInterest()
-  NKPrint("\nPointOfInterestUI:GetPointsOfInterest() called\n")
+	self:Debug("\nPointOfInterestUI:GetPointsOfInterest() called\n")
 
   local pois = self.pointsOfInterest
 
@@ -167,7 +167,7 @@ end
 --- Check if certain PoI type is in the list of allowed types.
 -- @param poiTypeToCheck PoI type to check.
 function PointOfInterestMain:PoITypeAllowed(poiTypeToCheck)
-  NKPrint("\nPointOfInterestUI:PoITypeAllowed(poiTypeToCheck) called\n")
+	self:Debug("\nPointOfInterestUI:PoITypeAllowed(poiTypeToCheck) called\n")
 
   for i, poiType in ipairs(self.poiTypes) do
     if poiType.name == poiTypeToCheck then
@@ -182,11 +182,11 @@ end
 -- @param position Position of the gameobject.
 -- @param rotation Roration of the gameobject. Not used for now.
 function PointOfInterestMain:SpawnPointOfInterest( position, rotation )
-  NKPrint("\nPointOfInterestMain:SpawnPointOfInterest( position, rotation ) called\n")
+	self:Debug("\nPointOfInterestMain:SpawnPointOfInterest( position, rotation ) called\n")
 	local obj = Eternus.GameObjectSystem:NKCreateGameObject("PointOfInterest", true)
 
   if obj then
-    NKPrint("\nPointOfInterestMain:SpawnPointOfInterest - succeeded in creating PointOfInterest \n")
+		self:Debug("\nPointOfInterestMain:SpawnPointOfInterest - succeeded in creating PointOfInterest \n")
 
     obj:NKSetShouldRender(false, false)
     obj:NKSetPosition(position, false)
@@ -197,7 +197,7 @@ function PointOfInterestMain:SpawnPointOfInterest( position, rotation )
 
     return obj:NKGetInstance() -- you need to do this for now. Will be no more required after 0.6.6 or 0.6.7, hopefully
   else
-    NKPrint("\nPointOfInterestMain:SpawnPointOfInterest - failed creating PointOfInterest \n")
+		self:Debug("\nPointOfInterestMain:SpawnPointOfInterest - failed creating PointOfInterest \n")
     return nil
   end
 end
@@ -205,7 +205,7 @@ end
 --- Method called by PoI when it's near player.
 -- @param poi The acking PoI itself
 function PointOfInterestMain:InRangePoIAcking( poi )
-  NKPrint("\nPointOfInterestUI:InRangePoIAcking( poi ) called\n")
+	self:Debug("\nPointOfInterestUI:InRangePoIAcking( poi ) called\n")
 end
 
 --- Calculate a direction (in radians) from first position to a second position.
@@ -239,7 +239,7 @@ end
 -- @param poi PoI of which direction and distance from pos we are calculating.
 -- @return table.
 function PointOfInterestMain:calculatePoIDirectionDistance(pos, poi)
---  NKPrint("\nPointOfInterestMain:calculatePoIDirectionDistance(pos, poi) called\n")
+--  self:Debug("\nPointOfInterestMain:calculatePoIDirectionDistance(pos, poi) called\n")
 
   local dirDis = {}
 
@@ -262,7 +262,7 @@ end
 -- @param pos Position in relation to which we are calculating PoIs' directions and distances.
 -- @return table.
 function PointOfInterestMain:calculateAllPoIDirectionDistance(pos)
---  NKPrint("\nPointOfInterestMain:calculateAllPoIDirectionDistance(pos) called\n")
+--  self:Debug("\nPointOfInterestMain:calculateAllPoIDirectionDistance(pos) called\n")
 
   local pois = {}
 
@@ -282,7 +282,7 @@ end
 -- @param pos Position in relation to which we are calculating PoIs' directions and distances.
 -- @return table.
 function PointOfInterestMain:calculateAllPoIDistance(pos)
---	NKPrint("\nPointOfInterestMain:calculateAllPoIDistance(pos) called\n")
+--	self:Debug("\nPointOfInterestMain:calculateAllPoIDistance(pos) called\n")
 
 	local pois = {}
 	local dis = nil
@@ -302,7 +302,7 @@ end
 --- Load data from a file.
 -- Not yet implemented.
 function PointOfInterestMain:LoadData()
-  NKPrint("\nPointOfInterestMain:LoadData()\n")
+	self:Debug("\nPointOfInterestMain:LoadData()\n")
   PointOfInterestMain.nextID = 1
   PointOfInterestMain.pointsOfInterest = {}
 end
@@ -310,9 +310,11 @@ end
 --- Save data to a file.
 -- Not yet implemented.
 function PointOfInterestMain:SaveData()
-  NKPrint("\nPointOfInterestMain:SaveData()\n")
+  self:Debug("\nPointOfInterestMain:SaveData()\n")
 end
 
-if EternusEngine.mods.PointOfInterest.Main == nil then
-  EternusEngine.mods.PointOfInterest.Main = PointOfInterestMain.new()
+function PointOfInterestMain:Debug(msg)
+	if EternusEngine.mods.PointOfInterest.Mod.options.useDebug then
+		NKPrint(msg)
+	end
 end
