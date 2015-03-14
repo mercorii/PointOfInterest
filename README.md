@@ -1,10 +1,10 @@
 # Point Of Interest Mod for [TUG](http://www.nerdkingdom.com/)
 
-**Version 0.2.0**
+**Version 0.2.1**
 
 ## Required TUG version
 
-**This version of Point Of Interest is made for TUG version 0.8.2.**
+**This version of Point Of Interest is made for TUG version 0.8.3.**
 
 ## Warning - early build!
 
@@ -23,13 +23,15 @@ It adds an invisible PointOfInterest.lua gameobject that player and other mods c
 * **This is dev build**, and because of that there might be game breaking bugs left.
 * Point of Interest markers **are currently not saved between play sessions**. Markers only exist during the current play session.
 * Items on the compass jump and disappear from time to time.
-* In order to get the mod working, CommonLib_mods mod by Johnycilohokla needs to be installed.
+* In order to get the mod working, CommonLib or CommonLib_mods mod by Johnycilohokla needs to be installed.
 
 ## How do you use it?
 
-The mod adds a compass bar to the game. The compass bar shows directions and marked point of interest.
+The mod adds a compass bar to the game. The compass bar shows directions and marked point of interest. You can add new markers by clicking the blue button on the right side of the compass.
 
-In addition to this, there's a simple command line UI, that supports /slashcommands. This will be changing in the future.
+You can hide the compass with key *P*.
+
+In addition to the graphical user interface, there's a simple command line UI that supports /slashcommands. This will be changing in the future.
 
 The /commands are:
 
@@ -93,6 +95,7 @@ Mods
 
 ### Requirements
 
-If you are using latest version of TUG (v0.8.2), you also need to install *CommonLib_mods* mod by Johnycilohokla. CommonLib_mods adds a functionality missing from TUG (v0.8.2) back to TUG. Without it, PointOfInterest mod will not work.
+If you are using latest version of TUG (v0.8.3), you also need to install latest *CommonLib* or *CommonLib_mods* mod by Johnycilohokla. They add a functionality missing from TUG (v0.8.3) back to TUG. Without it, PointOfInterest mod will not work.
 
-Installation instructions for CommonLib_mods: http://forum.nerdkingdom.com/viewtopic.php?f=39&t=1937
+Installation instructions for CommonLib (v0.8.3): https://github.com/JohnyCilohokla/CommonLib
+Installation instructions for CommonLib_mods (v0.8.2): http://forum.nerdkingdom.com/viewtopic.php?f=39&t=1937
