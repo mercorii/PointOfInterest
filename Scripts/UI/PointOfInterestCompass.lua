@@ -192,6 +192,6 @@ end
 
 function PointOfInterestCompass:Debug(msg)
 	if EternusEngine.mods.PointOfInterest.Mod.options.useDebug then
-		NKPrint(msg)
+		NKPrint(msg .. "\n")
 	end
 end

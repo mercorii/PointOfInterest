@@ -37,14 +37,17 @@ function PointOfInterestMod:Constructor(  )
 	  EternusEngine.mods.PointOfInterest.Main = PointOfInterestMain.new()
 	end
 
-	if EternusEngine.mods.PointOfInterest.ConsoleUI == nil then
-	  EternusEngine.mods.PointOfInterest.ConsoleUI = PointOfInterestConsoleUI.new()
+	if Eternus.IsClient then
+		if EternusEngine.mods.PointOfInterest.ConsoleUI == nil then
+	  	EternusEngine.mods.PointOfInterest.ConsoleUI = PointOfInterestConsoleUI.new()
+		end
+
+		-- Load CEGUI scheme
+		if self.options.useCompass then
+			CEGUI.SchemeManager:getSingleton():createFromFile("PointOfInterest.scheme")
+		end
 	end
 
-	-- Load CEGUI scheme
-	if self.options.useCompass then
-		CEGUI.SchemeManager:getSingleton():createFromFile("PointOfInterest.scheme")
-	end
 end
 
 -------------------------------------------------------------------------------
@@ -55,24 +58,28 @@ function PointOfInterestMod:Initialize()
 
   EternusEngine.mods.PointOfInterest.Main:Initialize()
 
-  if self.useConsole and EternusEngine.mods.PointOfInterest.ConsoleUI then
-    EternusEngine.mods.PointOfInterest.ConsoleUI:Initialize()
-  end
+	if Eternus.IsClient then
 
-	-- use ui
-	if self.options.useCompass then
-		self.m_compassVisible = true
-		self.m_pointOfInterestCompassView = PointOfInterestCompass.new("PointOfInterestCompassLayout.layout")
-		EternusEngine.mods.PointOfInterest.CompassUI = self.m_pointOfInterestCompassView
-	end
+  	if self.useConsole and EternusEngine.mods.PointOfInterest.ConsoleUI then
+    	EternusEngine.mods.PointOfInterest.ConsoleUI:Initialize()
+  	end
 
-	if self.useConsole and EternusEngine.mods.PointOfInterest.ConsoleUI then
-		EternusEngine.mods.PointOfInterest.ConsoleUI:SetupInputSystem()
-	end
+		-- use ui
+		if self.options.useCompass and Eternus.IsClient then
+			self.m_compassVisible = true
+			self.m_pointOfInterestCompassView = PointOfInterestCompass.new("PointOfInterestCompassLayout.layout")
+			EternusEngine.mods.PointOfInterest.CompassUI = self.m_pointOfInterestCompassView
+		end
 
-	if self.options.toggleCompassWithKey and self.options.toggleCompassKey then
-		self:Debug("\nRegisterning key for toggling on/off compass (show/hide): " .. self.options.toggleCompassKey .. "\n")
-		Eternus.World:NKGetKeybinds():NKRegisterDirectCommand(self.options.toggleCompassKey, self, "ToggleCompass", KEY_ONCE)
+		if self.useConsole and Eternus.IsClient and EternusEngine.mods.PointOfInterest.ConsoleUI then
+			EternusEngine.mods.PointOfInterest.ConsoleUI:SetupInputSystem()
+		end
+
+		if self.options.toggleCompassWithKey and self.options.toggleCompassKey then
+			self:Debug("\nRegisterning key for toggling on/off compass (show/hide): " .. self.options.toggleCompassKey .. "\n")
+			Eternus.World:NKGetKeybinds():NKRegisterDirectCommand(self.options.toggleCompassKey, self, "ToggleCompass", KEY_ONCE)
+		end
+
 	end
 end
 

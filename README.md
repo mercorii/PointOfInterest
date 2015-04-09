@@ -1,10 +1,10 @@
 # Point Of Interest Mod for [TUG](http://www.nerdkingdom.com/)
 
-**Version 0.2.1**
+**Version 0.2.2**
 
 ## Required TUG version
 
-**This version of Point Of Interest is made for TUG version 0.8.3.**
+**This version of Point Of Interest is made for TUG version 0.8.4.**
 
 ## Warning - early build!
 
@@ -23,7 +23,6 @@ It adds an invisible PointOfInterest.lua gameobject that player and other mods c
 * **This is dev build**, and because of that there might be game breaking bugs left.
 * Point of Interest markers **are currently not saved between play sessions**. Markers only exist during the current play session.
 * Items on the compass jump and disappear from time to time.
-* In order to get the mod working, CommonLib or CommonLib_mods mod by Johnycilohokla needs to be installed.
 
 ## How do you use it?
 
@@ -95,7 +94,4 @@ Mods
 
 ### Requirements
 
-If you are using latest version of TUG (v0.8.3), you also need to install latest *CommonLib* or *CommonLib_mods* mod by Johnycilohokla. They add a functionality missing from TUG (v0.8.3) back to TUG. Without it, PointOfInterest mod will not work.
-
-Installation instructions for CommonLib (v0.8.3): https://github.com/JohnyCilohokla/CommonLib
-Installation instructions for CommonLib_mods (v0.8.2): http://forum.nerdkingdom.com/viewtopic.php?f=39&t=1937
+CommonLib mod by JohnyCilohokla no longer required.

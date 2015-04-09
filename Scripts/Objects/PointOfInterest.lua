@@ -10,6 +10,8 @@ end
 -------------------------------------------------------------------------------
 function PointOfInterest:Constructor(args)
 	self:Debug("\n\nPointOfInterest:Constructor\n\n")
+
+	self:NKSetShouldSave(true)
 end
 
 -------------------------------------------------------------------------------

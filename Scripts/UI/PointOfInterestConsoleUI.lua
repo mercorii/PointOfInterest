@@ -63,7 +63,7 @@ end
 function PointOfInterestConsoleUI:WriteMessageToChat(message)
 
   --	local uiContainer = self.state:NKGetUIContainer()
-	local uiContainer = Eternus.GameStatePlaying:NKGetUIContainer()
+	local uiContainer = NKGetDeprecatedUIContainer()
 	local miscUI = uiContainer:NKGetMiscellaneousUI()
 
   -- if message is actually table, expect its items to be strings and print them one at a time

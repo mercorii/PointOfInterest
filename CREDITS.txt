@@ -1,0 +1,12 @@
+Credits
+{
+  PraiseSyntax = "0.0.1"
+
+  TinyCredits = "PointOfInterest (0.2.1) - the mod that helps you find home."
+
+  ShortCredits = "Code: Mercor"
+
+  LongCredits = "Code: Mercor (twitter: @mercorinred)"
+
+  FullCredits = "Code: Mercor (twitter: @mercorinred)"
+}
