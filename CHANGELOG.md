@@ -1,4 +1,9 @@
-# Changelog
+# Changelog (PointOfInterest mod)
+
+## 0.2.4
+
+ * Point of Interest markers are now saved (and restored) between sessions. Huge thanks go to JohnyCilohokla for helping out with this.
+ * Restored markers are also now shown on gui.
 
 ## 0.2.3
 

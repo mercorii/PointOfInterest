@@ -9,7 +9,7 @@ Manifest
   # Versioning
   MajorVersion = 0
   MinorVersion = 2
-	PatchVersion = 3
+	PatchVersion = 4
 
   # The file path to the script that is the entry point.
 	ScriptFile = "Scripts/PointOfInterestMod.lua"

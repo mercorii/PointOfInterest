@@ -1,6 +1,6 @@
 # Point Of Interest Mod for [TUG](http://www.nerdkingdom.com/)
 
-**Version 0.2.3**
+**Version 0.2.4**
 
 ## Required TUG version
 
@@ -20,8 +20,21 @@ It adds an invisible PointOfInterest.lua gameobject that player and other mods c
 
 ## Known bugs
 
-* **This is dev build**, and because of that there might be game breaking bugs left.
-* Point of Interest markers **are currently not saved between play sessions**. Markers only exist during the current play session.
+ * **This is dev build**, and because of that there might be game breaking bugs left.
+ * There is no way to limit what PoI markers are shown on compass. Currently everything is shown, which gets messy after couple of markers.
+
+## Future improvements
+
+#### Near future
+
+ * Possibility to add name, description and different icon for created PointsOfInterests in GUI. Already possible in code.
+ * Way to show the name of PoI to player. This will possibly be shown above compass when targeting PoI and when reaching it. Gramma's recipes style.
+ * Way to list and edit existing Points of Interest.
+ * Limit visible markers by their distance. Show only nearest n markers, or markers inside radius of m.
+
+#### Later in future
+
+ * Create simple map view based on Points of Interests. Nothing fancy. Possibly something like crude treasure map. Meaning the map has no ground information, only markers for PoIs.
 
 ## How do you use it?
 
@@ -54,16 +67,9 @@ Shows the direction of Point of Interest identified by its ID.
 ```
 Removes the Point of Interest object matching the ID given as parameter for the command.
 
-## What is coming later?
-
-* Way to load and save Points of Interest. Currently all of the data is flushed away when new world is loaded/created.
-* Different icons for different types of PoIs
-* Better graphics
-* Possibility to name locations
-
 ## How can I create my own UI for the mod?
 
-The UI part of the mod is intended to be separated from the rest of the mods functionality. This way it's very simple to create new UIs for the mod. The current console UI will become optional when the graphical UI will be implemented. As this is very early version the methods and object names are subject to change in the future.
+The UI part of the mod is intended to be separated from the rest of the mods functionality. This way it's very simple to create new UIs for the mod. As this is very early version the methods and object names are subject to change in the future.
 
 ## Installation
 
@@ -93,4 +99,4 @@ Mods
 
 ### Requirements
 
-CommonLib mod by JohnyCilohokla no longer required.
+CommonLib mod by JohnyCilohokla is no longer required.
