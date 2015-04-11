@@ -10,13 +10,13 @@ end
 -------------------------------------------------------------------------------
 function PointOfInterest:Constructor(args)
 	self:Debug("PointOfInterest:Constructor")
-
-	self:NKSetShouldSave(true)
 end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:PostLoad()
 	self:Debug("PointOfInterest:PostLoad")
+
+--	self:NKSetShouldSave(true)
 end
 
 -------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ end
 -- Save function for GameObject
 function PointOfInterest:Save(outData)
 	self:Debug("PointOfInterest:Save() called")
-	PointOfInterest.__super.Save(self, outData) -- only Object classes need to implement this (do not add this to mixins!)
+--	PointOfInterest.__super.Save(self, outData) -- only Object classes need to implement this (do not add this to mixins!)
 
 	outData.id = self.id
 	outData.title = self.title
@@ -87,7 +87,7 @@ end
 -- Load data function for GameObject
 function PointOfInterest:Restore(inData, version)
 	self:Debug("PointOfInterest:Restore() called")
-	PointOfInterest.__super.Restore(self, inData) -- only Object classes need to implement this (do not add this to mixins!)
+--	PointOfInterest.__super.Restore(self, inData) -- only Object classes need to implement this (do not add this to mixins!)
 
 	self.id = inData.id
 	self.title = inData.title
