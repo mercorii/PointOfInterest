@@ -9,7 +9,7 @@ end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:Constructor(args)
-	self:Debug("\n\nPointOfInterest:Constructor\n\n")
+	self:Debug("\n\nPointOfInterest:Constructor\n")
 
 	self:NKSetShouldSave(true)
 end
@@ -119,8 +119,9 @@ function PointOfInterest:ToStringWithDirDist()
 end
 
 function PointOfInterest:Debug(msg)
-	if EternusEngine.mods and EternusEngine.mods.PointOfInterest and EternusEngine.mods.PointOfInterest.Mod and EternusEngine.mods.PointOfInterest.Mod.options and EternusEngine.mods.PointOfInterest.Mod.options.useDebug then
-		NKPrint(msg)
+--	if EternusEngine.mods and EternusEngine.mods.PointOfInterest and EternusEngine.mods.PointOfInterest.Mod and EternusEngine.mods.PointOfInterest.Mod.options and EternusEngine.mods.PointOfInterest.Mod.options.useDebug then
+	if true then
+		NKPrint(msg .. "\n")
 	end
 end
 

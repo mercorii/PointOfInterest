@@ -80,7 +80,15 @@ function PointOfInterestCompass:Update( dt )
   for i, poi_item in ipairs(self.m_items) do
     dirDis = EternusEngine.mods.PointOfInterest.Main:calculatePoIDirectionDistance(playerPos, poi_item.poi)
     if dirDis and dirDis.distance > 1 then
-      poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(dirDis.direction / math.pi, 0), CEGUI.UDim(0, 0)))
+--      local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
+--      self.m_text:setText("pos: (" .. playerPos:x() .. "," .. playerPos:z() .. "), \npoiPos: (" .. poi_item.poi:NKGetPosition():x() .. "," .. poi_item.poi:NKGetPosition():z() .. "), \nfwd: (" .. fwd:x() .. "," .. fwd:z() .. "), \ndirDis.direction: " .. dirDis.direction .. ", \ncompass position: " .. (dirDis.direction / math.pi))
+
+      -- Convert PoI direction in radians to a value in range [-1, 1].
+      -- Only items with value in range [-0.5, 0.5] are shown in compass.
+      -- Others are behind player's compass view (of 180 degrees), and are not shown.
+      local compassX = dirDis.direction / math.pi
+
+      poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(compassX, 0), CEGUI.UDim(0, 0)))
     end
   end
 end

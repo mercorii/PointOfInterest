@@ -188,10 +188,10 @@ function PointOfInterestMain:SpawnPointOfInterest( position, rotation )
   if obj then
 		self:Debug("\nPointOfInterestMain:SpawnPointOfInterest - succeeded in creating PointOfInterest \n")
 
-    obj:NKSetShouldRender(false, false)
+    obj:NKSetShouldRender(true, false)
     obj:NKSetPosition(position, false)
 --	poi:NKSetRotation(rotation)  -- it doesn't move so rotation shouldn't matter, there's probably default value
-    obj:NKPlaceInWorld(false, false, false)
+    obj:NKPlaceInWorld(true, false)
 
 --    poi:Init(self)
 
@@ -214,7 +214,13 @@ end
 -- @param posTo Second position - a place of which direction is to be calculated in relation to the first position.
 function PointOfInterestMain:calculateDirection(posFrom, posTo)
   local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
-  return math.atan2(posFrom:z() - posTo:z() , posFrom:x() - posTo:x()) - math.atan2(fwd:z(), fwd:x())
+
+	-- calculate direction in degrees
+  local direction = math.atan2(posFrom:z() - posTo:z() , posFrom:x() - posTo:x()) - math.atan2(fwd:z(), fwd:x())
+
+	-- normalize the direction to be between [-math.pi, math.pi) ... or is it (-math.pi, math.pi]?
+	direction = (direction + math.pi*3) % (math.pi*2) - math.pi
+	return direction
 end
 
 --- Calculate a direction (in degrees) from first position to a second position.
@@ -222,8 +228,7 @@ end
 -- @param posTo Second position - a place of which direction is to be calculated in relation to the first position.
 -- @return number.
 function PointOfInterestMain:calculateDirectionInDegrees(posFrom, posTo)
-  local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
-  return math.deg(math.atan2(posFrom:z() - posTo:z() , posFrom:x() - posTo:x()) - math.atan2(fwd:z(), fwd:x()))
+	return math.deg(self:calculateDirection(posFrom, posTo))
 end
 
 --- Calculate a distance between two positions.
