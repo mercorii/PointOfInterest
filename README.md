@@ -1,6 +1,6 @@
 # Point Of Interest Mod for [TUG](http://www.nerdkingdom.com/)
 
-**Version 0.2.2**
+**Version 0.2.3**
 
 ## Required TUG version
 
