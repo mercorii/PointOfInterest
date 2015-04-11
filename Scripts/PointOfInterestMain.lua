@@ -188,7 +188,7 @@ function PointOfInterestMain:SpawnPointOfInterest( position, rotation )
   if obj then
 		self:Debug("\nPointOfInterestMain:SpawnPointOfInterest - succeeded in creating PointOfInterest \n")
 
-    obj:NKSetShouldRender(true, false)
+    obj:NKSetShouldRender(false, false)
     obj:NKSetPosition(position, false)
 --	poi:NKSetRotation(rotation)  -- it doesn't move so rotation shouldn't matter, there's probably default value
     obj:NKPlaceInWorld(true, false)

@@ -22,7 +22,6 @@ It adds an invisible PointOfInterest.lua gameobject that player and other mods c
 
 * **This is dev build**, and because of that there might be game breaking bugs left.
 * Point of Interest markers **are currently not saved between play sessions**. Markers only exist during the current play session.
-* Items on the compass jump and disappear from time to time.
 
 ## How do you use it?
 

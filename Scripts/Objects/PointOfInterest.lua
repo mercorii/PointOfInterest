@@ -9,13 +9,14 @@ end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:Constructor(args)
-	self:Debug("\n\nPointOfInterest:Constructor\n")
+	self:Debug("PointOfInterest:Constructor")
 
 	self:NKSetShouldSave(true)
 end
 
 -------------------------------------------------------------------------------
 function PointOfInterest:PostLoad()
+	self:Debug("PointOfInterest:PostLoad")
 end
 
 -------------------------------------------------------------------------------
