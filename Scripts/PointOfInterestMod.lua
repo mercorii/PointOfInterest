@@ -21,7 +21,6 @@ end
 -- Include mod files
 include("Scripts/PointOfInterestMain.lua")
 include("Scripts/UI/PointOfInterestConsoleUI.lua")
-include("Scripts/UI/PointOfInterestCompass.lua")
 
 -------------------------------------------------------------------------------
 -- This is called on .new()
@@ -40,11 +39,6 @@ function PointOfInterestMod:Constructor(  )
 	if Eternus.IsClient then
 		if EternusEngine.mods.PointOfInterest.ConsoleUI == nil then
 	  	EternusEngine.mods.PointOfInterest.ConsoleUI = PointOfInterestConsoleUI.new()
-		end
-
-		-- Load CEGUI scheme
-		if self.options.useCompass then
-			CEGUI.SchemeManager:getSingleton():createFromFile("PointOfInterest.scheme")
 		end
 	end
 
@@ -66,8 +60,10 @@ function PointOfInterestMod:Initialize()
 
 		-- use ui
 		if self.options.useCompass and Eternus.IsClient then
+			-- Load CEGUI scheme
+			CEGUI.SchemeManager:getSingleton():createFromFile("PointOfInterest.scheme")
 			self.m_compassVisible = true
-			self.m_pointOfInterestCompassView = PointOfInterestCompass.new("PointOfInterestCompassLayout.layout")
+			self.m_pointOfInterestCompassView = require("Scripts.UI.PointOfInterestCompass").new("PointOfInterestCompassLayout.layout")
 			EternusEngine.mods.PointOfInterest.CompassUI = self.m_pointOfInterestCompassView
 		end
 

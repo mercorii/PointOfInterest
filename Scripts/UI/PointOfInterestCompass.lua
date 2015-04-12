@@ -203,3 +203,5 @@ function PointOfInterestCompass:Debug(msg)
 		NKPrint(msg .. "\n")
 	end
 end
+
+return PointOfInterestCompass
