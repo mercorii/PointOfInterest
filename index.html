@@ -15,44 +15,60 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Pointofinterest Mod</h1>
-        <p>Mod for TUG that adds a new Points of Interest system to make it easier to mark interesting locations</p>
+        <h1>PointOfInterest Mod</h1>
+        <p>Mod for TUG that adds a new Points of Interest system (and COMPASS!) to make it easier to mark and find again interesting locations.</p>
 
+        <p class="view">
+          Have a question? Found a bug? <br/>
+          <a href="http://forum.nerdkingdom.com/viewtopic.php?f=41&p=22304&sid=dec854cc2aa50901b1ac9d5032cb737c">
+            Talk about the mod in TUG's official forums.
+          </a>
+        </p>
+
+<!--
         <p class="view"><a href="https://github.com/mercor-/PointOfInterest">View the Project on GitHub <small>mercor-/PointOfInterest</small></a></p>
-
+-->
 
         <ul>
-          <li><a href="https://github.com/mercor-/PointOfInterest/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/mercor-/PointOfInterest/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mercor-/PointOfInterest/zipball/dev">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mercor-/PointOfInterest/tarball/deb">Download <strong>TAR Ball</strong></a></li>
           <li><a href="https://github.com/mercor-/PointOfInterest">View On <strong>GitHub</strong></a></li>
         </ul>
       </header>
       <section>
+        <img src="images/PointOfInterest-v0-2-0_1024x576.jpg">
+
+
         <h1>
-<a name="point-of-interest-mod-for-tug" class="anchor" href="#point-of-interest-mod-for-tug"><span class="octicon octicon-link"></span></a>Point Of Interest Mod for <a href="http://www.nerdkingdom.com/">TUG</a>
-</h1>
+          <a name="point-of-interest-mod-for-tug" class="anchor" href="#point-of-interest-mod-for-tug">
+            <span class="octicon octicon-link"></span>
+          </a>Point Of Interest Mod for <a href="http://www.nerdkingdom.com/">TUG</a>
+        </h1>
 
-<p><strong>Version 0.1.0</strong></p>
+<p><strong>Version 0.2.4</strong></p>
 
+<!--
 <h2>
 <a name="required-tug-version" class="anchor" href="#required-tug-version"><span class="octicon octicon-link"></span></a>Required TUG version</h2>
+-->
 
-<p><strong>This version of Point Of Interest mod requires TUG InDev (Steam Beta Channel build) version 0.7.1.</strong></p>
-
-<p>The mod doesn't work with the latest normal build of TUG (0.6.4), as some of the required functionality is only implemented in the latest InDev build. As soon as TUG InDev build is merged into the normal build, this mod will be available for the normal build as well.</p>
+<p><strong>This version of Point Of Interest mod works with TUG alpha build 0.8.4.</strong></p>
 
 <h2>
 <a name="what-it-is" class="anchor" href="#what-it-is"><span class="octicon octicon-link"></span></a>What it is?</h2>
 
 <p>The mod allows players to mark certain locations as Points of Interest in order to help find those locations easily again on a later point. </p>
 
-<p><em>Note: This is very early version of the mod.</em></p>
+<p><em>Note: This is quite early version of the mod, and not everything is working just yet.</em></p>
 
 <p>It adds an invisible PointOfInterest.lua gameobject that player and other mods can spawn to the world (via this mod). The mod then keeps track of these objects and their location in relation to player.</p>
+
+<p>Most importantly it adds a compass to show the markers.</p>
 
 <h2>
 <a name="how-do-you-use-it" class="anchor" href="#how-do-you-use-it"><span class="octicon octicon-link"></span></a>How do you use it?</h2>
 
+<!--
 <p>Currently it only has very simple command line UI, that supports /slashcommands. This will be changing in the future.</p>
 
 <p>The /commands are:</p>
@@ -83,19 +99,41 @@
 <p>Removes the Point of Interest object matching the ID given as parameter for the command.</p>
 
 <p>The command line UI is very simplistic and is designed to be replaced with a real graphical UI in the near future.</p>
+-->
+
+<p>
+The compass shows you the main directions, and any created markers for Points of Interest that you have decided to mark down.
+</p>
+
+<p>
+New Points of Interest are creted by clicking the blue stone like button on the right side of the compass.
+</p>
+
+<h2>
+<a name="known-bugs" class="anchor" href="#known-bugs"><span class="octicon octicon-link"></span></a>Known bugs</h2>
+
+<ul>
+<li>This is dev build, and because of that there might be game breaking bugs left.</li>
+<li>There is no way to limit what PoI markers are shown on compass. Currently everything is shown, which gets messy after couple of markers.</li>
+</ul>
+
 
 <h2>
 <a name="what-is-coming-later" class="anchor" href="#what-is-coming-later"><span class="octicon octicon-link"></span></a>What is coming later?</h2>
 
 <ul>
-<li>Way to load and save Points of Interest. Currently all of the data is flushed away when new world is loaded/created.</li>
-<li>Graphical UI that will make it far easier to move between different Points of Interest.</li>
+  <li>Possibility to add name, description and different icon for created PointsOfInterests in GUI. Already possible in code.</li>
+  <li>Way to show the name of PoI to player. This will possibly be shown above compass when targeting PoI and when reaching it. Gramma's recipes style.</li>
+  <li>Way to list and edit existing Points of Interest.</li>
+  <li>Limit visible markers by their distance. Show only nearest n markers, or markers inside radius of m.</li>
 </ul>
 
+<!--
 <h2>
 <a name="how-can-i-create-my-own-ui-for-the-mod" class="anchor" href="#how-can-i-create-my-own-ui-for-the-mod"><span class="octicon octicon-link"></span></a>How can I create my own UI for the mod?</h2>
 
 <p>The UI part of the mod is separated from the rest of the mods functionality. This way it's very simple to create new UIs for the mod. The current console UI will become optional when the graphical UI will be implemented. As this is very early version the methods and object names are subject to change in the future.</p>
+-->
 
 <h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -123,12 +161,21 @@
 }
 </code></pre>
       </section>
+
       <footer>
         <p>This project is maintained by <a href="https://github.com/mercor-">mercor-</a></p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
+
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+
+    <a href="https://github.com/mercorii/pointofinterest">
+      <img style="position: absolute; top: 0; right: 0; border: 0;"
+      src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+      alt="Fork me on GitHub"
+      data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    </a>
+
   </body>
 </html>
