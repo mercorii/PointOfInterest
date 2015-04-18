@@ -122,10 +122,13 @@
                     <Property name="MaxSize" value="{{1,0},{1,0}}" />
                     <Property name="FrameEnabled" value="false" />
                     <Property name="BackgroundEnabled" value="false" />
-                    <Window type="TUGLook/Editbox" name="Editbox" >
+                    <Window type="PointOfInterest/MultiLineEditbox" name="Editbox" >
                         <Property name="Area" value="{{0,0},{0,0},{0.8,0},{1,0}}" />
                         <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="Text" >
+</Property>
                         <Property name="ReadOnly" value="true" />
+                        <Property name="WordWrap" value="false" />
                         <Property name="HorizontalAlignment" value="Right" />
                     </Window>
                     <Window type="TUGLook/Label" name="Label" >
@@ -138,13 +141,15 @@
                 </Window>
                 <Window type="TUGLook/StaticImage" name="Icon Picker" >
                     <Property name="Area" value="{{0,0},{0,0},{0.25,0},{1,0}}" />
-                    <Property name="Image" value="poi-options/compass_options_field_color" />
+                    <Property name="Image" value="poi-options/compass_options_field_color_612x377" />
                     <Property name="MaxSize" value="{{1,0},{1,0}}" />
                     <Property name="FrameEnabled" value="false" />
                     <Property name="BackgroundEnabled" value="false" />
                     <Window type="TUGLook/ImageButton" name="Forest Button" >
                         <Property name="Area" value="{{0,20},{0,20},{0,64},{0,64}}" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="NormalImage" value="poi-options/compass_options_panel_612x377" />
+                        <Property name="PushedImage" value="poi-options/compass_options_panel_612x377" />
                         <Window type="TUGLook/StaticImage" name="forest icon" >
                             <Property name="Area" value="{{0,0},{0,0},{0,26},{0,26}}" />
                             <Property name="Image" value="PoI-Icons/forest" />
@@ -160,6 +165,8 @@
                     <Window type="TUGLook/ImageButton" name="Triforce Button" >
                         <Property name="Area" value="{{0,-20},{0,20},{0,24},{0,64}}" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="NormalImage" value="poi-options/compass_options_panel_612x377" />
+                        <Property name="PushedImage" value="poi-options/compass_options_panel_612x377" />
                         <Property name="HorizontalAlignment" value="Right" />
                         <Window type="TUGLook/StaticImage" name="triforce icon" >
                             <Property name="Area" value="{{0,0},{0,0},{0,24},{0,20}}" />
@@ -176,6 +183,8 @@
                     <Window type="TUGLook/ImageButton" name="Sheep Button" >
                         <Property name="Area" value="{{0,-20},{0,70},{0,24},{0,114}}" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="NormalImage" value="poi-options/compass_options_panel_612x377" />
+                        <Property name="PushedImage" value="poi-options/compass_options_panel_612x377" />
                         <Property name="HorizontalAlignment" value="Right" />
                         <Window type="TUGLook/StaticImage" name="sheep icon" >
                             <Property name="Area" value="{{0,0},{0,0},{0,25},{0,19}}" />
@@ -192,6 +201,8 @@
                     <Window type="TUGLook/ImageButton" name="Panda Button" >
                         <Property name="Area" value="{{0,20},{0,70},{0,64},{0,114}}" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="NormalImage" value="poi-options/compass_options_panel_612x377" />
+                        <Property name="PushedImage" value="poi-options/compass_options_panel_612x377" />
                         <Window type="TUGLook/StaticImage" name="panda icon" >
                             <Property name="Area" value="{{0,0},{0,0},{0,24},{0,25}}" />
                             <Property name="Image" value="PoI-Icons/panda" />
@@ -207,6 +218,8 @@
                     <Window type="TUGLook/ImageButton" name="Lighthouse Button" >
                         <Property name="Area" value="{{0,20},{0,124},{0,64},{0,168}}" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="NormalImage" value="poi-options/compass_options_panel_612x377" />
+                        <Property name="PushedImage" value="poi-options/compass_options_panel_612x377" />
                         <Window type="TUGLook/StaticImage" name="lighthouse icon" >
                             <Property name="Area" value="{{0,0},{0,0},{0,24},{0,23}}" />
                             <Property name="Image" value="PoI-Icons/lighthouse" />
@@ -226,12 +239,14 @@
                     <Property name="FrameEnabled" value="false" />
                     <Property name="BackgroundEnabled" value="false" />
                     <Property name="VerticalAlignment" value="Bottom" />
-                    <Window type="TUGLook/MultiLineEditbox" name="Editbox" >
+                    <Window type="PointOfInterest/MultiLineEditbox" name="Editbox" >
                         <Property name="Area" value="{{0,0},{0,0},{1,0},{0.8,0}}" />
                         <Property name="Font" value="DejaVuSans-10" />
                         <Property name="Text" >
 </Property>
+                        <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
                         <Property name="VerticalAlignment" value="Bottom" />
+                        <Property name="SelectedTextColour" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
                     </Window>
                     <Window type="TUGLook/Label" name="Label" >
                         <Property name="Area" value="{{0,0},{0,0},{0,128},{0,32}}" />
@@ -246,9 +261,12 @@
                     <Property name="MaxSize" value="{{1,0},{1,0}}" />
                     <Property name="FrameEnabled" value="false" />
                     <Property name="BackgroundEnabled" value="false" />
-                    <Window type="TUGLook/Editbox" name="Editbox" >
+                    <Window type="PointOfInterest/MultiLineEditbox" name="Editbox" >
                         <Property name="Area" value="{{0,0},{0,0},{0.8,0},{1,0}}" />
                         <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="Text" >
+</Property>
+                        <Property name="WordWrap" value="false" />
                         <Property name="HorizontalAlignment" value="Right" />
                     </Window>
                     <Window type="TUGLook/Label" name="Label" >
@@ -259,32 +277,46 @@
                         <Property name="HorzFormatting" value="LeftAligned" />
                     </Window>
                 </Window>
-                <Window type="TUGLook/Button" name="Close Button" >
-                    <Property name="Area" value="{{0,0},{0,0},{0,32},{0,32}}" />
-                    <Property name="Font" value="DevinneSwash-14" />
-                    <Property name="Text" value="X" />
-                    <Property name="HoverImage" value="poi-options/compass_options_field_color" />
-                    <Property name="NormalImage" value="poi-options/compass_options_field_color" />
-                    <Property name="PushedImage" value="poi-options/compass_options_field_color" />
-                    <Property name="HorizontalAlignment" value="Right" />
-                </Window>
                 <Window type="TUGLook/Button" name="Create PoI Button" >
                     <Property name="Area" value="{{0,0},{0,0},{0,64},{0,32}}" />
                     <Property name="Font" value="DevinneSwash-10" />
                     <Property name="Text" value="Create" />
-                    <Property name="HoverImage" value="poi-options/compass_options_field_color" />
-                    <Property name="NormalImage" value="poi-options/compass_options_field_color" />
-                    <Property name="PushedImage" value="poi-options/compass_options_field_color" />
+                    <Property name="HoverImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="NormalImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="PushedImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="HoverTextColour" value="tl:FF1E1E1E tr:FF1E1E1E bl:FF1E1E1E br:FF1E1E1E" />
+                    <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                    <Property name="PushedTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
                     <Property name="VerticalAlignment" value="Bottom" />
                     <Property name="HorizontalAlignment" value="Right" />
                 </Window>
             </Window>
-            <Window type="TUGLook/Label" name="Options Title" >
-                <Property name="Area" value="{{0,0},{0,10},{0.8,0},{0,42}}" />
-                <Property name="Font" value="DevinneSwash-14" />
-                <Property name="Text" value="Create Point of Interest" />
+            <Window type="TUGLook/StaticImage" name="Header" >
+                <Property name="Area" value="{{0,0},{0,0},{1,0},{0,50}}" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
-                <Property name="HorizontalAlignment" value="Centre" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Window type="TUGLook/Label" name="Options Title" >
+                    <Property name="Area" value="{{0,0},{0,0},{0.8,0},{0,32}}" />
+                    <Property name="Font" value="DevinneSwash-14" />
+                    <Property name="Text" value="Create Point of Interest" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="VerticalAlignment" value="Centre" />
+                    <Property name="HorizontalAlignment" value="Centre" />
+                </Window>
+                <Window type="TUGLook/Button" name="Close Button" >
+                    <Property name="Area" value="{{0,-10},{0,0},{0,22},{0,32}}" />
+                    <Property name="Font" value="DevinneSwash-14" />
+                    <Property name="Text" value="X" />
+                    <Property name="HoverImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="NormalImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="PushedImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="HoverTextColour" value="tl:FF1E1E1E tr:FF1E1E1E bl:FF1E1E1E br:FF1E1E1E" />
+                    <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                    <Property name="PushedTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                    <Property name="VerticalAlignment" value="Centre" />
+                    <Property name="HorizontalAlignment" value="Right" />
+                </Window>
             </Window>
         </Window>
     </Window>

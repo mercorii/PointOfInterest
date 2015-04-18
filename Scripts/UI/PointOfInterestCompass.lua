@@ -44,11 +44,12 @@ function PointOfInterestCompass:PostLoad(args)
   self.m_options_window_visible = false
 
   self.m_create_poi_button = self:GetChild("Options Window/Options Container/Create PoI Button")
-  self.m_close_options_window_button = self:GetChild("Options Window/Options Container/Close Button")
+  self.m_close_options_window_button = self:GetChild("Options Window/Header/Close Button")
 
   -- options >> fields
   self.m_title_field = self:GetChild("Options Window/Options Container/Title Field/Editbox")
   self.m_type_field = self:GetChild("Options Window/Options Container/Type Field/Editbox")
+  self.m_new_poi_type = nil
   self.m_description_field = self:GetChild("Options Window/Options Container/Description Field/Editbox")
 
   -- options > type buttons
@@ -107,13 +108,14 @@ function PointOfInterestCompass:PostLoad(args)
       EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest created.")
     end
     self:CreatePointOfInterest()
+    self:HideOptionsWindow()
   end)
 
-  self.m_type_sheep_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("sheep") end) -- Sheep
-  self.m_type_panda_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("panda") end) -- danger
-  self.m_type_triforce_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("triforce") end) -- Spiritual location
-  self.m_type_forest_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("forest") end) -- Landmark
-  self.m_type_lighthouse_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("lighthouse") end) -- Building
+  self.m_type_sheep_button:subscribeEvent("MouseClick", function( args ) self:SetNewPoIType("sheep") end) -- Sheep
+  self.m_type_panda_button:subscribeEvent("MouseClick", function( args ) self:SetNewPoIType("panda") end) -- danger
+  self.m_type_triforce_button:subscribeEvent("MouseClick", function( args ) self:SetNewPoIType("triforce") end) -- Spiritual location
+  self.m_type_forest_button:subscribeEvent("MouseClick", function( args ) self:SetNewPoIType("forest") end) -- Landmark
+  self.m_type_lighthouse_button:subscribeEvent("MouseClick", function( args ) self:SetNewPoIType("lighthouse") end) -- Building
 end
 
 -------------------------------------------------------------------------------
@@ -205,7 +207,7 @@ function PointOfInterestCompass:CreatePointOfInterest()
 
   local title = self.m_title_field:getText()
   local description = self.m_description_field:getText()
-  local poiType = self.m_type_field:getText()
+  local poiType = self.m_new_poi_type
 
   local poi = EternusEngine.mods.PointOfInterest.Main:CreatePointOfInterest(pos, radius, title, description, poiType)
   if poi then
@@ -232,7 +234,7 @@ function PointOfInterestCompass:AddPointOfInterest(poi)
   local poi_item = EternusEngine.UI.Windows:createWindow("TUGLook/StaticImage")
   poi_item:setProperty("Area", "{{-1,0},{0,0},{-1,26},{0,26}}")
   poi_item:setProperty("FrameEnabled", "false")
-  poi_item:setProperty("Image", "PoI-Icons/" .. poi.type.name)
+  poi_item:setProperty("Image", poi.type.imageName)
   poi_item:setProperty("MaxSize", "{{1,0},{1,0}}")
   poi_item:setProperty("BackgroundEnabled", "false")
   poi_item:setProperty("VerticalAlignment", "Centre")
@@ -284,6 +286,15 @@ end
 -------------------------------------------------------------------------------
 function PointOfInterestCompass:SetText(text)
 --  self.m_text:setText(text)
+end
+
+-------------------------------------------------------------------------------
+--- Set the poi type for any new poi to be created
+-- @param typeName Name of the type
+function PointOfInterestCompass:SetNewPoIType( typeName )
+  local type = EternusEngine.mods.PointOfInterest.Main:getPoIType(typeName)
+  self.m_type_field:setText(type.title)
+  self.m_new_poi_type = type.name
 end
 
 -------------------------------------------------------------------------------

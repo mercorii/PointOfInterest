@@ -5,6 +5,11 @@
 	<Imageset name="PoI-Directions" filename="poi-directions.imageset" />
 	<Imageset name="PoI-Options" filename="poi-options.imageset" />
 
+	<LookNFeel filename="PointOfInterest.looknfeel" />
+
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />
+
+	<!-- Edit Boxes -->
+	<FalagardMapping windowType="PointOfInterest/MultiLineEditbox"        targetType="CEGUI/MultiLineEditbox"  renderer="Core/MultiLineEditbox"  lookNFeel="PointOfInterest/MultiLineEditbox" />
 
 </GUIScheme>

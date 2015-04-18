@@ -22,11 +22,11 @@ function PointOfInterestMain:Initialize()
 
   -- allowed PoI types -- TODO: this should probably come from a config file or something, probably not from gameobjects data file.
   PointOfInterestMain.poiTypes = {
-                      {name = "forest", description = "Landmark"},
-                      {name = "panda", description = "Danger"},
-                      {name = "lighthouse", description = "Building"},
-                      {name = "triforce", description = "Altar"},
-                      {name = "sheep", description = "Resource"}
+                      {name = "forest", 		imageName = "PoI-Icons/forest", 		title = "Landmark", description = "Landmark"},
+                      {name = "panda", 			imageName = "PoI-Icons/panda", 			title = "Danger", 	description = "Danger"},
+                      {name = "lighthouse", imageName = "PoI-Icons/lighthouse", title = "Building", description = "Building"},
+                      {name = "triforce", 	imageName = "PoI-Icons/triforce", 	title = "Altar", 		description = "Altar"},
+                      {name = "sheep", 			imageName = "PoI-Icons/sheep", 			title = "Resource", description = "Resource"}
   }
 
   PointOfInterestMain.defaultType = PointOfInterestMain.poiTypes[1].name -- PoI always has type, users can add new types (acts like category)
@@ -185,6 +185,8 @@ function PointOfInterestMain:PoITypeAllowed(poiTypeToCheck)
     if poiType.name == poiTypeToCheck then
 			local type = {}
 			type.name = poiType.name
+			type.imageName = poiType.imageName
+			type.title = poiType.title
 			type.description = poiType.description
       return type
     end
@@ -202,6 +204,8 @@ function PointOfInterestMain:getPoIType(typeName)
 	if type == nil then
 		type = {}
 		type.name = PointOfInterestMain.poiTypes[1].name -- (self:PoITypeAllowed(poiType) and poiType or self.defaultType)
+		type.imageName = PointOfInterestMain.poiTypes[1].imageName
+		type.title = PointOfInterestMain.poiTypes[1].title
 		type.description = PointOfInterestMain.poiTypes[1].description
 	end
 

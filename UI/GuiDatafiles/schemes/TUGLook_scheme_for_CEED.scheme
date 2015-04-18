@@ -10,7 +10,20 @@
 		Original file can be found in: Game\Core\UI\schemes\TUGLook.scheme
 		-->
 
+	<!-- Imagesets -->
+	<!--
+		You have to make a local copy of TugMenus.imageset and tug_menu_elements.png
+		for your mod as the imageset file expects itself to be found in the
+		imagesets folder defined in .projects file.
+
+		Other possible way would be to define in .project file imageset folder to
+		be in ../../../../Game/Core/UI/GuiDatafiles/imagesets and just add folder
+		structure to all your own imageset declarations.
+		-->
 	<Imageset name="TUGLook" filename="TugMenus_for_CEED.imageset" />
+
+	<!-- Fonts -->
+	<!-- Font path set in .project file to be: TUG\Game\Core\Ui\GuiDatafiles\fonts -->
 	<Font name="DejaVuSans-8" filename="DejaVuSans-8.font" />
 	<Font name="DejaVuSans-10" filename="DejaVuSans-10.font" />
 	<Font name="DejaVuSans-12" filename="DejaVuSans-12.font" />
@@ -21,9 +34,10 @@
 	<Font name="DevinneSwash-14" filename="DevinneSwash-14.font" />
 	<Font name="DevinneSwash-20" filename="DevinneSwash-20.font" />
 
-<!--	<LookNFeel filename="TUGLook_looknfeel_for_CEED.looknfeel" /> -->
-	<LookNFeel filename="TUGLook.looknfeel" />
-	<LookNFeel filename="TUGGameElements.looknfeel" />
+	<!-- LookNFeel -->
+	<!-- Expected path for looknfeel folder (defined in .project file): TUG\Mods\Mod_name\UI\GuiDatafiles\looknfeel  -->
+	<LookNFeel filename="../../../../../Game/Core/UI/GuiDatafiles/looknfeel/TUGLook.looknfeel" />
+	<LookNFeel filename="../../../../../Game/Core/UI/GuiDatafiles/looknfeel/TUGGameElements.looknfeel" />
 
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />
 

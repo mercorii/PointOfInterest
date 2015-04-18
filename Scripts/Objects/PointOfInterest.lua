@@ -78,7 +78,14 @@ function PointOfInterest:Save(outData)
 
 	outData.id = self.id
 	outData.title = self.title
-	outData.type = self.type
+
+  -- TODO: Do this with some deep copy function. This is horrible.
+	outData.type = {}
+	outData.type.name = self.type and self.type.name or nil
+	outData.type.imageName = self.type and self.type.imageName or nil
+	outData.type.title = self.type and self.type.title or nil
+	outData.type.description = self.type and self.type.description or nil
+
 	outData.description = self.description
 	outData.discovered = self.discovered
 end
@@ -91,7 +98,14 @@ function PointOfInterest:Restore(inData, version)
 
 	self.id = inData.id
 	self.title = inData.title
-  self.type = inData.type
+
+	-- TODO: Do this with some deep copy function. This is horrible.
+	self.type = {}
+	self.type.name = inData.type.name
+	self.type.imageName = inData.type.imageName
+	self.type.title = inData.type.title
+	self.type.description = inData.type.description
+
   self.description = inData.description
   self.discovered = inData.discovered
 	self.m_restored = true -- set the m_restored to true (used internally)
