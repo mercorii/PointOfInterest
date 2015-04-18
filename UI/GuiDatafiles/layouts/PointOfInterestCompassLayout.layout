@@ -4,21 +4,17 @@
     <Window type="DefaultWindow" name="PointOfInterestCompassLayout" >
         <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
         <Property name="MaxSize" value="{{1,0},{1,0}}" />
-<!--        <Property name="MousePassThroughEnabled" value="true" /> -->
-<!--        <Property name="DistributeCapturedInputs" value="true" /> -->
-<!--        <Property name="MouseInputPropagationEnabled" value="true" /> -->
-        <Property name="BackgroundEnabled" value="false" />
         <Window type="TUGLook/StaticImage" name="Compass" >
-            <Property name="Area" value="{{0,0},{0.03,0},{0,530},{0.03,73}}" />
+            <Property name="Area" value="{{0,0},{0,60},{0,530},{0,133}}" />
             <Property name="Image" value="PoI-Compass/compass_bar" />
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="FrameEnabled" value="false" />
             <Property name="DragDropTarget" value="false" />
             <Property name="BackgroundEnabled" value="false" />
+            <Property name="RiseOnClickEnabled" value="false" />
             <Property name="HorizontalAlignment" value="Centre" />
             <Property name="MousePassThroughEnabled" value="true" />
             <Property name="DistributeCapturedInputs" value="true" />
-            <Property name="RiseOnClickEnabled" value="false" />
             <Property name="MouseInputPropagationEnabled" value="true" />
             <Window type="TUGLook/StaticImage" name="North" >
                 <Property name="Area" value="{{-1,0},{0,0},{-1,18},{0,18}}" />
@@ -58,24 +54,24 @@
                 <Property name="HorizontalAlignment" value="Centre" />
             </Window>
             <Window type="TUGLook/StaticImage" name="Radar" >
-              <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
-              <Property name="MaxSize" value="{{1,0},{1,0}}" />
-              <Property name="FrameEnabled" value="false" />
-              <Property name="BackgroundEnabled" value="false" />
-              <Window type="TUGLook/StaticImage" name="PoI Item" >
-                  <Property name="Area" value="{{-1,0},{0,0},{-1,26},{0,26}}" />
-                  <Property name="Image" value="PoI-Icons/forest" />
-                  <Property name="MaxSize" value="{{1,0},{1,0}}" />
-                  <Property name="FrameEnabled" value="false" />
-                  <Property name="BackgroundEnabled" value="false" />
-                  <Property name="VerticalAlignment" value="Centre" />
-                  <Property name="HorizontalAlignment" value="Centre" />
-              </Window>
+                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Window type="TUGLook/StaticImage" name="PoI Item" >
+                    <Property name="Area" value="{{-1,0},{0,0},{-1,26},{0,26}}" />
+                    <Property name="Image" value="PoI-Icons/forest" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Property name="VerticalAlignment" value="Centre" />
+                    <Property name="HorizontalAlignment" value="Centre" />
+                </Window>
             </Window>
             <Window type="TUGLook/ImageButton" name="PoI Button" >
                 <Property name="Area" value="{{0.947,0},{0,0},{0.947,35},{0,35}}" />
-                <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="Text" value="      " />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="AspectMode" value="Expand" />
                 <Property name="HoverImage" value="PoI-Compass/compass_gem_hover" />
                 <Property name="NormalImage" value="PoI-Compass/compass_gem_normal" />
@@ -83,6 +79,212 @@
                 <Property name="DisabledImage" value="PoI-Compass/compass_gem_disabled" />
                 <Property name="ClippedByParent" value="false" />
                 <Property name="VerticalAlignment" value="Centre" />
+            </Window>
+            <Window type="TUGLook/Label" name="PoI Label" >
+                <Property name="Area" value="{{0,0},{0,0},{0,320},{0,24}}" />
+                <Property name="Font" value="DevinneSwash-12" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+        </Window>
+        <Window type="TUGLook/StaticImage" name="Location Scroll" >
+            <Property name="Area" value="{{0,0},{0,15},{0,411},{0,55}}" />
+            <Property name="Image" value="poi-options/location_name_scroll_411x55" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="FrameEnabled" value="false" />
+            <Property name="BackgroundEnabled" value="false" />
+            <Property name="HorizontalAlignment" value="Centre" />
+            <Window type="TUGLook/Label" name="Label" >
+                <Property name="Area" value="{{0,0},{0,0},{0,300},{1,0}}" />
+                <Property name="Font" value="DevinneSwash-20" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="VerticalAlignment" value="Centre" />
+                <Property name="HorizontalAlignment" value="Centre" />
+            </Window>
+        </Window>
+        <Window type="TUGLook/StaticImage" name="Options Window" >
+            <Property name="Area" value="{{0,0},{0,0},{0,612},{0,377}}" />
+            <Property name="Image" value="poi-options/compass_options_panel_612x377" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="FrameEnabled" value="false" />
+            <Property name="BackgroundEnabled" value="false" />
+            <Property name="VerticalAlignment" value="Centre" />
+            <Property name="HorizontalAlignment" value="Right" />
+            <Window type="TUGLook/StaticImage" name="Options Container" >
+                <Property name="Area" value="{{0,0},{0,-20},{0,552},{0,287}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Property name="VerticalAlignment" value="Bottom" />
+                <Property name="HorizontalAlignment" value="Centre" />
+                <Window type="TUGLook/StaticImage" name="Type Field" >
+                    <Property name="Area" value="{{0.3,0},{0,0},{0.85,0},{0,32}}" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Window type="TUGLook/Editbox" name="Editbox" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.8,0},{1,0}}" />
+                        <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="ReadOnly" value="true" />
+                        <Property name="HorizontalAlignment" value="Right" />
+                    </Window>
+                    <Window type="TUGLook/Label" name="Label" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.2,0},{1,0}}" />
+                        <Property name="Font" value="DevinneSwash-10" />
+                        <Property name="Text" value="Type:" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                    </Window>
+                </Window>
+                <Window type="TUGLook/StaticImage" name="Icon Picker" >
+                    <Property name="Area" value="{{0,0},{0,0},{0.25,0},{1,0}}" />
+                    <Property name="Image" value="poi-options/compass_options_field_color" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Window type="TUGLook/ImageButton" name="Forest Button" >
+                        <Property name="Area" value="{{0,20},{0,20},{0,64},{0,64}}" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Window type="TUGLook/StaticImage" name="forest icon" >
+                            <Property name="Area" value="{{0,0},{0,0},{0,26},{0,26}}" />
+                            <Property name="Image" value="PoI-Icons/forest" />
+                            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                            <Property name="FrameEnabled" value="false" />
+                            <Property name="BackgroundEnabled" value="false" />
+                            <Property name="VerticalAlignment" value="Centre" />
+                            <Property name="HorizontalAlignment" value="Centre" />
+                            <Property name="MousePassThroughEnabled" value="true" />
+                            <Property name="MouseInputPropagationEnabled" value="true" />
+                        </Window>
+                    </Window>
+                    <Window type="TUGLook/ImageButton" name="Triforce Button" >
+                        <Property name="Area" value="{{0,-20},{0,20},{0,24},{0,64}}" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorizontalAlignment" value="Right" />
+                        <Window type="TUGLook/StaticImage" name="triforce icon" >
+                            <Property name="Area" value="{{0,0},{0,0},{0,24},{0,20}}" />
+                            <Property name="Image" value="PoI-Icons/triforce" />
+                            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                            <Property name="FrameEnabled" value="false" />
+                            <Property name="BackgroundEnabled" value="false" />
+                            <Property name="VerticalAlignment" value="Centre" />
+                            <Property name="HorizontalAlignment" value="Centre" />
+                            <Property name="MousePassThroughEnabled" value="true" />
+                            <Property name="MouseInputPropagationEnabled" value="true" />
+                        </Window>
+                    </Window>
+                    <Window type="TUGLook/ImageButton" name="Sheep Button" >
+                        <Property name="Area" value="{{0,-20},{0,70},{0,24},{0,114}}" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorizontalAlignment" value="Right" />
+                        <Window type="TUGLook/StaticImage" name="sheep icon" >
+                            <Property name="Area" value="{{0,0},{0,0},{0,25},{0,19}}" />
+                            <Property name="Image" value="PoI-Icons/sheep" />
+                            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                            <Property name="FrameEnabled" value="false" />
+                            <Property name="BackgroundEnabled" value="false" />
+                            <Property name="VerticalAlignment" value="Centre" />
+                            <Property name="HorizontalAlignment" value="Centre" />
+                            <Property name="MousePassThroughEnabled" value="true" />
+                            <Property name="MouseInputPropagationEnabled" value="true" />
+                        </Window>
+                    </Window>
+                    <Window type="TUGLook/ImageButton" name="Panda Button" >
+                        <Property name="Area" value="{{0,20},{0,70},{0,64},{0,114}}" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Window type="TUGLook/StaticImage" name="panda icon" >
+                            <Property name="Area" value="{{0,0},{0,0},{0,24},{0,25}}" />
+                            <Property name="Image" value="PoI-Icons/panda" />
+                            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                            <Property name="FrameEnabled" value="false" />
+                            <Property name="BackgroundEnabled" value="false" />
+                            <Property name="VerticalAlignment" value="Centre" />
+                            <Property name="HorizontalAlignment" value="Centre" />
+                            <Property name="MousePassThroughEnabled" value="true" />
+                            <Property name="MouseInputPropagationEnabled" value="true" />
+                        </Window>
+                    </Window>
+                    <Window type="TUGLook/ImageButton" name="Lighthouse Button" >
+                        <Property name="Area" value="{{0,20},{0,124},{0,64},{0,168}}" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Window type="TUGLook/StaticImage" name="lighthouse icon" >
+                            <Property name="Area" value="{{0,0},{0,0},{0,24},{0,23}}" />
+                            <Property name="Image" value="PoI-Icons/lighthouse" />
+                            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                            <Property name="FrameEnabled" value="false" />
+                            <Property name="BackgroundEnabled" value="false" />
+                            <Property name="VerticalAlignment" value="Centre" />
+                            <Property name="HorizontalAlignment" value="Centre" />
+                            <Property name="MousePassThroughEnabled" value="true" />
+                            <Property name="MouseInputPropagationEnabled" value="true" />
+                        </Window>
+                    </Window>
+                </Window>
+                <Window type="TUGLook/StaticImage" name="Description Field" >
+                    <Property name="Area" value="{{0.3,0},{0,0},{0.85,0},{0,199}}" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Property name="VerticalAlignment" value="Bottom" />
+                    <Window type="TUGLook/MultiLineEditbox" name="Editbox" >
+                        <Property name="Area" value="{{0,0},{0,0},{1,0},{0.8,0}}" />
+                        <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="Text" >
+</Property>
+                        <Property name="VerticalAlignment" value="Bottom" />
+                    </Window>
+                    <Window type="TUGLook/Label" name="Label" >
+                        <Property name="Area" value="{{0,0},{0,0},{0,128},{0,32}}" />
+                        <Property name="Font" value="DevinneSwash-10" />
+                        <Property name="Text" value="Description:" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                    </Window>
+                </Window>
+                <Window type="TUGLook/StaticImage" name="Title Field" >
+                    <Property name="Area" value="{{0.3,0},{0,60},{0.85,0},{0,92}}" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Window type="TUGLook/Editbox" name="Editbox" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.8,0},{1,0}}" />
+                        <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="HorizontalAlignment" value="Right" />
+                    </Window>
+                    <Window type="TUGLook/Label" name="Label" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.2,0},{1,0}}" />
+                        <Property name="Font" value="DevinneSwash-10" />
+                        <Property name="Text" value="Title:" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                    </Window>
+                </Window>
+                <Window type="TUGLook/Button" name="Close Button" >
+                    <Property name="Area" value="{{0,0},{0,0},{0,32},{0,32}}" />
+                    <Property name="Font" value="DevinneSwash-14" />
+                    <Property name="Text" value="X" />
+                    <Property name="HoverImage" value="poi-options/compass_options_field_color" />
+                    <Property name="NormalImage" value="poi-options/compass_options_field_color" />
+                    <Property name="PushedImage" value="poi-options/compass_options_field_color" />
+                    <Property name="HorizontalAlignment" value="Right" />
+                </Window>
+                <Window type="TUGLook/Button" name="Create PoI Button" >
+                    <Property name="Area" value="{{0,0},{0,0},{0,64},{0,32}}" />
+                    <Property name="Font" value="DevinneSwash-10" />
+                    <Property name="Text" value="Create" />
+                    <Property name="HoverImage" value="poi-options/compass_options_field_color" />
+                    <Property name="NormalImage" value="poi-options/compass_options_field_color" />
+                    <Property name="PushedImage" value="poi-options/compass_options_field_color" />
+                    <Property name="VerticalAlignment" value="Bottom" />
+                    <Property name="HorizontalAlignment" value="Right" />
+                </Window>
+            </Window>
+            <Window type="TUGLook/Label" name="Options Title" >
+                <Property name="Area" value="{{0,0},{0,10},{0.8,0},{0,42}}" />
+                <Property name="Font" value="DevinneSwash-14" />
+                <Property name="Text" value="Create Point of Interest" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="HorizontalAlignment" value="Centre" />
             </Window>
         </Window>
     </Window>

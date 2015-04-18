@@ -1,0 +1,5 @@
+<Imageset autoScaled="false" imagefile="poi-options.png" name="poi-options" nativeHorzRes="616" nativeVertRes="442" version="2">
+    <Image height="1" name="compass_options_field_color" width="1" xPos="2" yPos="2" />
+    <Image height="377" name="compass_options_panel_612x377" width="612" xPos="2" yPos="63" />
+    <Image height="59" name="location_name_scroll_411x55" width="411" xPos="5" yPos="2" />
+</Imageset>

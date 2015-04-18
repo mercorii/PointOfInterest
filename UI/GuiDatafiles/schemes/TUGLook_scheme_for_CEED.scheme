@@ -10,7 +10,20 @@
 		Original file can be found in: Game\Core\UI\schemes\TUGLook.scheme
 		-->
 
-	<LookNFeel filename="TUGLook_looknfeel_for_CEED.looknfeel" />
+	<Imageset name="TUGLook" filename="TugMenus_for_CEED.imageset" />
+	<Font name="DejaVuSans-8" filename="DejaVuSans-8.font" />
+	<Font name="DejaVuSans-10" filename="DejaVuSans-10.font" />
+	<Font name="DejaVuSans-12" filename="DejaVuSans-12.font" />
+	<Font name="DejaVuSans-14" filename="DejaVuSans-14.font" />
+	<Font name="DevinneSwash-8" filename="DevinneSwash-8.font" />
+	<Font name="DevinneSwash-10" filename="DevinneSwash-10.font" />
+	<Font name="DevinneSwash-12" filename="DevinneSwash-12.font" />
+	<Font name="DevinneSwash-14" filename="DevinneSwash-14.font" />
+	<Font name="DevinneSwash-20" filename="DevinneSwash-20.font" />
+
+<!--	<LookNFeel filename="TUGLook_looknfeel_for_CEED.looknfeel" /> -->
+	<LookNFeel filename="TUGLook.looknfeel" />
+	<LookNFeel filename="TUGGameElements.looknfeel" />
 
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />
 

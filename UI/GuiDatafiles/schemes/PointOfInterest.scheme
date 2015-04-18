@@ -3,6 +3,7 @@
 	<Imageset name="PoI-Compass" filename="poi-compass.imageset" />
 	<Imageset name="PoI-Icons" filename="poi-icons.imageset" />
 	<Imageset name="PoI-Directions" filename="poi-directions.imageset" />
+	<Imageset name="PoI-Options" filename="poi-options.imageset" />
 
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />
 

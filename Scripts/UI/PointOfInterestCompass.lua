@@ -20,8 +20,44 @@ function PointOfInterestCompass:PostLoad(args)
   self.m_east = self:GetChild("Compass/East")
   self.m_south = self:GetChild("Compass/South")
   self.m_west = self:GetChild("Compass/West")
-  self.m_poi_button = self:GetChild("Compass/PoI Button")
+  self.m_options_button = self:GetChild("Compass/PoI Button")
   self.m_radar = self:GetChild("Compass/Radar")
+
+  -- target poi label
+  self.m_target_poi_label = self:GetChild("Compass/PoI Label")
+  self.m_target_poi_label:setProperty("Visible", "false")
+  self.m_target_poi_label_visible = false
+  self.m_poi_id_in_target_poi_label = nil
+
+  -- location scroll
+  self.m_location_scroll = self:GetChild("Location Scroll")
+  self.m_location_scroll:setProperty("Visible", "false")
+  self.m_location_scroll_visible = false
+  self.m_poi_id_in_location_scroll = nil
+
+  self.m_location_scroll_text = self:GetChild("Location Scroll/Label")
+  self.m_location_scroll_text:setText("")
+
+  -- options
+  self.m_options_window = self:GetChild("Options Window")
+  self.m_options_window:setProperty("Visible", "false")
+  self.m_options_window_visible = false
+
+  self.m_create_poi_button = self:GetChild("Options Window/Options Container/Create PoI Button")
+  self.m_close_options_window_button = self:GetChild("Options Window/Options Container/Close Button")
+
+  -- options >> fields
+  self.m_title_field = self:GetChild("Options Window/Options Container/Title Field/Editbox")
+  self.m_type_field = self:GetChild("Options Window/Options Container/Type Field/Editbox")
+  self.m_description_field = self:GetChild("Options Window/Options Container/Description Field/Editbox")
+
+  -- options > type buttons
+  self.m_type_sheep_button = self:GetChild("Options Window/Options Container/Icon Picker/Sheep Button")
+  self.m_type_triforce_button = self:GetChild("Options Window/Options Container/Icon Picker/Triforce Button")
+  self.m_type_panda_button = self:GetChild("Options Window/Options Container/Icon Picker/Panda Button")
+  self.m_type_lighthouse_button = self:GetChild("Options Window/Options Container/Icon Picker/Lighthouse Button")
+  self.m_type_forest_button = self:GetChild("Options Window/Options Container/Icon Picker/Forest Button")
+
 
   -- radar items
   self.m_items = {}
@@ -44,14 +80,40 @@ function PointOfInterestCompass:PostLoad(args)
   --
   -- self.m_text:setText("testing")
 
-	self.m_poi_button:subscribeEvent("MouseClick", function( args )
-    self:Debug("PointOfInterestMod's ui text was clicked")
+	self.m_options_button:subscribeEvent("MouseClick", function( args )
+    self:Debug("PointOfInterestMod's options button was clicked")
     if EternusEngine.mods.PointOfInterest.ConsoleUI then
-		  EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest created.")
+		  EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest options btn clicked.")
+    end
+
+    if self.m_options_window_visible then
+      self:HideOptionsWindow()
+    else
+      self:ShowOptionsWindow()
+    end
+  end)
+
+  self.m_close_options_window_button:subscribeEvent("MouseClick", function( args )
+    self:Debug("PointOfInterestMod's close options button was clicked")
+    if EternusEngine.mods.PointOfInterest.ConsoleUI then
+      EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest options's x btn clicked.")
+    end
+    self:HideOptionsWindow()
+  end)
+
+  self.m_create_poi_button:subscribeEvent("MouseClick", function( args )
+    self:Debug("PointOfInterestMod's create poi button was clicked")
+    if EternusEngine.mods.PointOfInterest.ConsoleUI then
+      EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest created.")
     end
     self:CreatePointOfInterest()
   end)
 
+  self.m_type_sheep_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("sheep") end) -- Sheep
+  self.m_type_panda_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("panda") end) -- danger
+  self.m_type_triforce_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("triforce") end) -- Spiritual location
+  self.m_type_forest_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("forest") end) -- Landmark
+  self.m_type_lighthouse_button:subscribeEvent("MouseClick", function( args ) self.m_type_field:setText("lighthouse") end) -- Building
 end
 
 -------------------------------------------------------------------------------
@@ -77,19 +139,58 @@ function PointOfInterestCompass:Update( dt )
 
   -- Position items
   local dirDis = nil
+
+  local nearest = nil
+  local distNearest = nil
+
+  local target = nil
+  local targetOffset = nil
+
   for i, poi_item in ipairs(self.m_items) do
     dirDis = EternusEngine.mods.PointOfInterest.Main:calculatePoIDirectionDistance(playerPos, poi_item.poi)
-    if dirDis and dirDis.distance > 1 then
+    if dirDis then
+      if dirDis.distance > poi_item.poi.radius then
 --      local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
 --      self.m_text:setText("pos: (" .. playerPos:x() .. "," .. playerPos:z() .. "), \npoiPos: (" .. poi_item.poi:NKGetPosition():x() .. "," .. poi_item.poi:NKGetPosition():z() .. "), \nfwd: (" .. fwd:x() .. "," .. fwd:z() .. "), \ndirDis.direction: " .. dirDis.direction .. ", \ncompass position: " .. (dirDis.direction / math.pi))
 
-      -- Convert PoI direction in radians to a value in range [-1, 1].
-      -- Only items with value in range [-0.5, 0.5] are shown in compass.
-      -- Others are behind player's compass view (of 180 degrees), and are not shown.
-      local compassX = dirDis.direction / math.pi
+        -- Convert PoI direction in radians to a value in range [-1, 1].
+        -- Only items with value in range [-0.5, 0.5] are shown in compass.
+        -- Others are behind player's compass view (of 180 degrees), and are not shown.
+        local compassX = dirDis.direction / math.pi
+        local itemOffset = math.abs(compassX)
 
-      poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(compassX, 0), CEGUI.UDim(0, 0)))
+        -- see if we are targeting the compass item (if item is at the center, and it's the very centermost item)
+        if itemOffset < 0.03 and (target == nil or targetOffset > itemOffset) then
+          target = poi_item.poi
+          targetOffset = itemOffset
+        end
+
+        -- show compass item on compass
+        poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(compassX, 0), CEGUI.UDim(0, 0)))
+      else -- if user is inside PoI radius
+        poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(-20, 0), CEGUI.UDim(0, 0)))
+        if nearest == nil or distNearest > dirDis.distance then
+          nearest = poi_item.poi
+          distNearest = dirDis.distance
+        end
+      end
     end
+  end
+
+  if nearest then
+    if self.m_poi_id_in_location_scroll ~= nearest.id then
+      self:ShowLocationScroll(nearest)
+    end
+  else
+    self:HideLocationScroll()
+  end
+
+  if target then
+    if self.m_poi_id_in_target_poi_label ~= target.id then
+      self:ShowTargetPoILabel(target)
+    end
+  else
+    self:HideTargetPoILabel()
   end
 end
 
@@ -97,13 +198,14 @@ end
 --- Create PoI (call poiMain to actually do it)
 function PointOfInterestCompass:CreatePointOfInterest()
   self:Debug("PointOfInterestCompass:CreatePointOfInterest() called")
-  local radius = 1.0
+  local radius = nil
 
   local player = Eternus.GameState:GetLocalPlayer()
   local pos = player:NKGetPosition() -- player position
-  local title = nil
-  local description = nil
-  local poiType = nil
+
+  local title = self.m_title_field:getText()
+  local description = self.m_description_field:getText()
+  local poiType = self.m_type_field:getText()
 
   local poi = EternusEngine.mods.PointOfInterest.Main:CreatePointOfInterest(pos, radius, title, description, poiType)
   if poi then
@@ -130,7 +232,7 @@ function PointOfInterestCompass:AddPointOfInterest(poi)
   local poi_item = EternusEngine.UI.Windows:createWindow("TUGLook/StaticImage")
   poi_item:setProperty("Area", "{{-1,0},{0,0},{-1,26},{0,26}}")
   poi_item:setProperty("FrameEnabled", "false")
-  poi_item:setProperty("Image", "PoI-Icons/forest")
+  poi_item:setProperty("Image", "PoI-Icons/" .. poi.type.name)
   poi_item:setProperty("MaxSize", "{{1,0},{1,0}}")
   poi_item:setProperty("BackgroundEnabled", "false")
   poi_item:setProperty("VerticalAlignment", "Centre")
@@ -196,6 +298,56 @@ end
 function PointOfInterestCompass:HideCompass()
   -- TODO: do things necessary to hide compass
   self:Hide()
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass visible (i.e. when slotting compass item)
+function PointOfInterestCompass:ShowLocationScroll(poi)
+  self.m_poi_id_in_location_scroll = poi.id
+  self.m_location_scroll_visible = true
+  self.m_location_scroll:setProperty("Visible", "true")
+  self.m_location_scroll_text:setText(poi.title)
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass hidden (i.e when unslotting compass item)
+function PointOfInterestCompass:HideLocationScroll()
+  self.m_location_scroll:setProperty("Visible", "false")
+  self.m_location_scroll_text:setText("")
+  self.m_location_scroll_visible = false
+  self.m_poi_id_in_location_scroll = nil
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass's target poi label visible
+function PointOfInterestCompass:ShowTargetPoILabel(poi)
+  self.m_poi_id_in_target_poi_label = poi.id
+  self.m_target_poi_label_visible = true
+  self.m_target_poi_label:setProperty("Visible", "true")
+  self.m_target_poi_label:setText(poi.title)
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass's target poi label hidden
+function PointOfInterestCompass:HideTargetPoILabel()
+  self.m_target_poi_label:setProperty("Visible", "false")
+  self.m_target_poi_label:setText("")
+  self.m_target_poi_label_visible = false
+  self.m_poi_id_in_target_poi_label = nil
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass options window visible
+function PointOfInterestCompass:ShowOptionsWindow()
+  self.m_options_window_visible = true
+  self.m_options_window:setProperty("Visible", "true")
+end
+
+-------------------------------------------------------------------------------
+--- Public method for allowing other mods to make compass options window hidden
+function PointOfInterestCompass:HideOptionsWindow()
+  self.m_options_window:setProperty("Visible", "false")
+  self.m_options_window_visible = false
 end
 
 function PointOfInterestCompass:Debug(msg)

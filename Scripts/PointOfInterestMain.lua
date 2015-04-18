@@ -22,17 +22,19 @@ function PointOfInterestMain:Initialize()
 
   -- allowed PoI types -- TODO: this should probably come from a config file or something, probably not from gameobjects data file.
   PointOfInterestMain.poiTypes = {
-                      {name = "normal", description = ""},
-                      {name = "danger"},
-                      {name = "building"},
-                      {name = "altar"},
-                      {name = "resource"}
+                      {name = "forest", description = "Landmark"},
+                      {name = "panda", description = "Danger"},
+                      {name = "lighthouse", description = "Building"},
+                      {name = "triforce", description = "Altar"},
+                      {name = "sheep", description = "Resource"}
   }
 
   PointOfInterestMain.defaultType = PointOfInterestMain.poiTypes[1].name -- PoI always has type, users can add new types (acts like category)
   PointOfInterestMain.defaultTitle = "Point of Interest" -- PoI always has title, even if only default one
   PointOfInterestMain.defaultDescription = "" -- PoI can contain description, that UI can show if it likes to do so
   PointOfInterestMain.defaultDiscovered = true -- if PoI has been discovered or not (like skyrim full vs bordered location icon)
+
+	PointOfInterestMain.defaultRadius = 1 -- default radius
 
 	PointOfInterestMain.previousPos = nil -- used to refresh poi distances after traveling n units
 end
@@ -100,12 +102,12 @@ function PointOfInterestMain:CreatePointOfInterest(pos, radius, title, descripti
   if poi then
 		self:Debug("PointOfInterestMain:CreatePointOfInterest(): new PoI created")
 
-    poi.radius = (radius and radius or 1)
+    poi.radius = (radius and radius or self.defaultRadius)
 
     poi.title = (title and title or self.defaultTitle)
     poi.description = (description and description or self.defaultDescription)
 
-    poi.type = (self:PoITypeAllowed(poiType) and poiType or self.defaultType)
+    poi.type = self:getPoIType(poiType) -- (self:PoITypeAllowed(poiType) and poiType or self.defaultType)
 
     poi.discovered = (discovered and discovered or self.defaultDiscovered)
 
@@ -175,15 +177,35 @@ end
 
 --- Check if certain PoI type is in the list of allowed types.
 -- @param poiTypeToCheck PoI type to check.
+-- @return table if allowed type, otherwise return nil
 function PointOfInterestMain:PoITypeAllowed(poiTypeToCheck)
 	self:Debug("PointOfInterestUI:PoITypeAllowed(poiTypeToCheck) called")
 
   for i, poiType in ipairs(self.poiTypes) do
     if poiType.name == poiTypeToCheck then
-      return true
+			local type = {}
+			type.name = poiType.name
+			type.description = poiType.description
+      return type
     end
   end
-  return false
+
+  return nil
+end
+
+--- Get poi type based on the type name given as parameter.
+-- @param typeName Type name to match the allowed type
+-- @return table type matching type name given as parameter, or default type if not allowed
+function PointOfInterestMain:getPoIType(typeName)
+	local type = self:PoITypeAllowed(typeName)
+
+	if type == nil then
+		type = {}
+		type.name = PointOfInterestMain.poiTypes[1].name -- (self:PoITypeAllowed(poiType) and poiType or self.defaultType)
+		type.description = PointOfInterestMain.poiTypes[1].description
+	end
+
+	return type
 end
 
 --- Helper function to quickly spawn a GameObject by name with a given position and rotation.
