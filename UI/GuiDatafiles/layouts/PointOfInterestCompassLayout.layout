@@ -129,6 +129,8 @@
 </Property>
                         <Property name="ReadOnly" value="true" />
                         <Property name="WordWrap" value="false" />
+                        <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                        <Property name="SelectedTextColour" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
                         <Property name="HorizontalAlignment" value="Right" />
                     </Window>
                     <Window type="TUGLook/Label" name="Label" >
@@ -137,6 +139,7 @@
                         <Property name="Text" value="Type:" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
+                        <Property name="NormalTextColour" value="FF000000" />
                     </Window>
                 </Window>
                 <Window type="TUGLook/StaticImage" name="Icon Picker" >
@@ -254,6 +257,7 @@
                         <Property name="Text" value="Description:" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
+                        <Property name="NormalTextColour" value="FF000000" />
                     </Window>
                 </Window>
                 <Window type="TUGLook/StaticImage" name="Title Field" >
@@ -267,6 +271,8 @@
                         <Property name="Text" >
 </Property>
                         <Property name="WordWrap" value="false" />
+                        <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                        <Property name="SelectedTextColour" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
                         <Property name="HorizontalAlignment" value="Right" />
                     </Window>
                     <Window type="TUGLook/Label" name="Label" >
@@ -275,6 +281,7 @@
                         <Property name="Text" value="Title:" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
+                        <Property name="NormalTextColour" value="FF000000" />
                     </Window>
                 </Window>
                 <Window type="TUGLook/Button" name="Create PoI Button" >
@@ -301,6 +308,7 @@
                     <Property name="Font" value="DevinneSwash-14" />
                     <Property name="Text" value="Create Point of Interest" />
                     <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="NormalTextColour" value="FF000000" />
                     <Property name="VerticalAlignment" value="Centre" />
                     <Property name="HorizontalAlignment" value="Centre" />
                 </Window>
@@ -346,6 +354,8 @@
 </Property>
                         <Property name="ReadOnly" value="true" />
                         <Property name="WordWrap" value="false" />
+                        <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                        <Property name="SelectedTextColour" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
                         <Property name="HorizontalAlignment" value="Right" />
                     </Window>
                     <Window type="TUGLook/Label" name="Label" >
@@ -354,6 +364,7 @@
                         <Property name="Text" value="Type:" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
+                        <Property name="NormalTextColour" value="FF000000" />
                     </Window>
                 </Window>
                 <Window type="TUGLook/StaticImage" name="Description Field" >
@@ -379,6 +390,7 @@
                         <Property name="Text" value="Description:" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
+                        <Property name="NormalTextColour" value="FF000000" />
                     </Window>
                 </Window>
                 <Window type="TUGLook/StaticImage" name="Title Field" >
@@ -394,6 +406,8 @@
 </Property>
                         <Property name="ReadOnly" value="true" />
                         <Property name="WordWrap" value="false" />
+                        <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                        <Property name="SelectedTextColour" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
                         <Property name="HorizontalAlignment" value="Right" />
                     </Window>
                     <Window type="TUGLook/Label" name="Label" >
@@ -402,6 +416,7 @@
                         <Property name="Text" value="Title:" />
                         <Property name="MaxSize" value="{{1,0},{1,0}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
+                        <Property name="NormalTextColour" value="FF000000" />
                     </Window>
                 </Window>
                 <Window type="TUGLook/StaticImage" name="List" >
@@ -439,6 +454,7 @@
                     <Property name="Font" value="DevinneSwash-14" />
                     <Property name="Text" value="List Points of Interest" />
                     <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="NormalTextColour" value="FF000000" />
                     <Property name="VerticalAlignment" value="Centre" />
                     <Property name="HorizontalAlignment" value="Centre" />
                 </Window>
