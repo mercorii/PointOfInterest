@@ -48,7 +48,7 @@ end
 -- Called once from C++ at engine initialization time
 function PointOfInterestMod:Initialize()
 
-	self:Debug("PointOfInterestMod:Initialize was just called.....\n")
+	self:Debug("PointOfInterestMod:Initialize was just called.....")
 
   EternusEngine.mods.PointOfInterest.Main:Initialize()
 
@@ -72,7 +72,7 @@ function PointOfInterestMod:Initialize()
 		end
 
 		if self.options.toggleCompassWithKey and self.options.toggleCompassKey then
-			self:Debug("\nRegisterning key for toggling on/off compass (show/hide): " .. self.options.toggleCompassKey .. "\n")
+			self:Debug("\nRegisterning key for toggling on/off compass (show/hide): " .. self.options.toggleCompassKey)
 			Eternus.World:NKGetKeybinds():NKRegisterDirectCommand(self.options.toggleCompassKey, self, "ToggleCompass", KEY_ONCE)
 		end
 
@@ -124,14 +124,14 @@ function PointOfInterestMod:ToggleCompass(down)
 		return
 	end
 
-	self:Debug("PointOfInterestMod:ToggleCompass(down) called\n")
+	self:Debug("PointOfInterestMod:ToggleCompass(down) called")
 
 	if self.m_compassVisible then
-		self:Debug("Hiding compass\n")
+		self:Debug("Hiding compass")
 		self.m_pointOfInterestCompassView:Hide()
 		self.m_compassVisible = false
 	else
-		self:Debug("Making compass visible\n")
+		self:Debug("Making compass visible")
 		self.m_pointOfInterestCompassView:Show()
 		self.m_compassVisible = true
 	end
@@ -186,9 +186,23 @@ function PointOfInterestMod:loadConfing()
 	end
 end
 
+function PointOfInterestMod:SavePlayerData(player, outData)
+	outData.pointOfInterest = {}
+	EternusEngine.mods.PointOfInterest.Main:SaveData(outData.pointOfInterest)
+	self:Debug("PoIMod: Saving n pois: " .. #outData.pointOfInterest.pois)
+--	outData.pointOfInterest = data
+	outData.pointOfInterest.testFoo = "foo3"
+end
+
+function PointOfInterestMod:RestorePlayerData(player, inData, version)
+--	local data = inData.pointOfInterest
+	EternusEngine.mods.PointOfInterest.Main:RestoreData(inData.pointOfInterest, version)
+	self:Debug("PoIMod: Restoring word foo: " .. inData.pointOfInterest.testFoo)
+end
+
 function PointOfInterestMod:Debug(msg)
 	if self.options.useDebug then
-		NKPrint(msg)
+		NKPrint(msg .. "\n")
 	end
 end
 

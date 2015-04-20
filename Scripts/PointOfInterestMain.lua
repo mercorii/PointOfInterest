@@ -22,11 +22,11 @@ function PointOfInterestMain:Initialize()
 
   -- allowed PoI types -- TODO: this should probably come from a config file or something, probably not from gameobjects data file.
   PointOfInterestMain.poiTypes = {
-                      {name = "forest", 		imageName = "PoI-Icons/forest", 		title = "Landmark", description = "Landmark"},
-                      {name = "panda", 			imageName = "PoI-Icons/panda", 			title = "Danger", 	description = "Danger"},
-                      {name = "lighthouse", imageName = "PoI-Icons/lighthouse", title = "Building", description = "Building"},
-                      {name = "triforce", 	imageName = "PoI-Icons/triforce", 	title = "Altar", 		description = "Altar"},
-                      {name = "sheep", 			imageName = "PoI-Icons/sheep", 			title = "Resource", description = "Resource"}
+                      {name = "forest", 		title = "Landmark", description = "Landmark"},
+                      {name = "panda", 			title = "Danger", 	description = "Danger"},
+                      {name = "lighthouse", title = "Building", description = "Building"},
+                      {name = "triforce", 	title = "Altar", 		description = "Altar"},
+                      {name = "sheep", 			title = "Resource", description = "Resource"}
   }
 
   PointOfInterestMain.defaultType = PointOfInterestMain.poiTypes[1].name -- PoI always has type, users can add new types (acts like category)
@@ -45,8 +45,8 @@ function PointOfInterestMain:Enter()
 
 -- Call load data only if no data is available (mainly, call load data only when gameplay starts first time, not when returning from paused state)
   if not PointOfInterestMain.nextID then
-    PointOfInterestMain:LoadData()
-  end
+		PointOfInterestMain:InitData()
+	end
 
 	local currentPos = Eternus.GameState:GetLocalPlayer():NKGetPosition()
 	if PointOfInterestMain.previousPos == nil then
@@ -57,7 +57,7 @@ end
 -------------------------------------------------------------------------------
 -- Called from C++ when the game leaves it current mode
 function PointOfInterestMain:Leave()
-    PointOfInterestMain:SaveData()
+
 end
 
 -------------------------------------------------------------------------------
@@ -185,7 +185,6 @@ function PointOfInterestMain:PoITypeAllowed(poiTypeToCheck)
     if poiType.name == poiTypeToCheck then
 			local type = {}
 			type.name = poiType.name
-			type.imageName = poiType.imageName
 			type.title = poiType.title
 			type.description = poiType.description
       return type
@@ -204,7 +203,6 @@ function PointOfInterestMain:getPoIType(typeName)
 	if type == nil then
 		type = {}
 		type.name = PointOfInterestMain.poiTypes[1].name -- (self:PoITypeAllowed(poiType) and poiType or self.defaultType)
-		type.imageName = PointOfInterestMain.poiTypes[1].imageName
 		type.title = PointOfInterestMain.poiTypes[1].title
 		type.description = PointOfInterestMain.poiTypes[1].description
 	end
@@ -226,7 +224,8 @@ function PointOfInterestMain:SpawnPointOfInterest( position, rotation )
   	obj:NKSetShouldRender(false, false)
     obj:NKSetPosition(position, false)
 --	poi:NKSetRotation(rotation)  -- it doesn't move so rotation shouldn't matter, there's probably default value
-    obj:NKPlaceInWorld(true, false)
+-- 		obj:NKPlaceInWorld(true, false) -- true required for saving, but if placed in world, will despawn when leaving zone and result into errors..
+		obj:NKPlaceInWorld(false, false)
 
 --    poi:Init(self)
 
@@ -338,18 +337,45 @@ function PointOfInterestMain:calculateAllPoIDistance(pos)
 	return pois
 end
 
---- Load data from a file.
--- Not yet implemented.
-function PointOfInterestMain:LoadData()
-	self:Debug("PointOfInterestMain:LoadData()")
-  PointOfInterestMain.nextID = 1
-  PointOfInterestMain.pointsOfInterest = {}
+--- Save data to a file.
+-- @param outData Table that is used to store the data.
+function PointOfInterestMain:SaveData(outData)
+  self:Debug("PointOfInterestMain:SaveData()")
+
+	-- TODO: save also typedata definitions, or should they always come from a file?
+
+	outData.pois = {}
+
+	for i, poi in ipairs(self.pointsOfInterest) do
+		local poiData = {}
+		poi:Save(poiData)
+		outData.pois[#outData.pois+1] = poiData
+	end
+
+	self:Debug("PoIMain: Saving " .. #outData.pois .. " pois")
+--	outData.pois = pois
 end
 
---- Save data to a file.
--- Not yet implemented.
-function PointOfInterestMain:SaveData()
-  self:Debug("PointOfInterestMain:SaveData()")
+--- Load data from a file.
+-- @param inData Table containing data to be loaded.
+function PointOfInterestMain:RestoreData(inData, version)
+	self:Debug("PointOfInterestMain:RestoreData()")
+	self:Debug("PoIMain: Restoring pois: " .. (inData.pois and #inData.pois or "no") .. " pois restored")
+	self:Debug("PoIMain: Restoring word foo3: " .. inData.testFoo)
+
+	if inData then
+		for i, poi in ipairs(inData.pois) do
+			local poiType = poi.type and poi.type.name or nil
+			self:CreatePointOfInterest(poi.pos, poi.radius, poi.title, poi.description, poiType, poi.discovered)
+		end
+	end
+end
+
+-- formerly known as LoadData, this could probably just be done on initialize
+function PointOfInterestMain:InitData()
+	self:Debug("PointOfInterestMain:InitData()")
+	PointOfInterestMain.nextID = 1
+	PointOfInterestMain.pointsOfInterest = {}
 end
 
 function PointOfInterestMain:Debug(msg)

@@ -78,6 +78,9 @@ function PointOfInterest:Save(outData)
 
 	outData.id = self.id
 	outData.title = self.title
+	outData.radius = self.radius
+
+	outData.pos = self:NKGetWorldPosition()
 
   -- TODO: Do this with some deep copy function. This is horrible.
 	outData.type = {}
@@ -98,8 +101,10 @@ function PointOfInterest:Restore(inData, version)
 
 	self.id = inData.id
 	self.title = inData.title
+	self.radius = inData.radius
 
 	-- TODO: Do this with some deep copy function. This is horrible.
+	-- Actually most of this type data is not important at all. Type name/code should be enough to save/restore, as rest can be deducted from poiType definitions
 	self.type = {}
 	self.type.name = inData.type.name
 	self.type.imageName = inData.type.imageName

@@ -15,6 +15,18 @@ function PointOfInterestCompass:PostLoad(args)
 
   self:Debug("\n\nPointOfInterestCompass:PostLoad called\n\n")
 
+  -- Decide which type image to use for which type
+  -- TODO: Move this to config file on later point
+  self.m_type_images = {
+    {name = "forest", 		imageName = "PoI-Icons/forest"},
+    {name = "panda", 			imageName = "PoI-Icons/panda"},
+    {name = "lighthouse", imageName = "PoI-Icons/lighthouse"},
+    {name = "triforce", 	imageName = "PoI-Icons/triforce"},
+    {name = "sheep", 			imageName = "PoI-Icons/sheep"}
+  }
+
+  self.m_default_type_image = "PoI-Icons/forest"
+
   self.m_compass = self:GetChild("Compass")
   self.m_north = self:GetChild("Compass/North")
   self.m_east = self:GetChild("Compass/East")
@@ -43,22 +55,27 @@ function PointOfInterestCompass:PostLoad(args)
   self.m_options_window:setProperty("Visible", "false")
   self.m_options_window_visible = false
 
+
+  -- options > create
   self.m_create_poi_button = self:GetChild("Options Window/Options Container/Create PoI Button")
   self.m_close_options_window_button = self:GetChild("Options Window/Header/Close Button")
 
-  -- options >> fields
+  -- options > create > fields
   self.m_title_field = self:GetChild("Options Window/Options Container/Title Field/Editbox")
   self.m_type_field = self:GetChild("Options Window/Options Container/Type Field/Editbox")
   self.m_new_poi_type = nil
   self.m_description_field = self:GetChild("Options Window/Options Container/Description Field/Editbox")
 
-  -- options > type buttons
+  -- options > create > type buttons
   self.m_type_sheep_button = self:GetChild("Options Window/Options Container/Icon Picker/Sheep Button")
   self.m_type_triforce_button = self:GetChild("Options Window/Options Container/Icon Picker/Triforce Button")
   self.m_type_panda_button = self:GetChild("Options Window/Options Container/Icon Picker/Panda Button")
   self.m_type_lighthouse_button = self:GetChild("Options Window/Options Container/Icon Picker/Lighthouse Button")
   self.m_type_forest_button = self:GetChild("Options Window/Options Container/Icon Picker/Forest Button")
 
+  -- options > list pois
+  self.m_list_tab = self:GetChild("List PoIs Window")
+  self.m_list_tab:setProperty("Visible", "false")
 
   -- radar items
   self.m_items = {}
@@ -149,31 +166,33 @@ function PointOfInterestCompass:Update( dt )
   local targetOffset = nil
 
   for i, poi_item in ipairs(self.m_items) do
-    dirDis = EternusEngine.mods.PointOfInterest.Main:calculatePoIDirectionDistance(playerPos, poi_item.poi)
-    if dirDis then
-      if dirDis.distance > poi_item.poi.radius then
---      local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
---      self.m_text:setText("pos: (" .. playerPos:x() .. "," .. playerPos:z() .. "), \npoiPos: (" .. poi_item.poi:NKGetPosition():x() .. "," .. poi_item.poi:NKGetPosition():z() .. "), \nfwd: (" .. fwd:x() .. "," .. fwd:z() .. "), \ndirDis.direction: " .. dirDis.direction .. ", \ncompass position: " .. (dirDis.direction / math.pi))
+    if poi_item.poi then
+      dirDis = EternusEngine.mods.PointOfInterest.Main:calculatePoIDirectionDistance(playerPos, poi_item.poi)
+      if dirDis then
+        if dirDis.distance > poi_item.poi.radius then
+  --      local fwd = Eternus.GameState.m_activeCamera:ForwardVector()
+  --      self.m_text:setText("pos: (" .. playerPos:x() .. "," .. playerPos:z() .. "), \npoiPos: (" .. poi_item.poi:NKGetPosition():x() .. "," .. poi_item.poi:NKGetPosition():z() .. "), \nfwd: (" .. fwd:x() .. "," .. fwd:z() .. "), \ndirDis.direction: " .. dirDis.direction .. ", \ncompass position: " .. (dirDis.direction / math.pi))
 
-        -- Convert PoI direction in radians to a value in range [-1, 1].
-        -- Only items with value in range [-0.5, 0.5] are shown in compass.
-        -- Others are behind player's compass view (of 180 degrees), and are not shown.
-        local compassX = dirDis.direction / math.pi
-        local itemOffset = math.abs(compassX)
+          -- Convert PoI direction in radians to a value in range [-1, 1].
+          -- Only items with value in range [-0.5, 0.5] are shown in compass.
+          -- Others are behind player's compass view (of 180 degrees), and are not shown.
+          local compassX = dirDis.direction / math.pi
+          local itemOffset = math.abs(compassX)
 
-        -- see if we are targeting the compass item (if item is at the center, and it's the very centermost item)
-        if itemOffset < 0.03 and (target == nil or targetOffset > itemOffset) then
-          target = poi_item.poi
-          targetOffset = itemOffset
-        end
+          -- see if we are targeting the compass item (if item is at the center, and it's the very centermost item)
+          if itemOffset < 0.03 and (target == nil or targetOffset > itemOffset) then
+            target = poi_item.poi
+            targetOffset = itemOffset
+          end
 
-        -- show compass item on compass
-        poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(compassX, 0), CEGUI.UDim(0, 0)))
-      else -- if user is inside PoI radius
-        poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(-20, 0), CEGUI.UDim(0, 0)))
-        if nearest == nil or distNearest > dirDis.distance then
-          nearest = poi_item.poi
-          distNearest = dirDis.distance
+          -- show compass item on compass
+          poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(compassX, 0), CEGUI.UDim(0, 0)))
+        else -- if user is inside PoI radius
+          poi_item.item:setPosition(CEGUI.UVector2(CEGUI.UDim(-20, 0), CEGUI.UDim(0, 0)))
+          if nearest == nil or distNearest > dirDis.distance then
+            nearest = poi_item.poi
+            distNearest = dirDis.distance
+          end
         end
       end
     end
@@ -234,7 +253,7 @@ function PointOfInterestCompass:AddPointOfInterest(poi)
   local poi_item = EternusEngine.UI.Windows:createWindow("TUGLook/StaticImage")
   poi_item:setProperty("Area", "{{-1,0},{0,0},{-1,26},{0,26}}")
   poi_item:setProperty("FrameEnabled", "false")
-  poi_item:setProperty("Image", poi.type.imageName)
+  poi_item:setProperty("Image", self:ResolveTypeImage(poi.type.name))
   poi_item:setProperty("MaxSize", "{{1,0},{1,0}}")
   poi_item:setProperty("BackgroundEnabled", "false")
   poi_item:setProperty("VerticalAlignment", "Centre")
@@ -295,6 +314,19 @@ function PointOfInterestCompass:SetNewPoIType( typeName )
   local type = EternusEngine.mods.PointOfInterest.Main:getPoIType(typeName)
   self.m_type_field:setText(type.title)
   self.m_new_poi_type = type.name
+end
+
+-------------------------------------------------------------------------------
+--- Set the poi type for any new poi to be created
+-- @param typeName Name of the type
+function PointOfInterestCompass:ResolveTypeImage( typeName )
+  for i, type in ipairs(self.m_type_images) do
+    if type.name == typeName then
+      return type.imageName
+    end
+  end
+
+  return self.m_default_type_image
 end
 
 -------------------------------------------------------------------------------

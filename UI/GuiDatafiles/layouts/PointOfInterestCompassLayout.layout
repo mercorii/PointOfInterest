@@ -319,5 +319,143 @@
                 </Window>
             </Window>
         </Window>
+        <Window type="TUGLook/StaticImage" name="List PoIs Window" >
+            <Property name="Area" value="{{0,0},{0,0},{0,612},{0,377}}" />
+            <Property name="Image" value="poi-options/compass_options_panel_612x377" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="FrameEnabled" value="false" />
+            <Property name="BackgroundEnabled" value="false" />
+            <Property name="VerticalAlignment" value="Centre" />
+            <Window type="TUGLook/StaticImage" name="Options Container" >
+                <Property name="Area" value="{{0,0},{0,-20},{0,552},{0,287}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Property name="VerticalAlignment" value="Bottom" />
+                <Property name="HorizontalAlignment" value="Centre" />
+                <Window type="TUGLook/StaticImage" name="Type Field" >
+                    <Property name="Area" value="{{0,0},{0,0},{0.55,0},{0,32}}" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Property name="HorizontalAlignment" value="Right" />
+                    <Window type="PointOfInterest/MultiLineEditbox" name="Editbox" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.8,0},{1,0}}" />
+                        <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="Text" >
+</Property>
+                        <Property name="ReadOnly" value="true" />
+                        <Property name="WordWrap" value="false" />
+                        <Property name="HorizontalAlignment" value="Right" />
+                    </Window>
+                    <Window type="TUGLook/Label" name="Label" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.2,0},{1,0}}" />
+                        <Property name="Font" value="DevinneSwash-10" />
+                        <Property name="Text" value="Type:" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                    </Window>
+                </Window>
+                <Window type="TUGLook/StaticImage" name="Description Field" >
+                    <Property name="Area" value="{{0,0},{0,0},{0.55,0},{0,199}}" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Property name="VerticalAlignment" value="Bottom" />
+                    <Property name="HorizontalAlignment" value="Right" />
+                    <Window type="PointOfInterest/MultiLineEditbox" name="Editbox" >
+                        <Property name="Area" value="{{0,0},{0,0},{1,0},{0.8,0}}" />
+                        <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="Text" >
+</Property>
+                        <Property name="ReadOnly" value="true" />
+                        <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                        <Property name="VerticalAlignment" value="Bottom" />
+                        <Property name="SelectedTextColour" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
+                    </Window>
+                    <Window type="TUGLook/Label" name="Label" >
+                        <Property name="Area" value="{{0,0},{0,0},{0,128},{0,32}}" />
+                        <Property name="Font" value="DevinneSwash-10" />
+                        <Property name="Text" value="Description:" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                    </Window>
+                </Window>
+                <Window type="TUGLook/StaticImage" name="Title Field" >
+                    <Property name="Area" value="{{0,0},{0,55},{0.55,0},{0,87}}" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Property name="HorizontalAlignment" value="Right" />
+                    <Window type="PointOfInterest/MultiLineEditbox" name="Editbox" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.8,0},{1,0}}" />
+                        <Property name="Font" value="DejaVuSans-10" />
+                        <Property name="Text" >
+</Property>
+                        <Property name="ReadOnly" value="true" />
+                        <Property name="WordWrap" value="false" />
+                        <Property name="HorizontalAlignment" value="Right" />
+                    </Window>
+                    <Window type="TUGLook/Label" name="Label" >
+                        <Property name="Area" value="{{0,0},{0,0},{0.2,0},{1,0}}" />
+                        <Property name="Font" value="DevinneSwash-10" />
+                        <Property name="Text" value="Title:" />
+                        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                    </Window>
+                </Window>
+                <Window type="TUGLook/StaticImage" name="List" >
+                    <Property name="Area" value="{{0,0},{0,0},{0,200},{1,0}}" />
+                    <Property name="Image" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="FrameEnabled" value="false" />
+                    <Property name="BackgroundEnabled" value="false" />
+                    <Window type="TUGLook/ScrollablePane" name="ScrollablePane" >
+                        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                        <Property name="ContentArea" value="l:0 t:0 r:200 b:307" />
+                        <AutoWindow namePath="__auto_container__" >
+                            <Property name="ContentArea" value="l:0 t:0 r:200 b:307" />
+                            <Property name="MouseInputPropagationEnabled" value="true" />
+                            <Window type="VerticalLayoutContainer" name="VerticalLayoutContainer" >
+                                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                            </Window>
+                        </AutoWindow>
+                        <AutoWindow namePath="__auto_hscrollbar__" >
+                            <Property name="AlwaysOnTop" value="true" />
+                        </AutoWindow>
+                        <AutoWindow namePath="__auto_vscrollbar__" >
+                            <Property name="AlwaysOnTop" value="true" />
+                        </AutoWindow>
+                    </Window>
+                </Window>
+            </Window>
+            <Window type="TUGLook/StaticImage" name="Header" >
+                <Property name="Area" value="{{0,0},{0,0},{1,0},{0,50}}" />
+                <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="FrameEnabled" value="false" />
+                <Property name="BackgroundEnabled" value="false" />
+                <Window type="TUGLook/Label" name="Options Title" >
+                    <Property name="Area" value="{{0,0},{0,0},{0.8,0},{0,32}}" />
+                    <Property name="Font" value="DevinneSwash-14" />
+                    <Property name="Text" value="List Points of Interest" />
+                    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                    <Property name="VerticalAlignment" value="Centre" />
+                    <Property name="HorizontalAlignment" value="Centre" />
+                </Window>
+                <Window type="TUGLook/Button" name="Close Button" >
+                    <Property name="Area" value="{{0,-10},{0,0},{0,22},{0,32}}" />
+                    <Property name="Font" value="DevinneSwash-14" />
+                    <Property name="Text" value="X" />
+                    <Property name="HoverImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="NormalImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="PushedImage" value="poi-options/compass_options_field_color_612x377" />
+                    <Property name="HoverTextColour" value="tl:FF1E1E1E tr:FF1E1E1E bl:FF1E1E1E br:FF1E1E1E" />
+                    <Property name="NormalTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                    <Property name="PushedTextColour" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+                    <Property name="VerticalAlignment" value="Centre" />
+                    <Property name="HorizontalAlignment" value="Right" />
+                </Window>
+            </Window>
+        </Window>
     </Window>
 </GUILayout>
