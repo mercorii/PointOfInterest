@@ -11,6 +11,11 @@ end
 -------------------------------------------------------------------------------
 function PointOfInterestMain:Constructor(  )
 	self.pointsOfInterest = {}
+
+	-- Call load data only if no data is available (mainly, call load data only when gameplay starts first time, not when returning from paused state)
+  if not PointOfInterestMain.nextID then
+		PointOfInterestMain:InitData()
+	end
 end
 
 
@@ -42,11 +47,6 @@ end
 -------------------------------------------------------------------------------
 -- Called from C++ when the current game enters
 function PointOfInterestMain:Enter()
-
--- Call load data only if no data is available (mainly, call load data only when gameplay starts first time, not when returning from paused state)
-  if not PointOfInterestMain.nextID then
-		PointOfInterestMain:InitData()
-	end
 
 	local currentPos = Eternus.GameState:GetLocalPlayer():NKGetPosition()
 	if PointOfInterestMain.previousPos == nil then
@@ -345,26 +345,20 @@ function PointOfInterestMain:SaveData(outData)
 	-- TODO: save also typedata definitions, or should they always come from a file?
 
 	outData.pois = {}
-
 	for i, poi in ipairs(self.pointsOfInterest) do
 		local poiData = {}
 		poi:Save(poiData)
-		outData.pois[#outData.pois+1] = poiData
+		outData.pois["p" .. i] = poiData
 	end
-
-	self:Debug("PoIMain: Saving " .. #outData.pois .. " pois")
---	outData.pois = pois
 end
 
 --- Load data from a file.
 -- @param inData Table containing data to be loaded.
 function PointOfInterestMain:RestoreData(inData, version)
 	self:Debug("PointOfInterestMain:RestoreData()")
-	self:Debug("PoIMain: Restoring pois: " .. (inData.pois and #inData.pois or "no") .. " pois restored")
-	self:Debug("PoIMain: Restoring word foo3: " .. inData.testFoo)
 
 	if inData then
-		for i, poi in ipairs(inData.pois) do
+		for key, poi in pairs(inData.pois) do
 			local poiType = poi.type and poi.type.name or nil
 			self:CreatePointOfInterest(poi.pos, poi.radius, poi.title, poi.description, poiType, poi.discovered)
 		end

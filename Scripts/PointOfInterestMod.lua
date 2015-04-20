@@ -72,7 +72,7 @@ function PointOfInterestMod:Initialize()
 		end
 
 		if self.options.toggleCompassWithKey and self.options.toggleCompassKey then
-			self:Debug("\nRegisterning key for toggling on/off compass (show/hide): " .. self.options.toggleCompassKey)
+			self:Debug("Registerning key for toggling on/off compass (show/hide): " .. self.options.toggleCompassKey)
 			Eternus.World:NKGetKeybinds():NKRegisterDirectCommand(self.options.toggleCompassKey, self, "ToggleCompass", KEY_ONCE)
 		end
 
@@ -189,15 +189,12 @@ end
 function PointOfInterestMod:SavePlayerData(player, outData)
 	outData.pointOfInterest = {}
 	EternusEngine.mods.PointOfInterest.Main:SaveData(outData.pointOfInterest)
-	self:Debug("PoIMod: Saving n pois: " .. #outData.pointOfInterest.pois)
---	outData.pointOfInterest = data
-	outData.pointOfInterest.testFoo = "foo3"
 end
 
 function PointOfInterestMod:RestorePlayerData(player, inData, version)
---	local data = inData.pointOfInterest
 	EternusEngine.mods.PointOfInterest.Main:RestoreData(inData.pointOfInterest, version)
-	self:Debug("PoIMod: Restoring word foo: " .. inData.pointOfInterest.testFoo)
+--	NKWarn(EternusEngine.Debugging.Inspect(inData))
+--	NKWarn(CL.inspect.inspect(inData))
 end
 
 function PointOfInterestMod:Debug(msg)
