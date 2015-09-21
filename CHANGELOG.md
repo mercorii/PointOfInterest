@@ -1,5 +1,11 @@
 # Changelog (PointOfInterest mod)
 
+## 0.2.5
+
+  * Fixed mod to work with TUG build 0.8.6.
+  * Saving Point of Interest markers works again. Not sure if they actually worked in the previous version..
+  * Added .editorconfig file. It should make all the IDEs supporting it use correct spacing.
+
 ## 0.2.4
 
  * Point of Interest markers are now saved (and restored) between sessions. Huge thanks go to JohnyCilohokla for helping out with this.
