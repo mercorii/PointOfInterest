@@ -6,7 +6,7 @@ Credits
 
   ShortCredits = "Code: Mercor"
 
-  LongCredits = "Code: Mercor (twitter: @mercorinred)"
+  LongCredits = "Code: Mercor (twitter: @mercorinred), Thanks: JohnyCilohokla."
 
-  FullCredits = "Code: Mercor (twitter: @mercorinred)"
+  FullCredits = "Code: Mercor (twitter: @mercorinred). Thanks: JohnyCilohokla. Icons from http://game-icons.net by Delapouite with license cc-by 3.0 http://creativecommons.org/licenses/by/3.0/ with minor modifications."
 }

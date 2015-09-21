@@ -26,6 +26,8 @@ include("Scripts/UI/PointOfInterestConsoleUI.lua")
 -- This is called on .new()
 function PointOfInterestMod:Constructor(  )
 
+	self.savedItems = false
+
 	self:loadConfing()
 
 	if EternusEngine.mods.PointOfInterest.Mod == nil then
@@ -33,12 +35,12 @@ function PointOfInterestMod:Constructor(  )
 	end
 
 	if EternusEngine.mods.PointOfInterest.Main == nil then
-	  EternusEngine.mods.PointOfInterest.Main = PointOfInterestMain.new()
+	  EternusEngine.mods.PointOfInterest.Main = PointOfInterestMain.new(self)
 	end
 
 	if Eternus.IsClient then
 		if EternusEngine.mods.PointOfInterest.ConsoleUI == nil then
-	  	EternusEngine.mods.PointOfInterest.ConsoleUI = PointOfInterestConsoleUI.new()
+	  	EternusEngine.mods.PointOfInterest.ConsoleUI = PointOfInterestConsoleUI.new(self)
 		end
 	end
 
@@ -49,6 +51,10 @@ end
 function PointOfInterestMod:Initialize()
 
 	self:Debug("PointOfInterestMod:Initialize was just called.....")
+
+	if self.NKGetName then
+		self:Debug("PointOfInterestMod: Mod name: " .. self:NKGetName())
+	end
 
   EternusEngine.mods.PointOfInterest.Main:Initialize()
 
@@ -186,15 +192,38 @@ function PointOfInterestMod:loadConfing()
 	end
 end
 
-function PointOfInterestMod:SavePlayerData(player, outData)
-	outData.pointOfInterest = {}
-	EternusEngine.mods.PointOfInterest.Main:SaveData(outData.pointOfInterest)
+-- function PointOfInterestMod:SavePlayerData(player, outData)
+-- 	outData.pointOfInterest = {}
+-- 	EternusEngine.mods.PointOfInterest.Main:SaveData(outData.pointOfInterest)
+-- end
+
+-- Called from c++
+function PointOfInterestMod:Save()
+	local outData = {}
+	EternusEngine.mods.PointOfInterest.Main:SaveData(outData)
 end
 
-function PointOfInterestMod:RestorePlayerData(player, inData, version)
-	EternusEngine.mods.PointOfInterest.Main:RestoreData(inData.pointOfInterest, version)
+-- function PointOfInterestMod:RestorePlayerData(player, inData, version)
+-- 	EternusEngine.mods.PointOfInterest.Main:RestoreData(inData.pointOfInterest, version)
+-- --	NKWarn(EternusEngine.Debugging.Inspect(inData))
+-- --	NKWarn(CL.inspect.inspect(inData))
+-- end
+
+-- Called from c++
+function PointOfInterestMod:Restore()
+	-- EternusEngine.mods.PointOfInterest.Main:RestoreData()
 --	NKWarn(EternusEngine.Debugging.Inspect(inData))
 --	NKWarn(CL.inspect.inspect(inData))
+
+	local inData, success = self:NKRestoreTable("pointsOfInterest")
+
+	if success and inData then
+		self:Debug("\nPointOfInterestMain:RestoreData - Restore succeeded.")
+		self.savedItems = inData
+	else
+		self:Debug("\nPointOfInterestMain:RestoreData - Restore failed.")
+	end
+
 end
 
 function PointOfInterestMod:Debug(msg)

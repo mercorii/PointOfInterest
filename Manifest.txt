@@ -1,17 +1,17 @@
 Manifest
 {
 	# Name of the mods.
-  Name = "Point Of Interest mod"
+  	Name = "Point Of Interest Mod"
 
 	# Description of the mod.
-  Description = "A Point Of Interest system for making it easier to return to interesting places"
+  	Description = "A Point Of Interest system for making it easier to return to interesting places"
 
-  # Versioning
-  MajorVersion = 0
-  MinorVersion = 2
-	PatchVersion = 4
+  	# Versioning
+  	MajorVersion = 0
+  	MinorVersion = 2
+	PatchVersion = 5
 
-  # The file path to the script that is the entry point.
+  	# The file path to the script that is the entry point.
 	ScriptFile = "Scripts/PointOfInterestMod.lua"
 
 	# The script entry point class name

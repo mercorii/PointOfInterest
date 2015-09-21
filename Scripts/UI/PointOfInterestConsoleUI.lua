@@ -8,7 +8,9 @@ if PointOfInterestConsoleUI == nil then
 end
 
 -------------------------------------------------------------------------------
-function PointOfInterestConsoleUI:Constructor(  )
+function PointOfInterestConsoleUI:Constructor( mod )
+	self.m_mod = mod
+
 	self:Debug("\n\nPointOfInterestConsoleUI:Constructor called\n\n")
 end
 
@@ -50,7 +52,13 @@ function PointOfInterestConsoleUI:RegisterSlashCommands()
 --  if not Eternus.GameState.ListPointsOfInterest then
 
   -- Register /commands
-    Eternus.GameState:RegisterSlashCommand("CreatePointOfInterest", self, "CreatePointOfInterest")
+    -- Eternus.GameState:RegisterSlashCommand("CreatePointOfInterest", self, "CreatePointOfInterest")
+    -- Eternus.GameState:RegisterSlashCommand("ListPointsOfInterest", self, "ListPointsOfInterest")
+    -- Eternus.GameState:RegisterSlashCommand("RemovePointOfInterest", self, "RemovePointOfInterest")
+    -- Eternus.GameState:RegisterSlashCommand("DistanceToPointOfInterest", self, "DistanceToPointOfInterest")
+    -- Eternus.GameState:RegisterSlashCommand("DirectionToPointOfInterest", self, "DirectionToPointOfInterest")
+
+		Eternus.GameState:RegisterSlashCommand("CreatePointOfInterest", self, "CreatePointOfInterest")
     Eternus.GameState:RegisterSlashCommand("ListPointsOfInterest", self, "ListPointsOfInterest")
     Eternus.GameState:RegisterSlashCommand("RemovePointOfInterest", self, "RemovePointOfInterest")
     Eternus.GameState:RegisterSlashCommand("DistanceToPointOfInterest", self, "DistanceToPointOfInterest")
@@ -63,20 +71,22 @@ end
 function PointOfInterestConsoleUI:WriteMessageToChat(message)
 
   --	local uiContainer = self.state:NKGetUIContainer()
-	local uiContainer = NKGetDeprecatedUIContainer()
-	local miscUI = uiContainer:NKGetMiscellaneousUI()
+	-- local uiContainer = NKGetDeprecatedUIContainer()
+	-- local miscUI = uiContainer:NKGetMiscellaneousUI()
 
   -- if message is actually table, expect its items to be strings and print them one at a time
   if type(message) == "table" then
 		self:Debug("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called, was a table:")
     for i, msg in ipairs(message) do
 			self:Debug("\n" .. msg)
-      miscUI:NKChatWindow_AddText(msg)
+			-- miscUI:NKChatWindow_AddText(msg)
+			Eternus.CommandService:NKAddLocalText(msg)
     end
 		self:Debug("\n")
   else -- otherwise expect it to be string
 		self:Debug("\nPointOfInterestConsoleUI:WriteMessageToChat(message) called with message: \n" .. message)
-    miscUI:NKChatWindow_AddText(message)
+    -- miscUI:NKChatWindow_AddText(message)
+		Eternus.CommandService:NKAddLocalText(message)
   end
 end
 

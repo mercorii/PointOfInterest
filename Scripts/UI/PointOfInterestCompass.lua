@@ -41,7 +41,6 @@ function PointOfInterestCompass:Update( dt )
   local northPos = vec3.new(playerPos:x(), playerPos:y(), playerPos:z()+1.0)
   local northRadian = EternusEngine.mods.PointOfInterest.Main:calculateDirection(playerPos, northPos)
 
-
   local eastRadian = (((northRadian + math.pi/2) + math.pi) % (2*math.pi) - math.pi) / math.pi
   local southRadian = (((northRadian + math.pi) + math.pi) % (2*math.pi) - math.pi) / math.pi
   local westRadian = (((northRadian + math.pi/2*3) + math.pi) % (2*math.pi) - math.pi) / math.pi
@@ -190,10 +189,10 @@ end
 
 function PointOfInterestCompass:RegisterEvents()
   self.m_options_button:subscribeEvent("MouseClick", function( args )
-    self:Debug("PointOfInterestMod's options button was clicked")
-    if EternusEngine.mods.PointOfInterest.ConsoleUI then
-		  EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest options btn clicked.")
-    end
+--    self:Debug("PointOfInterestMod's options button was clicked")
+--    if EternusEngine.mods.PointOfInterest.ConsoleUI then
+--		  EternusEngine.mods.PointOfInterest.ConsoleUI:WriteMessageToChat("Point Of Interest options btn clicked.")
+--    end
 
     if self.m_options_window_visible then
       self:HideOptionsWindow()
@@ -394,6 +393,7 @@ end
 -------------------------------------------------------------------------------
 --- Public method for allowing other mods to make compass options window visible
 function PointOfInterestCompass:ShowOptionsWindow()
+
   self.m_options_window_visible = true
   self.m_options_window:setProperty("Visible", "true")
 
@@ -403,6 +403,7 @@ end
 -------------------------------------------------------------------------------
 --- Public method for allowing other mods to make compass options window hidden
 function PointOfInterestCompass:HideOptionsWindow()
+
   self.m_options_window:setProperty("Visible", "false")
   self.m_options_window_visible = false
 
@@ -410,11 +411,14 @@ function PointOfInterestCompass:HideOptionsWindow()
 end
 
 function PointOfInterestCompass:CreateInputMappingContext()
+  -- this kind of in wrong place but who cares
+  Eternus.World:NKGetKeybinds():NKRegisterNamedCommand("Toggle Mouse Mode", self, "ToggleMouseMode", KEY_ONCE)
+
   self.m_optionsContext = InputMappingContext.new("PointOfInterest > Options")
 
   self.m_optionsContext:NKSetInputPropagation(false)
 
-  -- define esc as escape key
+  self.m_optionsContext:NKRegisterNamedCommand("Return to Menu", self, "HideOptionsWindow", KEY_ONCE)
 end
 
 function PointOfInterestCompass:GrabInputMappingContext()
@@ -423,6 +427,21 @@ end
 
 function PointOfInterestCompass:ReleaseInputMappingContext()
   Eternus.InputSystem:NKRemoveInputContext(self.m_optionsContext)
+end
+
+function PointOfInterestCompass:ToggleMouseMode(down)
+  if down then
+    return
+  end
+
+  if Eternus.InputSystem:NKIsMouseGrabbed() then
+    Eternus.InputSystem:NKReleaseMouseInput()
+    Eternus.InputSystem:NKShowMouse()
+    Eternus.InputSystem:NKCenterMouse()
+  else
+    Eternus.InputSystem:NKHideMouse()
+    Eternus.InputSystem:NKGrabMouseInput()
+  end
 end
 
 function PointOfInterestCompass:Debug(msg)

@@ -9,11 +9,12 @@ if PointOfInterestMain == nil then
 end
 
 -------------------------------------------------------------------------------
-function PointOfInterestMain:Constructor(  )
+function PointOfInterestMain:Constructor( mod )
+	self.m_mod = mod
 	self.pointsOfInterest = {}
 
 	-- Call load data only if no data is available (mainly, call load data only when gameplay starts first time, not when returning from paused state)
-  if not PointOfInterestMain.nextID then
+	if not PointOfInterestMain.nextID then
 		PointOfInterestMain:InitData()
 	end
 end
@@ -51,6 +52,12 @@ function PointOfInterestMain:Enter()
 	local currentPos = Eternus.GameState:GetLocalPlayer():NKGetPosition()
 	if PointOfInterestMain.previousPos == nil then
 		PointOfInterestMain.previousPos = currentPos
+	end
+
+	-- Load any restored data. We need to wait until enter phase before loading it. Otherwise PoI objects are not created.
+	if self.m_mod.savedItems then
+		self:RestoreData(self.m_mod.savedItems)
+		self.m_mod.savedItems = false
 	end
 end
 
@@ -350,18 +357,30 @@ function PointOfInterestMain:SaveData(outData)
 		poi:Save(poiData)
 		outData.pois["p" .. i] = poiData
 	end
+
+	local success = self.m_mod:NKSaveTable("pointsOfInterest", outData)
+
+	if success then
+		self:Debug("\nPointOfInterestMain:SaveData - Save succeeded.")
+	else
+		self:Debug("\nPointOfInterestMain:SaveData - Save failed.")
+	end
+
 end
 
 --- Load data from a file.
 -- @param inData Table containing data to be loaded.
-function PointOfInterestMain:RestoreData(inData, version)
+function PointOfInterestMain:RestoreData(inData)
 	self:Debug("PointOfInterestMain:RestoreData()")
 
 	if inData then
+		self:Debug("PointOfInterestMain:RestoreData() - data found")
 		for key, poi in pairs(inData.pois) do
 			local poiType = poi.type and poi.type.name or nil
 			self:CreatePointOfInterest(poi.pos, poi.radius, poi.title, poi.description, poiType, poi.discovered)
 		end
+	else
+		self:Debug("PointOfInterestMain:RestoreData() - no data found")
 	end
 end
 
