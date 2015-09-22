@@ -1,12 +1,8 @@
 # Point Of Interest Mod for [TUG](http://www.nerdkingdom.com/)
 
-**Version 0.2.5**
+Mod version: **Version 0.2.5**
 
-## Required TUG version
-
-**This version of Point Of Interest is made for TUG version 0.8.6.**
-
-## Warning - early build!
+TUG version: **Version 0.8.6.**
 
 ## What it is?
 
