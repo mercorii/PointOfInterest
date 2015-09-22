@@ -1,0 +1,17 @@
+-- rename this file as config.txt
+PoI Config
+{
+  ENABLE_DEBUG = 0
+
+  ENABLE_COMPASS = 1
+  TOGGLE_COMPASS_WITH_KEY = 1
+
+  ENABLE_CHAT_CONSOLE_MESSAGES = 1
+
+  LAYOUT = "Mouse wizard"
+
+  User Keybinds
+  {
+    TOGGLE_COMPASS = "P"
+  }
+}
