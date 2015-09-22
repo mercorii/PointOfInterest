@@ -17,7 +17,6 @@ It adds an invisible PointOfInterest.lua gameobject that player and other mods c
 * Compass also shows custom Point of Interest markers. (Five different marker icons available!)
 * Marker names are shown when they are straight ahead, Gramma's recipes style.
 * Possibility to add name, description and different icon for created Points of Interests in GUI.
-* This will possibly be shown above compass when targeting PoI and when reaching it.
 * Some of the mod options can be configured by editing config.txt.
 
 ## Known bugs
